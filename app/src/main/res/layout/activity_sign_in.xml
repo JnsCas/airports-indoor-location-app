@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_sign_in"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="48dp"
+    tools:context="afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.SignInActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:srcCompat="@drawable/beacon"
+        android:id="@+id/imageView"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="4" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/signin_registrar_usuario"
+        android:layout_weight="2"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:elevation="0dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/signin_nombre"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:id="@+id/signin_nombre_et" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/signin_email"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:id="@+id/signin_email_et" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/signin_contraseña"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:id="@+id/signin_contrasena_et"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/signin_confirmar_contraseña"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:id="@+id/signin_confirmar_contrasena_et"
+        android:inputType="textPassword" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/signin_registrar_usuario"
+        android:layout_weight="0"
+        android:id="@+id/signin_registrar_usuario_btn" />
+
+</LinearLayout>

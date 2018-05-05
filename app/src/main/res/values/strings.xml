@@ -2,4 +2,9 @@
     <string name="app_name">Airports Indoor Location App</string>
     <string name="app_description">Desarrollar un sistema de localización en interiores para aeropuertos y cercanía a comercios turísticos.</string>
     <string name="app_title">SISTEMA DE LOCALIZACIÓN EN INTERIORES PARA AEROPUERTOS</string>
+    <string name="signin_registrar_usuario">Registrar Usuario</string>
+    <string name="signin_nombre">Nombre</string>
+    <string name="signin_email">Email</string>
+    <string name="signin_contraseña">Contraseña</string>
+    <string name="signin_confirmar_contraseña">Confirmar Contraseña</string>
 </resources>
