@@ -24,16 +24,12 @@ import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
 
 public class ConexionWebService {
 
-    private static final int _201 = 201;
-    private static final int _404 = 404;
-    private static final int _500 = 500;
-
     private static final String TAG = ConexionWebService.class.getName();
 
     /* ESTE ENDPOINT SE UTILIZA PARA PROBAR LOCALMENTE CORRIENDO DESDE EL EMULADOR*/
     public static final String ENDPOINT = "http://10.0.2.2:8080";
 
-    public static JSONArray getJSONfromURL(String resource) {
+    public static JSONArray getJson(String resource) {
         InputStream is = null;
         String result = "";
         JSONArray jArray = null;
@@ -75,11 +71,11 @@ public class ConexionWebService {
         return jArray;
     }
 
-    public static JSONfunctionsResponse postJSONfromURL(String resource, JSONObject json) {
+    public static JsonResponse postJson(String resource, JSONObject json) {
         InputStream is = null;
         String result = "";
         JSONObject jObject = null;
-        JSONfunctionsResponse jsoNfunctionsResponse = new JSONfunctionsResponse();
+        JsonResponse jsonResponse = new JsonResponse();
         String endpoint = ENDPOINT + resource;
 
         // Download JSON data from URL
@@ -94,7 +90,7 @@ public class ConexionWebService {
 
             is = entity.getContent();
             //set status
-            jsoNfunctionsResponse.setStatus(response.getStatusLine().getStatusCode());
+            jsonResponse.setStatus(response.getStatusLine().getStatusCode());
 
         } catch (Exception e) {
             Log.e(TAG, "Error in http connection " + e.toString());
@@ -120,7 +116,7 @@ public class ConexionWebService {
         } catch (JSONException e) {
             Log.e(TAG, "Error parsing data " + e.toString());
         }
-        jsoNfunctionsResponse.setJsonObject(jObject);
-        return jsoNfunctionsResponse;
+        jsonResponse.setJsonObject(jObject);
+        return jsonResponse;
     }
 }

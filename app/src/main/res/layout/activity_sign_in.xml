@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="48dp"
+    android:padding="16dp"
     tools:context="afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.SignInActivity">
 
     <ImageView
@@ -67,5 +67,6 @@
         android:text="@string/signin_registrar_usuario"
         android:layout_weight="0"
         android:id="@+id/signin_registrar_usuario_btn" />
+
 
 </LinearLayout>

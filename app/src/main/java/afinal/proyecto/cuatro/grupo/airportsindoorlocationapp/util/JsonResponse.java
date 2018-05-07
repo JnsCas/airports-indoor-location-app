@@ -3,7 +3,7 @@ package afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util;
 import org.json.JSONObject;
 
 
-public class JSONfunctionsResponse {
+public class JsonResponse {
 
     private Integer status;
     private JSONObject jsonObject;

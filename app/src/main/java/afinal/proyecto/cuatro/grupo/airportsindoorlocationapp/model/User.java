@@ -3,6 +3,7 @@ package afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.model;
 import java.io.UnsupportedEncodingException;
 
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.exceptions.signin.ContrasenasDistintasException;
+import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.exceptions.signin.EditTextVacioException;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.exceptions.signin.FormatoEmailInvalidoException;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.Security;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.Validaciones;
@@ -23,7 +24,7 @@ public class User {
 
     public void setNombre(String nombre) throws EditTextVacioException {
         if (Validaciones.isNullOrEmpty(nombre)) {
-            throw new EditTextVacioException("Nombre");
+            throw new EditTextVacioException();
         }
         this.nombre = nombre;
     }
@@ -34,7 +35,7 @@ public class User {
 
     public void setEmail(String email) throws EditTextVacioException, FormatoEmailInvalidoException {
         if (Validaciones.isNullOrEmpty(email)) {
-            throw new EditTextVacioException("Email");
+            throw new EditTextVacioException();
         }
         if (!Validaciones.emailIsValidate(email)) {
             throw new FormatoEmailInvalidoException();
