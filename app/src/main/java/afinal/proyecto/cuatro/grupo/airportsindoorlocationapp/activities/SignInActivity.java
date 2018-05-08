@@ -53,7 +53,7 @@ public class SignInActivity extends AppCompatActivity {
 
                 try {
                     User user = obtenerDatosDeUsuarioAInsertar();
-                    new PostUser(user, SignInActivity.this).execute();
+                    new PostUser(user).execute();
 
                 } catch (Throwable e) {
                     setearError(e);
@@ -88,9 +88,9 @@ public class SignInActivity extends AppCompatActivity {
         private JSONObject jsonObject;
         private ProgressDialog progressDialog;
 
-        public PostUser(User user, SignInActivity signInActivity) {
+        public PostUser(User user) {
             this.user = user;
-            this.progressDialog = new ProgressDialog(signInActivity);
+            this.progressDialog = new ProgressDialog(SignInActivity.this);
         }
 
         @Override

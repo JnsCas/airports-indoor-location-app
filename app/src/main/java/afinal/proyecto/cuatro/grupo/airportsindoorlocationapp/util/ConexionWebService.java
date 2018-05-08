@@ -76,7 +76,16 @@ public class ConexionWebService {
         String result = "";
         JSONObject jObject = null;
         JsonResponse jsonResponse = new JsonResponse();
-        String endpoint = ENDPOINT + resource;
+
+        // Para que esta funcion pueda ser invocada para consumir apis externas.
+        String endpoint;
+        if (resource.contains("http")) {
+            endpoint = resource;
+        } else {
+            endpoint = ENDPOINT + resource;
+        }
+        //
+
 
         // Download JSON data from URL
         try {
@@ -88,7 +97,7 @@ public class ConexionWebService {
             HttpClient client = new DefaultHttpClient();
             HttpResponse response = client.execute(httppost);
 
-            is = entity.getContent();
+            is = response.getEntity().getContent();
             //set status
             jsonResponse.setStatus(response.getStatusLine().getStatusCode());
 

@@ -8,4 +8,11 @@
     <string name="signin_contraseña">Contraseña</string>
     <string name="signin_confirmar_contraseña">Confirmar Contraseña</string>
     <string name="main_registrarme">Registrarme</string>
+    <string name="main_login">Login</string>
+    <string name="main_userSupport">User Support</string>
+    <string name="usersupport_nro_vuelo">Número de vuelo</string>
+    <string name="usersupport_buscar">Buscar</string>
+    <string name="usersupport_salida">Salida:</string>
+    <string name="usersupport_llegada">Llegada</string>
+    <string name="usersupport_estado_de_vuelo">Estado de vuelo</string>
 </resources>
