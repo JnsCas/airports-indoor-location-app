@@ -18,7 +18,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.SignInActivity" />
-        <activity android:name=".activities.UserSupportActivity"></activity>
+        <activity android:name=".activities.HomeActivity" />
+        <activity android:name=".activities.UserSupportActivity" />
+        <activity android:name=".activities.VueloActivity" />
+        <activity android:name=".activities.MapaActivity" />
+        <activity android:name=".activities.InfoActivity" />
+
     </application>
 
-</manifest>
+    </manifest>
