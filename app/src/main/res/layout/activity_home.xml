@@ -40,6 +40,7 @@
             android:layout_weight="1"
             android:text="@string/home_mapa" />
 
+<<<<<<< HEAD
         <Button
             android:id="@+id/home_info_btn"
             android:layout_width="wrap_content"
@@ -47,6 +48,8 @@
             android:layout_weight="1"
             android:text="@string/home_masinfo" />
 
+=======
+>>>>>>> 8d2c4c9b4e91cf1df8f5c4789739c68dde0e4b7c
         <TextView
             android:id="@+id/home_info_tvw"
             android:layout_width="wrap_content"

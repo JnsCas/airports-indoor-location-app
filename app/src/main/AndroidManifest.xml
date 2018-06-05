@@ -18,6 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.SignInActivity" />
+<<<<<<< HEAD
         <activity android:name=".activities.HomeActivity" />
         <activity android:name=".activities.UserSupportActivity" />
         <activity android:name=".activities.VueloActivity" />
@@ -25,6 +26,15 @@
         <activity android:name=".activities.InfoActivity" />
         <activity android:name=".activities.DestinoActivity" />
 
+=======
+        <activity android:name=".activities.UserSupportActivity">
+        <activity android:name=".activities.HomeActivity">
+        <activity android:name=".activities.VueloActivity">
+        <activity android:name=".activities.MapaActivity">
+        <activity android:name=".activities.DestinoActivity">
+        <activity android:name=".activities.InfoActivity">
+        <activity android:name=".activities.CargarVueloActivity"></activity>
+>>>>>>> 8d2c4c9b4e91cf1df8f5c4789739c68dde0e4b7c
     </application>
 
     </manifest>

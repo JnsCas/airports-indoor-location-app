@@ -50,7 +50,11 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void buttonInfo() {
+<<<<<<< HEAD
         TextView btnInfo = (TextView) findViewById(R.id.home_info_btn);
+=======
+        TextView btnInfo = (TextView) findViewById(R.id.home_info_tvw);
+>>>>>>> 8d2c4c9b4e91cf1df8f5c4789739c68dde0e4b7c
 
         btnInfo.setOnClickListener(new View.OnClickListener() {
             @Override
