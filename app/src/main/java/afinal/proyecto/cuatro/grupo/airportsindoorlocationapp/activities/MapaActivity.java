@@ -40,7 +40,7 @@ public class MapaActivity extends AppCompatActivity {
         btnDestino.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentDestino = new Intent(getApplicationContext(), VueloActivity.class);
+                Intent intentDestino = new Intent(getApplicationContext(), DestinoActivity.class);
                 startActivity(intentDestino);
             }
         });
