@@ -8,6 +8,11 @@ import android.widget.Button;
 
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.SignInActivity;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.UserSupportActivity;
+import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.HomeActivity;
+import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.VueloActivity;
+import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.MapaActivity;
+import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.InfoActivity;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
         buttonRegistrarme();
         buttonUserSupport();
+        buttonLogin();
+
     }
 
     private void buttonUserSupport() {
@@ -40,6 +47,19 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intentSignIn = new Intent(getApplicationContext(), SignInActivity.class);
                 startActivity(intentSignIn);
+            }
+        });
+    }
+
+
+    private void buttonLogin() {
+        Button btnLogin = (Button) findViewById(R.id.main_login_btn);
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentHome = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(intentHome);
             }
         });
     }
