@@ -13,11 +13,7 @@ public class InfoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-<<<<<<< HEAD
         setContentView(R.layout.activity_info);
-=======
-        setContentView(R.layout.activity_home);
->>>>>>> 8d2c4c9b4e91cf1df8f5c4789739c68dde0e4b7c
 
         //buttonVuelo();
         //buttonMapa();

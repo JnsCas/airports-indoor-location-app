@@ -25,10 +25,7 @@ public class MainActivity extends AppCompatActivity {
         buttonRegistrarme();
         buttonUserSupport();
         buttonLogin();
-<<<<<<< HEAD
-=======
 
->>>>>>> 8d2c4c9b4e91cf1df8f5c4789739c68dde0e4b7c
     }
 
     private void buttonUserSupport() {
@@ -55,23 +52,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 8d2c4c9b4e91cf1df8f5c4789739c68dde0e4b7c
     private void buttonLogin() {
         Button btnLogin = (Button) findViewById(R.id.main_login_btn);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-<<<<<<< HEAD
-                Intent intentLogin = new Intent(getApplicationContext(), HomeActivity.class);
-                startActivity(intentLogin);
-=======
+
                 Intent intentHome = new Intent(getApplicationContext(), HomeActivity.class);
                 startActivity(intentHome);
->>>>>>> 8d2c4c9b4e91cf1df8f5c4789739c68dde0e4b7c
+
             }
         });
     }
