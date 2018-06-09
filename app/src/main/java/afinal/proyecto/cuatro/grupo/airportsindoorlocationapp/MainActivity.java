@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.SignInActivity;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.UserSupportActivity;
+import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.MapaActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
         buttonRegistrarme();
         buttonUserSupport();
+        buttonMapa();
     }
 
     private void buttonUserSupport() {
@@ -40,6 +42,18 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intentSignIn = new Intent(getApplicationContext(), SignInActivity.class);
                 startActivity(intentSignIn);
+            }
+        });
+    }
+
+    private void buttonMapa() {
+        Button btnMapa = (Button) findViewById(R.id.main_mapa_btn);
+
+        btnMapa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentMapa = new Intent(getApplicationContext(), MapaActivity.class);
+                startActivity(intentMapa);
             }
         });
     }

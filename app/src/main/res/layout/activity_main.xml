@@ -34,24 +34,31 @@
         android:orientation="horizontal">
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:id="@+id/main_registrarme_btn"
-            android:text="@string/main_registrarme"/>
+            android:layout_width="55dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:text="@string/main_registrarme" />
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:id="@+id/main_userSupport_btn"
+            android:layout_width="58dp"
+            android:layout_height="34dp"
+            android:layout_weight="1"
             android:text="@string/main_userSupport" />
 
         <Button
+            android:id="@+id/main_mapa_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:text="MAPA" />
+
+        <Button
             android:id="@+id/main_login_btn"
+            android:layout_width="48dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
             android:text="@string/main_login" />
 
     </LinearLayout>
