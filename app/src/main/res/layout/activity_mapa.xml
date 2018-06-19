@@ -5,17 +5,14 @@
     android:id="@+id/activity_mapa"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/aeropuertopng8"
     android:orientation="vertical"
     android:padding="@dimen/activity_horizontal_margin"
     tools:context="afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.MainActivity">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="match_parent"
-        android:layout_height="432dp"
-        android:layout_weight="0"
-        android:src="@drawable/mapapng" />
+    <com.estimote.indoorsdk_module.view.IndoorLocationView
+        android:id="@+id/indoor_view"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent" />
 
     <LinearLayout
         android:layout_width="match_parent"
