@@ -36,17 +36,17 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        this.nombreEditText                 = (EditText) findViewById(R.id.signin_nombre_et);
-        this.emailEditText                  = (EditText) findViewById(R.id.signin_email_et);
-        this.contrasenaEditText             = (EditText) findViewById(R.id.signin_contrasena_et);
-        this.confirmarContrasenaEditText    = (EditText) findViewById(R.id.signin_confirmar_contrasena_et);
+        this.nombreEditText                 = findViewById(R.id.signin_nombre_et);
+        this.emailEditText                  = findViewById(R.id.signin_email_et);
+        this.contrasenaEditText             = findViewById(R.id.signin_contrasena_et);
+        this.confirmarContrasenaEditText    = findViewById(R.id.signin_confirmar_contrasena_et);
 
         buttonRegistrarUsuario();
 
     }
 
     private void buttonRegistrarUsuario() {
-        Button btnRegistrar = (Button) findViewById(R.id.signin_registrar_usuario_btn);
+        Button btnRegistrar = findViewById(R.id.signin_registrar_usuario_btn);
 
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
@@ -117,8 +117,6 @@ public class SignInActivity extends AppCompatActivity {
             jsonObject = response.getJsonObject();
             Integer status = response.getStatus();
 
-
-
             return null;
         }
 
@@ -130,7 +128,7 @@ public class SignInActivity extends AppCompatActivity {
             if (response.getStatus() == 201) {
                 Toast.makeText(getApplicationContext(), "Alta hecha!", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(getApplicationContext(), "Se obtuvo un error distinto a 201.", Toast.LENGTH_LONG).show(); //FIXME
+                Toast.makeText(getApplicationContext(), "Se obtuvo el error." + response.getStatus(), Toast.LENGTH_LONG).show(); //FIXME
             }
         }
     }
