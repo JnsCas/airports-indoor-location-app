@@ -54,4 +54,11 @@ public class User {
             throw new ContrasenasDistintasException();
         }
     }
+
+    public void setContrasena(String contrasena) throws EditTextVacioException {
+        if (Validaciones.isNullOrEmpty(contrasena)) {
+            throw new EditTextVacioException();
+        }
+        this.contrasena = contrasena;
+    }
 }

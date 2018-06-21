@@ -33,4 +33,5 @@ public class Validaciones {
     public static boolean isNullOrEmpty(String txt){
         return txt==null || txt.trim().length() == 0;
     }
+
 }
