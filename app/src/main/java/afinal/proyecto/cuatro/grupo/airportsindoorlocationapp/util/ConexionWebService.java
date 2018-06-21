@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import cz.msebera.android.httpclient.HttpEntity;
+import cz.msebera.android.httpclient.HttpHeaders;
 import cz.msebera.android.httpclient.HttpResponse;
 import cz.msebera.android.httpclient.client.HttpClient;
 import cz.msebera.android.httpclient.client.methods.HttpGet;
@@ -27,7 +28,8 @@ public class ConexionWebService {
     private static final String TAG = ConexionWebService.class.getName();
 
     /* ESTE ENDPOINT SE UTILIZA PARA PROBAR LOCALMENTE CORRIENDO DESDE EL EMULADOR*/
-    public static final String ENDPOINT = "http://10.0.2.2:8080";
+    private static final String ENDPOINT = "http://10.0.2.2:8080";
+    private static final String API_KEY_VALUE = "12345678";
 
     public static JSONArray getJson(String resource) {
         InputStream is = null;
@@ -78,11 +80,12 @@ public class ConexionWebService {
         JsonResponse jsonResponse = new JsonResponse();
 
         // Para que esta funcion pueda ser invocada para consumir apis externas.
-        String endpoint;
+        HttpPost httppost;
         if (resource.contains("http")) {
-            endpoint = resource;
+            httppost = new HttpPost(resource);
         } else {
-            endpoint = ENDPOINT + resource;
+            httppost = new HttpPost(ENDPOINT + resource);
+            httppost.addHeader("X-Api-Key", API_KEY_VALUE);
         }
         //
 
@@ -90,7 +93,6 @@ public class ConexionWebService {
         // Download JSON data from URL
         try {
 
-            HttpPost httppost = new HttpPost(endpoint);
             StringEntity entity = new StringEntity(json.toString());
             entity.setContentType("application/json");
             httppost.setEntity(entity);
