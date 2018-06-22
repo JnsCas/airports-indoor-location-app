@@ -61,6 +61,8 @@ public class LoginActivity extends AppCompatActivity {
                     User user = new User();
                     user.setEmail(emailEditText.getText().toString());
                     user.setContrasena(Security.getSHA512SecurePassword(contrasenaEditText.getText().toString()));
+
+                    new PostUserLogin(user).execute();
                 } catch (EditTextVacioException e) {
                     ExceptionUtil.setearErrorEditTextsCamposObligatorios(editTexts, e.getMessage());
                 } catch (FormatoEmailInvalidoException emailException) {
