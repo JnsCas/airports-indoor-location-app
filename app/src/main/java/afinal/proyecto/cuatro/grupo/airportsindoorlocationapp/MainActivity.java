@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.HomeActivity;
+import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.LoginActivity;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.SignInActivity;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.UserSupportActivity;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.MapaActivity;
@@ -55,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intentHome = new Intent(getApplicationContext(), HomeActivity.class);
-                startActivity(intentHome);
+                Intent intentLogin = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intentLogin);
 
             }
         });
