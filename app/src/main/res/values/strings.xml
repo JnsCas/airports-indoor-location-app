@@ -27,5 +27,6 @@
     <string name="cargarvuelo_guardar">GUARDAR</string>
     <string name="confirmar">CONFIRMAR</string>
     <string name="appbar_scrolling_view_behavior">CONFIRMAR</string>
+    <string name="login_registrarme">Registrarme</string>
 
 </resources>

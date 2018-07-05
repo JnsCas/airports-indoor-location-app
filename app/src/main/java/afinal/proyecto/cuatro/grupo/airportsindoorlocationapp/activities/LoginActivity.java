@@ -25,7 +25,6 @@ import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.ConexionWebSe
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.ExceptionUtil;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.JsonResponse;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.Security;
-import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.Validaciones;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -44,6 +43,18 @@ public class LoginActivity extends AppCompatActivity {
         cargarEditTextsObligatorios();
 
         buttonLogin();
+        buttonRegistrarme();
+    }
+
+    private void buttonRegistrarme() {
+        Button btnRegistrarme = findViewById(R.id.login_registrarme_btn);
+        btnRegistrarme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent signInIntent = new Intent(getApplicationContext(), SignInActivity.class);
+                startActivity(signInIntent);
+            }
+        });
     }
 
     private void cargarEditTextsObligatorios() {
@@ -120,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
                 Intent homeActivityIntent = new Intent(getApplicationContext(), HomeActivity.class);
                 startActivity(homeActivityIntent);
             } else {
-                Toast.makeText(getApplicationContext(), "Se obtuvo el error." + response.getStatus(), Toast.LENGTH_LONG).show(); //FIXME
+                Toast.makeText(getApplicationContext(), "Se obtuvo el error:" + response.getStatus(), Toast.LENGTH_LONG).show(); //FIXME
             }
         }
     }
