@@ -4,13 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.ImageButton;
 
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.R;
-import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.VueloActivity;
-import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.MapaActivity;
-import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.InfoActivity;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -22,11 +18,10 @@ public class HomeActivity extends AppCompatActivity {
         buttonVuelo();
         buttonMapa();
         buttonInfo();
-
     }
 
     private void buttonMapa() {
-        Button btnMapa = (Button) findViewById(R.id.home_mapa_btn);
+        ImageButton btnMapa = findViewById(R.id.mapa_imgbtn);
 
         btnMapa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,7 +33,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void buttonVuelo() {
-        Button btnVuelo = (Button) findViewById(R.id.home_vuelo_btn);
+        ImageButton btnVuelo = findViewById(R.id.fly_imgbtn);
 
         btnVuelo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,8 +45,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void buttonInfo() {
-
-        TextView btnInfo = (TextView) findViewById(R.id.home_info_tvw);
+        ImageButton btnInfo = findViewById(R.id.support_imgbtn);
 
         btnInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,4 +56,5 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+    //TODO: buttonNotification()
 }

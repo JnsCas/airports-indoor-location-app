@@ -4,7 +4,7 @@
     android:id="@+id/activity_user_support"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/airport3"
+    android:background="@drawable/aeropuerto"
     android:orientation="vertical"
     android:padding="16dp"
     tools:context="afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.UserSupportActivity">
