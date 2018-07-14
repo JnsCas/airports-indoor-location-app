@@ -1,20 +1,8 @@
 package afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util;
 
-import org.json.JSONObject;
-
-
-public class JsonResponse {
+public abstract class JsonResponse {
 
     private Integer status;
-    private JSONObject jsonObject;
-
-    public JSONObject getJsonObject() {
-        return jsonObject;
-    }
-
-    public void setJsonObject(JSONObject jsonObject) {
-        this.jsonObject = jsonObject;
-    }
 
     public Integer getStatus() {
         return status;

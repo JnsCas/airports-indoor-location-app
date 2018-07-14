@@ -12,8 +12,6 @@
     <string name="main_userSupport">User Support</string>
     <string name="usersupport_nro_vuelo">Número de vuelo</string>
     <string name="usersupport_buscar">Buscar</string>
-    <string name="usersupport_salida">Salida:</string>
-    <string name="usersupport_llegada">Llegada</string>
     <string name="usersupport_estado_de_vuelo">Estado de vuelo</string>
     <string name="home_vuelo">VUELO</string>
     <string name="home_mapa">MAPA</string>
@@ -28,5 +26,9 @@
     <string name="confirmar">CONFIRMAR</string>
     <string name="appbar_scrolling_view_behavior">CONFIRMAR</string>
     <string name="login_registrarme">Registrarme</string>
+    <string name="usersupport_numero">Número</string>
+    <string name="usersupport_destino">Destino</string>
+    <string name="usersupport_fechaEmbarque">Fecha de embarque</string>
+    <string name="usersupport_puertaEmbarque">Puerta de embarque</string>
 
 </resources>
