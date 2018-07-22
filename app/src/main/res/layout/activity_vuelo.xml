@@ -1,21 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_user_support"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/aeropuerto"
-    android:orientation="vertical"
-    android:padding="16dp"
-    tools:context="afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.UserSupportActivity">
-
-    <!--TODO: Eliminar este TextView !-->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:text="TODO: Acá iría un Spinner para seleccionar la Aerolinea.\n Aerolínea Seleccionada: Aerolíneas Argentinas." />
-    <!---->
+    android:layout_margin="30dp">
 
     <EditText
         android:id="@+id/usersupport_nro_vuelo_et"
