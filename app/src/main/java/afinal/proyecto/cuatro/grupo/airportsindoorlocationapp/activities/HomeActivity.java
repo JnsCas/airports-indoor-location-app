@@ -17,7 +17,8 @@ public class HomeActivity extends AppCompatActivity {
 
         buttonVuelo();
         buttonMapa();
-        buttonInfo();
+        buttonSupport();
+        buttonNotification();
     }
 
     private void buttonMapa() {
@@ -33,7 +34,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void buttonVuelo() {
-        ImageButton btnVuelo = findViewById(R.id.fly_imgbtn);
+        ImageButton btnVuelo = findViewById(R.id.vuelo_imgbtn);
 
         btnVuelo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,7 +45,7 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    private void buttonInfo() {
+    private void buttonSupport() {
         ImageButton btnInfo = findViewById(R.id.support_imgbtn);
 
         btnInfo.setOnClickListener(new View.OnClickListener() {
@@ -56,5 +57,15 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    //TODO: buttonNotification()
+    private void buttonNotification() {
+        ImageButton btnInfo = findViewById(R.id.notification_imgbtn);
+
+        btnInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentInfo = new Intent(getApplicationContext(), NotificationActivity.class);
+                startActivity(intentInfo);
+            }
+        });
+    }
 }
