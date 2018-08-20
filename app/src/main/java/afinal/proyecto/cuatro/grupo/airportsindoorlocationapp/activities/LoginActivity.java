@@ -23,7 +23,7 @@ import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.exceptions.signin.
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.model.User;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.ConexionWebService;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.ExceptionUtil;
-import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.JsonResponse;
+import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.JsonObjectResponse;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.Security;
 
 public class LoginActivity extends AppCompatActivity {
@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private class PostUserLogin extends AsyncTask<Void, Void, Void> {
         private User user;
-        private JsonResponse response;
+        private JsonObjectResponse response;
         private JSONObject jsonObject;
         private ProgressDialog progressDialog;
 

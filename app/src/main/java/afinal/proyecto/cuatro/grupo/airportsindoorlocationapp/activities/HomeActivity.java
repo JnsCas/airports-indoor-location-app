@@ -8,9 +8,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.R;
-import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.VueloActivity;
-import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.MapaActivity;
-import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.InfoActivity;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -43,7 +40,7 @@ public class HomeActivity extends AppCompatActivity {
         btnVuelo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentVuelo = new Intent(getApplicationContext(), VueloActivity.class);
+                Intent intentVuelo = new Intent(getApplicationContext(), UserSupportActivity.class);
                 startActivity(intentVuelo);
             }
         });

@@ -6,11 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.HomeActivity;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.LoginActivity;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.SignInActivity;
-import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.UserSupportActivity;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.MapaActivity;
+import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.UserSupportActivity;
 
 public class MainActivity extends AppCompatActivity {
 
