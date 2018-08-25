@@ -27,9 +27,13 @@ public class ConexionWebService {
 
     private static final String TAG = ConexionWebService.class.getName();
 
-    /* ESTE ENDPOINT SE UTILIZA PARA PROBAR LOCALMENTE CORRIENDO DESDE EL EMULADOR*/
-    private static final String ENDPOINT = "http://10.0.2.2:8080";
-    private static final String API_KEY_VALUE = "12345678";
+    /* Endpoint local, para probar desde el emulador */
+    // private static final String ENDPOINT = "http://10.0.2.2:8080";
+    // private static final String API_KEY_VALUE = "12345678";
+
+    /* Endpoint de prod, para probar desde el celu */
+    private static final String ENDPOINT = "http://54.233.174.152:9090";
+    private static final String API_KEY_VALUE = "udQH4Ny9NM3VAw5QB3Bvo7YIwQmIhMYiLamgjgYgn6GQ8V6cv8";
 
     public static JsonArrayResponse getJson(String resource) {
         InputStream is = null;
