@@ -28,9 +28,9 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/signin_contraseña"
         android:layout_gravity="center_horizontal"
         android:layout_weight="1"
+        android:hint="@string/signin_contraseña"
         android:id="@+id/signin_contrasena_et"
         android:inputType="textPassword" />
 
@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="Registrarme"
-        android:background="@drawable/mybutton"
+        android:background="@color/colorButton"
         android:layout_marginVertical="30dp"
         android:id="@+id/signin_registrar_usuario_btn" />
 

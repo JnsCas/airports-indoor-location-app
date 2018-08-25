@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Airports Indoor Location App</string>
-    <string name="app_description">Desarrollar un sistema de localización en interiores para aeropuertos y cercanía a comercios turísticos.</string>
-    <string name="app_title">SISTEMA DE LOCALIZACIÓN EN INTERIORES PARA AEROPUERTOS</string>
+    <string name="app_name">BWay</string>
+    <string name="app_description">Sistema de localización en interiores para aeropuertos.</string>
+    <string name="app_title">BWay - Sistema de localización en interiores para aeropuertos</string>
     <string name="signin_registrar_usuario">Registrar</string>
     <string name="signin_nombre">Nombre</string>
     <string name="signin_email">Email</string>
@@ -30,5 +30,8 @@
     <string name="usersupport_destino">Destino</string>
     <string name="usersupport_fechaEmbarque">Fecha de embarque</string>
     <string name="usersupport_puertaEmbarque">Puerta de embarque</string>
+    <string name="bway">BWay</string>
+    <string name="contrase_a">Contraseña</string>
+    <string name="no_tengo_usuario_registrarme">No tengo usuario, registrarme.</string>
 
 </resources>
