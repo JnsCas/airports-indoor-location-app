@@ -39,7 +39,7 @@ public class HomeActivity extends AppCompatActivity {
         btnVuelo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentVuelo = new Intent(getApplicationContext(), VueloActivity.class);
+                Intent intentVuelo = new Intent(getApplicationContext(), UserSupportActivity.class);
                 startActivity(intentVuelo);
             }
         });

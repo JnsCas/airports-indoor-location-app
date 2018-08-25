@@ -4,58 +4,36 @@
     android:id="@+id/activity_user_support"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     android:orientation="vertical"
+    android:padding="16dp"
     tools:context="afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.UserSupportActivity">
 
-    <!--TODO: Eliminar este TextView !-->
-    <TextView
+    <Spinner
+        android:id="@+id/usersupport_vuelos_sp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="TODO: Acá iría un Spinner para seleccionar la Aerolinea.\n Aerolínea Seleccionada: Aerolíneas Argentinas."
         android:layout_weight="1" />
-    <!---->
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:hint="@string/usersupport_nro_vuelo"
-        android:layout_weight="1"
-        android:id="@+id/usersupport_nro_vuelo_et" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:hint="DD/MM/AAAA"
-        android:layout_weight="1"
-        android:id="@+id/usersupport_date_et" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/usersupport_buscar"
-        android:layout_weight="0"
-        android:id="@+id/usersupport_buscar_btn" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
-        <!-- SALIDA -->
+        <!-- Numero -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/usersupport_salida"
             android:layout_weight="1"
+            android:text="@string/usersupport_numero"
             android:textSize="18sp"
             tools:textStyle="bold" />
+
         <TextView
+            android:id="@+id/usersupport_result_numero"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/usersupport_result_salida"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
 
     </LinearLayout>
@@ -64,22 +42,47 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
-        <!-- LLEGADA -->
+        <!-- DESTINO -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/usersupport_destino"
+            android:textSize="18sp"
+            tools:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/usersupport_result_destino"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <!-- FECHA DE EMBARQUE -->
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/usersupport_llegada"
             android:layout_weight="1"
+            android:text="@string/usersupport_fechaEmbarque"
             android:textSize="18sp"
             android:textStyle="bold" />
+
         <TextView
+            android:id="@+id/usersupport_result_fechaEmbarque"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/usersupport_result_llegada"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
     </LinearLayout>
 
@@ -87,22 +90,47 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
+
+        <!-- PUERTA DE EMBARQUE -->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/usersupport_puertaEmbarque"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/usersupport_result_puertaEmbarque"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
         <!-- ESTADO DE VUELO -->
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/usersupport_estado_de_vuelo"
             android:layout_weight="1"
+            android:text="@string/usersupport_estado_de_vuelo"
             android:textSize="18sp"
             android:textStyle="bold" />
+
         <TextView
+            android:id="@+id/usersupport_result_estado_de_vuelo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/usersupport_result_estado_de_vuelo"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
     </LinearLayout>
 

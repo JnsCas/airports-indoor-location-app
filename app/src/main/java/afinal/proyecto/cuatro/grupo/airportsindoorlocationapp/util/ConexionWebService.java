@@ -1,5 +1,6 @@
 package afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -11,7 +12,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import cz.msebera.android.httpclient.HttpEntity;
-import cz.msebera.android.httpclient.HttpHeaders;
 import cz.msebera.android.httpclient.HttpResponse;
 import cz.msebera.android.httpclient.client.HttpClient;
 import cz.msebera.android.httpclient.client.methods.HttpGet;
@@ -31,19 +31,25 @@ public class ConexionWebService {
     private static final String ENDPOINT = "http://10.0.2.2:8080";
     private static final String API_KEY_VALUE = "12345678";
 
-    public static JSONArray getJson(String resource) {
+    public static JsonArrayResponse getJson(String resource) {
         InputStream is = null;
         String result = "";
         JSONArray jArray = null;
+
+        JsonArrayResponse jsonArrayResponse = new JsonArrayResponse();
+
         String endpoint = ENDPOINT + resource;
 
         // Download JSON data from URL
         try {
             HttpClient httpclient = new DefaultHttpClient();
-            /*HttpPost httppost = new HttpPost(url);*/
             HttpGet httpget = new HttpGet(endpoint);
+            httpget.addHeader("X-Api-Key", API_KEY_VALUE);
             HttpResponse response = httpclient.execute(httpget);
             HttpEntity entity = response.getEntity();
+
+            //set status
+            jsonArrayResponse.setStatus(response.getStatusLine().getStatusCode());
             is = entity.getContent();
 
         } catch (Exception e) {
@@ -70,24 +76,18 @@ public class ConexionWebService {
         } catch (JSONException e) {
             Log.e(TAG, "Error parsing data " + e.toString());
         }
-        return jArray;
+        jsonArrayResponse.setJsonArray(jArray);
+
+        return jsonArrayResponse;
     }
 
-    public static JsonResponse postJson(String resource, JSONObject json) {
+    public static JsonObjectResponse postJson(String resource, JSONObject json) {
         InputStream is = null;
         String result = "";
         JSONObject jObject = null;
-        JsonResponse jsonResponse = new JsonResponse();
+        JsonObjectResponse jsonObjectResponse = new JsonObjectResponse();
 
-        // Para que esta funcion pueda ser invocada para consumir apis externas.
-        HttpPost httppost;
-        if (resource.contains("http")) {
-            httppost = new HttpPost(resource);
-        } else {
-            httppost = new HttpPost(ENDPOINT + resource);
-            httppost.addHeader("X-Api-Key", API_KEY_VALUE);
-        }
-        //
+        HttpPost httppost = getHttpPost(resource);
 
 
         // Download JSON data from URL
@@ -101,7 +101,7 @@ public class ConexionWebService {
 
             is = response.getEntity().getContent();
             //set status
-            jsonResponse.setStatus(response.getStatusLine().getStatusCode());
+            jsonObjectResponse.setStatus(response.getStatusLine().getStatusCode());
 
         } catch (Exception e) {
             Log.e(TAG, "Error in http connection " + e.toString());
@@ -127,7 +127,21 @@ public class ConexionWebService {
         } catch (JSONException e) {
             Log.e(TAG, "Error parsing data " + e.toString());
         }
-        jsonResponse.setJsonObject(jObject);
-        return jsonResponse;
+        jsonObjectResponse.setJsonObject(jObject);
+        return jsonObjectResponse;
+    }
+
+    @NonNull
+    private static HttpPost getHttpPost(String resource) {
+        // Para que esta funcion pueda ser invocada para consumir apis externas.
+        HttpPost httppost;
+        if (resource.contains("http")) {
+            httppost = new HttpPost(resource);
+        } else {
+            httppost = new HttpPost(ENDPOINT + resource);
+            httppost.addHeader("X-Api-Key", API_KEY_VALUE);
+        }
+        //
+        return httppost;
     }
 }
