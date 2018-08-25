@@ -1,6 +1,7 @@
 package afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -46,11 +47,8 @@ public class SignInActivity extends AppCompatActivity {
         this.contrasenaEditText             = findViewById(R.id.signin_contrasena_et);
         this.confirmarContrasenaEditText    = findViewById(R.id.signin_confirmar_contrasena_et);
 
-
         cargarEditTextsObligatorios();
-
         buttonRegistrarUsuario();
-
     }
 
     private void cargarEditTextsObligatorios() {
@@ -138,7 +136,9 @@ public class SignInActivity extends AppCompatActivity {
                 progressDialog.dismiss();
             }
             if (response.getStatus() == 201) {
-                Toast.makeText(getApplicationContext(), "Alta hecha!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Usuario registrado.", Toast.LENGTH_LONG).show();
+                Intent loginActivityIntent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(loginActivityIntent);
             } else {
                 Toast.makeText(getApplicationContext(), "Se obtuvo el error." + response.getStatus(), Toast.LENGTH_LONG).show(); //FIXME
             }

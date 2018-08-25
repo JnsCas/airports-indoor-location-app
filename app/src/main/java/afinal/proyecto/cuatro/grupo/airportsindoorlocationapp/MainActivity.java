@@ -1,76 +1,34 @@
 package afinal.proyecto.cuatro.grupo.airportsindoorlocationapp;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
+import android.support.v7.app.AppCompatActivity;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.LoginActivity;
-import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.SignInActivity;
-import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.MapaActivity;
-import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.UserSupportActivity;
+
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        buttonRegistrarme();
-        buttonUserSupport();
-        buttonLogin();
-        buttonMapa();
-    }
+        int timeout = 10; // make the activity visible for 10 miliseconds
 
-    private void buttonUserSupport() {
-        Button btnUserSupport = (Button) findViewById(R.id.main_userSupport_btn);
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
 
-        btnUserSupport.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intentUserSupport = new Intent(getApplicationContext(), UserSupportActivity.class);
-                startActivity(intentUserSupport);
+            public void run() {
+                finish();
+                Intent loginPage = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(loginPage);
             }
-        });
-    }
+        }, timeout);
 
-    private void buttonRegistrarme() {
-        Button btnRegistrarme = (Button) findViewById(R.id.main_registrarme_btn);
-
-        btnRegistrarme.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentSignIn = new Intent(getApplicationContext(), SignInActivity.class);
-                startActivity(intentSignIn);
-            }
-        });
-    }
-
-    private void buttonLogin() {
-        Button btnLogin = (Button) findViewById(R.id.main_login_btn);
-
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intentLogin = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(intentLogin);
-
-            }
-        });
-    }
-
-    private void buttonMapa () {
-        Button btnMapa = (Button) findViewById(R.id.main_mapa_btn);
-
-        btnMapa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentMapa = new Intent(getApplicationContext(), MapaActivity.class);
-                startActivity(intentMapa);
-            }
-        });
     }
 }

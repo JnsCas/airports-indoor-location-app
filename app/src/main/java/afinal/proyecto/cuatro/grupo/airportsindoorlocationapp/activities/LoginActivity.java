@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,13 +43,13 @@ public class LoginActivity extends AppCompatActivity {
 
         cargarEditTextsObligatorios();
 
-        buttonLogin();
-        buttonRegistrarme();
+        buttonLogIn();
+        buttonSignIn();
     }
 
-    private void buttonRegistrarme() {
-        Button btnRegistrarme = findViewById(R.id.login_registrarme_btn);
-        btnRegistrarme.setOnClickListener(new View.OnClickListener() {
+    private void buttonSignIn() {
+        Button btnSignIn = findViewById(R.id.login_signin_btn);
+        btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent signInIntent = new Intent(getApplicationContext(), SignInActivity.class);
@@ -63,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
         editTexts.add(contrasenaEditText);
     }
 
-    private void buttonLogin() {
+    private void buttonLogIn() {
         Button btnLogin = findViewById(R.id.login_login_btn);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,12 +73,14 @@ public class LoginActivity extends AppCompatActivity {
                     User user = new User();
                     user.setEmail(emailEditText.getText().toString());
                     user.setContrasena(Security.getSHA512SecurePassword(contrasenaEditText.getText().toString()));
-
                     new PostUserLogin(user).execute();
+
                 } catch (EditTextVacioException e) {
                     ExceptionUtil.setearErrorEditTextsCamposObligatorios(editTexts, e.getMessage());
+
                 } catch (FormatoEmailInvalidoException emailException) {
                     emailEditText.setError(emailException.getMessage());
+
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
@@ -124,9 +127,13 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void args) {
+
             if (progressDialog.isShowing()) {
                 progressDialog.dismiss();
             }
+
+            Log.d("LoginActivity","-- Response status: "+response.getStatus().toString());
+
             if (response.getStatus() == 200) {
                 Intent homeActivityIntent = new Intent(getApplicationContext(), HomeActivity.class);
                 startActivity(homeActivityIntent);

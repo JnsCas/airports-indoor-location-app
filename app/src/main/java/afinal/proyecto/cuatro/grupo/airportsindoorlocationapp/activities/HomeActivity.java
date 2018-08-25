@@ -4,8 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.ImageButton;
 
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.R;
 
@@ -18,12 +17,12 @@ public class HomeActivity extends AppCompatActivity {
 
         buttonVuelo();
         buttonMapa();
-        buttonInfo();
-
+        buttonSupport();
+        buttonNotification();
     }
 
     private void buttonMapa() {
-        Button btnMapa = (Button) findViewById(R.id.home_mapa_btn);
+        ImageButton btnMapa = findViewById(R.id.mapa_imgbtn);
 
         btnMapa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,7 +34,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void buttonVuelo() {
-        Button btnVuelo = (Button) findViewById(R.id.home_vuelo_btn);
+        ImageButton btnVuelo = findViewById(R.id.vuelo_imgbtn);
 
         btnVuelo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,9 +45,8 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    private void buttonInfo() {
-
-        TextView btnInfo = (TextView) findViewById(R.id.home_info_tvw);
+    private void buttonSupport() {
+        ImageButton btnInfo = findViewById(R.id.support_imgbtn);
 
         btnInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,4 +57,15 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+    private void buttonNotification() {
+        ImageButton btnInfo = findViewById(R.id.notification_imgbtn);
+
+        btnInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentInfo = new Intent(getApplicationContext(), NotificationActivity.class);
+                startActivity(intentInfo);
+            }
+        });
+    }
 }
