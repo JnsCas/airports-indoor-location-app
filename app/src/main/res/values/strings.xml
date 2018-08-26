@@ -33,5 +33,6 @@
     <string name="bway">BWay</string>
     <string name="contrase_a">Contraseña</string>
     <string name="no_tengo_usuario_registrarme">No tengo usuario, registrarme.</string>
+    <string name="confirmar_contrase_a">Confirmar contraseña</string>
 
 </resources>
