@@ -2,5 +2,15 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#ff4081</color>
+    <color name="colorAccent">#75d3ff</color>
+    <color name="colorButton">#4e81ce</color>
+    <color name="colorButtonText">#FFFFFF</color>
+    <color name="colorSignInText">#4e81ce</color>
+    <color name="colorBackground">#e2edf2</color>
+    <color name="colorBeacon1">#6aabe2</color>
+    <color name="colorBeacon2">#5d99e1</color>
+    <color name="colorBeacon3">#4e81ce</color>
+    <color name="colorBeacon4">#395eae</color>
+    <color name="colorBeacon5">#2a457d</color>
+
 </resources>

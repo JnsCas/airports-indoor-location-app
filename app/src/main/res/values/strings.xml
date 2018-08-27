@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Airports Indoor Location App</string>
-    <string name="app_description">Desarrollar un sistema de localización en interiores para aeropuertos y cercanía a comercios turísticos.</string>
-    <string name="app_title">SISTEMA DE LOCALIZACIÓN EN INTERIORES PARA AEROPUERTOS</string>
+    <string name="app_name">BWay</string>
+    <string name="app_description">Sistema de localización en interiores para aeropuertos.</string>
+    <string name="app_title">BWay - Sistema de localización en interiores para aeropuertos</string>
     <string name="signin_registrar_usuario">Registrar</string>
     <string name="signin_nombre">Nombre</string>
     <string name="signin_email">Email</string>
@@ -30,5 +30,15 @@
     <string name="usersupport_destino">Destino</string>
     <string name="usersupport_fechaEmbarque">Fecha de embarque</string>
     <string name="usersupport_puertaEmbarque">Puerta de embarque</string>
-
+    <string name="bway">BWay</string>
+    <string name="contrase_a">Contraseña</string>
+    <string name="no_tengo_usuario_registrarme">No tengo usuario, registrarme.</string>
+    <string name="confirmar_contrase_a">Confirmar contraseña</string>
+    <string name="notification_btn">notification_btn</string>
+    <string name="vuelo_btn">vuelo_btn</string>
+    <string name="titulo">Titulo</string>
+    <string name="pushnotification">PushNotification</string>
+    <string name="aqui_agregar_info_relacionada_a_pushnotification">Aqui agregar info relacionada a PushNotification.</string>
+    <string name="aqui_agregar_info_relacionada_a_ayuda_info_del_proyecto_preguntas_frecuentes_y_cualquier_otra_referencia">Aqui agregar info relacionada a ayuda. Info del proyecto. Preguntas frecuentes y cualquier otra referencia.</string>
+    <string name="moreinfo">moreInfo</string>
 </resources>
