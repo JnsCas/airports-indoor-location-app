@@ -1,135 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="30dp"
-    android:weightSum="6">
-
-    <Spinner
-        android:id="@+id/usersupport_vuelos_sp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:spinnerMode="dropdown"
-        android:layout_weight="1"
-        android:ellipsize="marquee"/>
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="204dp"
         android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:background="@color/colorBackground">
 
-        <!-- Numero -->
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/usersupport_numero"
-            tools:ignore="NestedWeights" />
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="30dp">
 
-        <TextView
-            android:id="@+id/usersupport_result_numero"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+            <Spinner
+                android:id="@+id/usersupport_vuelos_sp"
+                android:layout_width="315dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:ellipsize="marquee"
+                android:gravity="center_vertical"
+                android:spinnerMode="dropdown" />
 
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/icons8_nrovuelo" />
 
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:layout_marginHorizontal="30dp"
+        android:weightSum="4">
 
-        <!-- DESTINO -->
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/usersupport_destino"
-            tools:ignore="NestedWeights"/>
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/usersupport_result_destino"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingRight="15dp"
+                app:srcCompat="@drawable/icons8_destination"
+                tools:ignore="NestedWeights" />
+
+            <TextView
+                android:layout_width="115dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/usersupport_destino"
+                android:textSize="15dp"
+                tools:ignore="NestedWeights" />
+
+            <TextView
+                android:id="@+id/usersupport_result_destino"
+                android:layout_width="105dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:textSize="15dp" />
 
 
-    </LinearLayout>
+        </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <!-- FECHA DE EMBARQUE -->
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/usersupport_fechaEmbarque"
-            tools:ignore="NestedWeights"/>
-
-        <TextView
-            android:id="@+id/usersupport_result_fechaEmbarque"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <!-- PUERTA DE EMBARQUE -->
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/usersupport_puertaEmbarque"
-            tools:ignore="NestedWeights" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/usersupport_result_puertaEmbarque"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingRight="15dp"
+                app:srcCompat="@drawable/icons8_fechaembarque"
+                tools:ignore="NestedWeights" />
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="115dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/usersupport_fechaEmbarque"
+                android:textSize="15dp"
+                tools:ignore="NestedWeights" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="horizontal">
+            <TextView
+                android:id="@+id/usersupport_result_fechaEmbarque"
+                android:layout_width="105dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:textSize="15dp" />
 
-        <!-- ESTADO DE VUELO -->
+        </LinearLayout>
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/usersupport_estado_de_vuelo"
-            tools:ignore="NestedWeights"/>
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/usersupport_result_estado_de_vuelo"
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingRight="15dp"
+                app:srcCompat="@drawable/icons8_boardinggate"
+                tools:ignore="NestedWeights" />
+
+            <TextView
+                android:layout_width="115dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/usersupport_puertaEmbarque"
+                android:textSize="15dp"
+                tools:ignore="NestedWeights" />
+
+            <TextView
+                android:id="@+id/usersupport_result_puertaEmbarque"
+                android:layout_width="105dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:textSize="15dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingRight="15dp"
+                app:srcCompat="@drawable/icons8_estado"
+                tools:ignore="NestedWeights" />
+
+            <TextView
+                android:layout_width="115dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/usersupport_estado_de_vuelo"
+                android:textSize="15dp"
+                tools:ignore="NestedWeights" />
+
+            <TextView
+                android:id="@+id/usersupport_result_estado_de_vuelo"
+                android:layout_width="105dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:textSize="15dp" />
+
+        </LinearLayout>
     </LinearLayout>
-
 
 </LinearLayout>

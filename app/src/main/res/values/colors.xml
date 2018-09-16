@@ -12,5 +12,8 @@
     <color name="colorBeacon3">#4e81ce</color>
     <color name="colorBeacon4">#395eae</color>
     <color name="colorBeacon5">#2a457d</color>
+    <color name="colorCancelado">#e1734f</color>
+    <color name="colorEnHorario">#09693f</color>
+    <color name="colorDemorado">#ffb03b</color>
 
 </resources>
