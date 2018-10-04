@@ -23,10 +23,36 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
 
-        requirementsEstimote();
+        //requirements Estimote
+        final MyApplication application = (MyApplication) getApplication();
+        RequirementsWizardFactory
+            .createEstimoteRequirementsWizard()
+            .fulfillRequirements(this,
+                new Function0<Unit>() {
+                    @Override
+                    public Unit invoke() {
+                        Log.d("app", "requirements fulfilled");
+                        application.enableBeaconNotifications();
+                        return null;
+                    }
+                },
+                new Function1<List<? extends Requirement>, Unit>() {
+                    @Override
+                    public Unit invoke(List<? extends Requirement> requirements) {
+                        Log.e("app", "requirements missing: " + requirements);
+                        return null;
+                    }
+                },
+                new Function1<Throwable, Unit>() {
+                    @Override
+                    public Unit invoke(Throwable throwable) {
+                        Log.e("app", "requirements error: " + throwable);
+                        return null;
+                    }
+                }
+            );
 
         int timeout = 10; // make the activity visible for 10 miliseconds
 
@@ -43,34 +69,4 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void requirementsEstimote() {
-        final MyApplication application = (MyApplication) getApplication();
-
-        RequirementsWizardFactory
-            .createEstimoteRequirementsWizard()
-            .fulfillRequirements(this,
-                new Function0<Unit>() {
-                    @Override
-                    public Unit invoke() {
-                    Log.d("app", "requirements fulfilled");
-                    application.enableBeaconNotifications();
-                    return null;
-                    }
-                },
-                new Function1<List<? extends Requirement>, Unit>() {
-                    @Override
-                    public Unit invoke(List<? extends Requirement> requirements) {
-                    Log.e("app", "requirements missing: " + requirements);
-                    return null;
-                    }
-                },
-                new Function1<Throwable, Unit>() {
-                    @Override
-                    public Unit invoke(Throwable throwable) {
-                        Log.e("app", "requirements error: " + throwable);
-                        return null;
-                    }
-                }
-            );
-    }
 }

@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -18,6 +19,7 @@ import com.estimote.proximity_sdk.api.ProximityZoneContext;
 import java.util.Arrays;
 
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.MainActivity;
+import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.R;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.application.MyApplication;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
@@ -44,7 +46,7 @@ public class NotificationsManager {
         }
 
         return new NotificationCompat.Builder(context, "content_channel")
-                .setSmallIcon(android.R.drawable.ic_dialog_info)
+                .setSmallIcon(R.drawable.beacon_candy_small)
                 .setContentTitle(title)
                 .setContentText(text)
                 .setContentIntent(PendingIntent.getActivity(context, 0,
@@ -72,16 +74,8 @@ public class NotificationsManager {
                 .onEnter(new Function1<ProximityZoneContext, Unit>() {
                     @Override
                     public Unit invoke(ProximityZoneContext proximityContext) {
-                        notificationManager.notify(notificationIdLemon1, buildNotification("Hello",
-                                "You're near your lemon1 beacon"));
-                        return null;
-                    }
-                })
-                .onExit(new Function1<ProximityZoneContext, Unit>() {
-                    @Override
-                    public Unit invoke(ProximityZoneContext proximityContext) {
-                        notificationManager.notify(notificationIdLemon1, buildNotification("Bye bye",
-                                "You've left the proximity of your lemon1 beacon"));
+                        notificationManager.notify(notificationIdLemon1, buildNotification("Hola!",
+                                "Estás cerca del beacon lemon1"));
                         return null;
                     }
                 })
@@ -93,16 +87,8 @@ public class NotificationsManager {
                 .onEnter(new Function1<ProximityZoneContext, Unit>() {
                     @Override
                     public Unit invoke(ProximityZoneContext proximityContext) {
-                        notificationManager.notify(notificationIdBeetroot1, buildNotification("Hello",
-                                "You're near your beetroot1 beacon"));
-                        return null;
-                    }
-                })
-                .onExit(new Function1<ProximityZoneContext, Unit>() {
-                    @Override
-                    public Unit invoke(ProximityZoneContext proximityContext) {
-                        notificationManager.notify(notificationIdBeetroot1, buildNotification("Bye bye",
-                                "You've left the proximity of your beetroot1 beacon"));
+                        notificationManager.notify(notificationIdBeetroot1, buildNotification("Hola!",
+                                "Estás cerca del beacon beetroot1"));
                         return null;
                     }
                 })
@@ -114,16 +100,8 @@ public class NotificationsManager {
                 .onEnter(new Function1<ProximityZoneContext, Unit>() {
                     @Override
                     public Unit invoke(ProximityZoneContext proximityContext) {
-                        notificationManager.notify(notificationIdCoconut1, buildNotification("Hello",
-                                "You're near your coconut1 beacon"));
-                        return null;
-                    }
-                })
-                .onExit(new Function1<ProximityZoneContext, Unit>() {
-                    @Override
-                    public Unit invoke(ProximityZoneContext proximityContext) {
-                        notificationManager.notify(notificationIdCoconut1, buildNotification("Bye bye",
-                                "You've left the proximity of your coconut1 beacon"));
+                        notificationManager.notify(notificationIdCoconut1, buildNotification("Hola!",
+                                "Estás cerca del beacon coconut1"));
                         return null;
                     }
                 })
@@ -135,16 +113,8 @@ public class NotificationsManager {
                 .onEnter(new Function1<ProximityZoneContext, Unit>() {
                     @Override
                     public Unit invoke(ProximityZoneContext proximityContext) {
-                        notificationManager.notify(notificationIdCandy1, buildNotification("Hello",
-                                "You're near your candy1 beacon"));
-                        return null;
-                    }
-                })
-                .onExit(new Function1<ProximityZoneContext, Unit>() {
-                    @Override
-                    public Unit invoke(ProximityZoneContext proximityContext) {
-                        notificationManager.notify(notificationIdCandy1, buildNotification("Bye bye",
-                                "You've left the proximity of your candy1 beacon"));
+                        notificationManager.notify(notificationIdCandy1, buildNotification("Hola!",
+                                "Estás cerca del beacon candy1"));
                         return null;
                     }
                 })
