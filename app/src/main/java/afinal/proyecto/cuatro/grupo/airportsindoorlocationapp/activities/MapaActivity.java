@@ -5,10 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.estimote.indoorsdk.EstimoteCloudCredentials;
-import com.estimote.indoorsdk_module.algorithm.IndoorLocationManager;
 import com.estimote.indoorsdk_module.cloud.CloudCallback;
 import com.estimote.indoorsdk_module.cloud.EstimoteCloudException;
 import com.estimote.indoorsdk_module.cloud.IndoorCloudManager;
