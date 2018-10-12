@@ -10,10 +10,14 @@ import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.R;
 
 public class HomeActivity extends AppCompatActivity {
 
+    private int idUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home2);
+
+        idUser = getIntent().getIntExtra("idUser", 0);
 
         buttonVuelo();
         buttonMapa();

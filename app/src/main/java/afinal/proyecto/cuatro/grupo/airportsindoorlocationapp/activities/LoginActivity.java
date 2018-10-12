@@ -135,8 +135,14 @@ public class LoginActivity extends AppCompatActivity {
             Log.d("LoginActivity","-- Response status: "+response.getStatus().toString());
 
             if (response.getStatus() == 200) {
-                Intent homeActivityIntent = new Intent(getApplicationContext(), HomeActivity.class);
-                startActivity(homeActivityIntent);
+                try {
+                    Intent homeActivityIntent = new Intent(getApplicationContext(), HomeActivity.class);
+                    int idUser = (int) response.getJsonObject().get("id");
+                    homeActivityIntent.putExtra("idUser", idUser);
+                    startActivity(homeActivityIntent);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             } else {
                 Toast.makeText(getApplicationContext(), "Se obtuvo el error:" + response.getStatus(), Toast.LENGTH_LONG).show(); //FIXME
             }
