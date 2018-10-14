@@ -14,18 +14,36 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.SignInActivity" android:label="SignIn"/>
-        <activity android:name=".activities.HomeActivity" android:label="Home"/>
-        <activity android:name=".activities.UserSupportActivity" android:label="UserInformation"/>
-        <activity android:name=".activities.MapaActivity" android:label="WayFinding"/>
+        <activity
+            android:name=".activities.SignInActivity"
+            android:label="SignIn" />
+        <activity
+            android:name=".activities.HomeActivity"
+            android:label="Home" />
+        <activity
+            android:name=".activities.UserSupportActivity"
+            android:label="UserInformation" />
+        <activity
+            android:name=".activities.MapaActivity"
+            android:label="WayFinding" />
         <activity android:name=".activities.DestinoActivity" />
-        <activity android:name=".activities.InfoActivity" android:label="Ayuda" />
+        <activity
+            android:name=".activities.InfoActivity"
+            android:label="Ayuda" />
         <activity android:name=".activities.CargarVueloActivity" />
-        <activity android:name=".activities.LoginActivity" android:label="LogIn"/>
-        <activity android:name=".activities.NotificationActivity" android:label="PushNotification"></activity>
+        <activity
+            android:name=".activities.LoginActivity"
+            android:label="LogIn" />
+        <activity
+            android:name=".activities.NotificationActivity"
+            android:label="PushNotification" />
+        <activity android:name=".newmap.ImageAdapter" />
+        <activity android:name=".newmap.Details" />
+        <activity android:name=".newmap.NewMapManager"></activity>
     </application>
 
 </manifest>

@@ -41,4 +41,6 @@
     <string name="aqui_agregar_info_relacionada_a_pushnotification">Aqui agregar info relacionada a PushNotification.</string>
     <string name="aqui_agregar_info_relacionada_a_ayuda_info_del_proyecto_preguntas_frecuentes_y_cualquier_otra_referencia">Aqui agregar info relacionada a ayuda. Info del proyecto. Preguntas frecuentes y cualquier otra referencia.</string>
     <string name="moreinfo">moreInfo</string>
+    <!-- New Map -->
+    <string name="imageDesc">Tamaño Original</string>
 </resources>
