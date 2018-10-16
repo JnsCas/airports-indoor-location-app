@@ -52,8 +52,9 @@ public class NewMapManager {
 
         ProximityZone zoneCandy2 = createZoneFromBeacon("candy-2");
         ProximityZone zoneLemon2 = createZoneFromBeacon("lemon-2");
+        ProximityZone zoneBeetroot2 = createZoneFromBeacon("beetroot-2");
 
-        newMapProximityObserver.startObserving(Arrays.asList(zoneCandy2,zoneLemon2));
+        newMapProximityObserver.startObserving(Arrays.asList(zoneCandy2,zoneLemon2,zoneBeetroot2));
     }
 
     private ProximityZone createZoneFromBeacon(final String tag){
@@ -67,10 +68,7 @@ public class NewMapManager {
 
                     Log.i("*** NewMapManager","Beacon coming-in: "+tag);
 
-                    String pos = proximityContext.getAttachments().get(tag+"/pos");
-                    String posName  = proximityContext.getAttachments().get(tag+"/posname");
-
-                    ContentZone contentZone = new ContentZone(pos, posName, tag, true);
+                    ContentZone contentZone = new ContentZone(tag, true, proximityContext);
 
                     imageAdapter.adjustMapWith(contentZone);
                     imageAdapter.notifyDataSetChanged();
@@ -84,10 +82,7 @@ public class NewMapManager {
 
                     Log.i("*** NewMapManager","Beacon coming-out: "+tag);
 
-                    String pos = proximityContext.getAttachments().get(tag+"/pos");
-                    String posName  = proximityContext.getAttachments().get(tag+"/posname");
-
-                    ContentZone contentZone = new ContentZone(pos, posName, tag, false);
+                    ContentZone contentZone = new ContentZone(tag, false, proximityContext);
 
                     imageAdapter.adjustMapWith(contentZone);
                     imageAdapter.notifyDataSetChanged();
@@ -97,5 +92,6 @@ public class NewMapManager {
             })
             .build();
     }
+
 
 }

@@ -1,29 +1,35 @@
 package afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.newmap;
 
+import com.estimote.proximity_sdk.api.ProximityZoneContext;
+
+import java.util.Arrays;
+import java.util.List;
+
 class ContentZone {
 
-    private Integer pos;
-    private String posName;
+    private List<String> pos;
     private String tag;
+    private String code;
     private Boolean isComingIn;
 
-    ContentZone(String pos, String posName, String tag, Boolean isComingIn) {
-        this.pos = Integer.parseInt(pos);
-        this.posName = posName;
+    ContentZone(String tag, Boolean isComingIn, ProximityZoneContext proximityContext) {
         this.tag = tag;
         this.isComingIn = isComingIn;
+        this.code = proximityContext.getAttachments().get(tag + "/code");
+        String aux = proximityContext.getAttachments().get(tag + "/pos");
+        this.pos = Arrays.asList(aux.split("\\s*;\\s*"));
     }
 
-    Integer getPos() {
+    List<String> getPos() {
         return pos;
-    }
-
-    String getPosName() {
-        return posName;
     }
 
     String getTag() {
         return tag;
+    }
+
+    String getCode() {
+        return code;
     }
 
     Boolean getIsComingIn() {
@@ -31,7 +37,6 @@ class ContentZone {
     }
 
     void setIsComingIn(Boolean action) {
-
         this.isComingIn = action;
     }
 }
