@@ -131,7 +131,7 @@ public class ImageAdapter extends BaseAdapter {
 
 
     /* Here we received the contentZone data */
-    void adjustMapWith(ContentZone contentZone) {
+    public void adjustMapWith(ContentZone contentZone) {
         this.contentZone = contentZone;
     }
 

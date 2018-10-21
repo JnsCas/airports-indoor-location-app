@@ -5,14 +5,14 @@ import com.estimote.proximity_sdk.api.ProximityZoneContext;
 import java.util.Arrays;
 import java.util.List;
 
-class ContentZone {
+public class ContentZone {
 
     private List<String> pos;
     private String tag;
     private String code;
     private Boolean isComingIn;
 
-    ContentZone(String tag, Boolean isComingIn, ProximityZoneContext proximityContext) {
+    public ContentZone(String tag, Boolean isComingIn, ProximityZoneContext proximityContext) {
         this.tag = tag;
         this.isComingIn = isComingIn;
         this.code = proximityContext.getAttachments().get(tag + "/code");
