@@ -1,12 +1,15 @@
 package afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
 /**
  * Created by JnsCas on 3/5/18.
  */
 
-public class Vuelo {
+public class Vuelo implements Parcelable {
 
 
     private Long id;
@@ -15,6 +18,10 @@ public class Vuelo {
     private Integer boardingGate;
     private StateFlight stateFlight;
     private Location destination;
+
+    public Vuelo() {
+
+    }
 
     public Long getId() {
         return id;
@@ -68,4 +75,62 @@ public class Vuelo {
     public String toString() {
         return "Vuelo " + number;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        if (id == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeLong(id);
+        }
+        parcel.writeString(number);
+        if (boardingGate == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(boardingGate);
+        }
+        if (boardingDateTime == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeLong(boardingDateTime.getTime());
+        }
+        parcel.writeParcelable(stateFlight, i);
+        parcel.writeParcelable(destination, i);
+    }
+
+    protected Vuelo(Parcel in) {
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readLong();
+        }
+        number = in.readString();
+        if (in.readByte() == 0) {
+            boardingGate = null;
+        } else {
+            boardingGate = in.readInt();
+        }
+        boardingDateTime = new Date(in.readLong());
+        stateFlight = in.readParcelable(StateFlight.class.getClassLoader());
+        destination = in.readParcelable(Location.class.getClassLoader());
+    }
+
+    public static final Creator<Vuelo> CREATOR = new Creator<Vuelo>() {
+        @Override
+        public Vuelo createFromParcel(Parcel in) {
+            return new Vuelo(in);
+        }
+
+        @Override
+        public Vuelo[] newArray(int size) {
+            return new Vuelo[size];
+        }
+    };
 }

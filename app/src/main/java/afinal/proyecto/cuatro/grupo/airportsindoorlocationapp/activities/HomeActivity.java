@@ -6,18 +6,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 
+import java.util.ArrayList;
+
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.R;
+import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.model.Vuelo;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private int idUser;
+    private ArrayList<Vuelo> flights;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home2);
 
-        idUser = getIntent().getIntExtra("idUser", 0);
+        flights = getIntent().getParcelableArrayListExtra("flights");
 
         buttonVuelo();
         buttonMapa();
@@ -44,6 +47,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intentVuelo = new Intent(getApplicationContext(), UserSupportActivity.class);
+                intentVuelo.putParcelableArrayListExtra("flights", flights);
                 startActivity(intentVuelo);
             }
         });
