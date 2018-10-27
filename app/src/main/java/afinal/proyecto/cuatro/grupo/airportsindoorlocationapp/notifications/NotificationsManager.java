@@ -44,7 +44,7 @@ public class NotificationsManager {
     }
 
     /* Beacon recognition distance  */
-    private static final Double DISTANCE = 2.0;
+    private static final Double DISTANCE = 3.0;
 
 
     /* General notification */
@@ -115,21 +115,38 @@ public class NotificationsManager {
         ProximityZone newMapZoneCandy2 = createNewMapZoneFromBeacon("candy-2");
         ProximityZone newMapZoneLemon2 = createNewMapZoneFromBeacon("lemon-2");
         ProximityZone newMapZoneBeetroot2 = createNewMapZoneFromBeacon("beetroot-2");
+        ProximityZone newMapZoneCoconut2 = createNewMapZoneFromBeacon("coconut-2");
+        ProximityZone newMapZoneCandy1 = createNewMapZoneFromBeacon("candy-1");
+        ProximityZone newMapZoneLemon1 = createNewMapZoneFromBeacon("lemon-1");
+        ProximityZone newMapZoneBeetroot1 = createNewMapZoneFromBeacon("beetroot-1");
+        ProximityZone newMapZoneCoconut1 = createNewMapZoneFromBeacon("coconut-1");
         ProximityZone liveNotificationZoneLemon1 = createLiveNotificationZoneFromBeacon("notification-lemon-1");
+        ProximityZone liveNotificationZoneLemon2 = createLiveNotificationZoneFromBeacon("notification-lemon-2");
+        ProximityZone liveNotificationZoneCandy1 = createLiveNotificationZoneFromBeacon("notification-candy-1");
         ProximityZone liveNotificationZoneCandy2 = createLiveNotificationZoneFromBeacon("notification-candy-2");
-        /*
-        "notification-beetroot-1"
-        "notification-coconut-1"
-        "notification-candy-1"
-         */
+        ProximityZone liveNotificationZoneBeetroot1 = createLiveNotificationZoneFromBeacon("notification-lemon-1");
+        ProximityZone liveNotificationZoneBeetroot2 = createLiveNotificationZoneFromBeacon("notification-lemon-2");
+        ProximityZone liveNotificationZoneCoconut1 = createLiveNotificationZoneFromBeacon("notification-candy-1");
+        ProximityZone liveNotificationZoneCoconut2 = createLiveNotificationZoneFromBeacon("notification-candy-2");
 
         notificationManagerObserver.startObserving(
                 Arrays.asList(
+                        newMapZoneCandy1,
+                        newMapZoneLemon1,
+                        newMapZoneBeetroot1,
+                        newMapZoneCoconut1,
                         newMapZoneCandy2,
                         newMapZoneLemon2,
                         newMapZoneBeetroot2,
+                        newMapZoneCoconut2,
                         liveNotificationZoneLemon1,
-                        liveNotificationZoneCandy2));
+                        liveNotificationZoneLemon2,
+                        liveNotificationZoneCandy1,
+                        liveNotificationZoneCandy2,
+                        liveNotificationZoneBeetroot1,
+                        liveNotificationZoneBeetroot2,
+                        liveNotificationZoneCoconut1,
+                        liveNotificationZoneCoconut2));
     }
 
     /* create zone for map activity */
