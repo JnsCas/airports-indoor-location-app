@@ -16,6 +16,8 @@ import com.estimote.proximity_sdk.api.ProximityZone;
 import com.estimote.proximity_sdk.api.ProximityZoneBuilder;
 import com.estimote.proximity_sdk.api.ProximityZoneContext;
 
+import org.json.JSONArray;
+
 import java.util.Arrays;
 
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.MainActivity;
@@ -63,6 +65,17 @@ public class NotificationsManager {
     public void NewMapManager(Context newMapContext, ImageAdapter imageAdapter) {
         this.newMapContext = newMapContext;
         this.imageAdapter = imageAdapter;
+    }
+
+    /* NewMap Destination Found */
+    public void NewDestinationFound(ImageAdapter imageAdapter, Integer position, JSONArray jsonObject) {
+
+        Log.i("*** NotificationManager","NewDestinationFound - position: "+position+" jsonObject: "+jsonObject);
+
+        if (imageAdapter != null) {
+            imageAdapter.adjustMapWithDestination(position,jsonObject);
+            // imageAdapter.notifyDataSetChanged();
+        }
     }
 
     /* Buil notification */

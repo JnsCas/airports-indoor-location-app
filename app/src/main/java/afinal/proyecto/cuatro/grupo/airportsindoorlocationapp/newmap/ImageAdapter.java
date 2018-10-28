@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import org.json.JSONArray;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,10 +24,10 @@ public class ImageAdapter extends BaseAdapter {
 
     // Image Map
     private Integer[] mThumbIds = {
-            R.drawable.plano1a, R.drawable.plano1b, R.drawable.plano1c, R.drawable.plano1d,
-            R.drawable.plano2a, R.drawable.plano2b, R.drawable.plano2c, R.drawable.plano2d,
-            R.drawable.plano3a, R.drawable.plano3b, R.drawable.plano3c, R.drawable.plano3d,
-            R.drawable.plano4a, R.drawable.plano4b, R.drawable.plano4c, R.drawable.plano4d,
+            R.drawable.p0, R.drawable.p1, R.drawable.p2, R.drawable.p3,
+            R.drawable.p4, R.drawable.p5, R.drawable.p6, R.drawable.p7,
+            R.drawable.p8, R.drawable.p9, R.drawable.p10, R.drawable.p11,
+            R.drawable.p12, R.drawable.p13, R.drawable.p14, R.drawable.p15,
     };
 
     public ImageAdapter(Context c) {
@@ -44,7 +46,7 @@ public class ImageAdapter extends BaseAdapter {
         return 0;
     }
 
-    int getThumbId(int position){
+    int getThumbId(int position) {
         return mThumbIds[position];
     }
 
@@ -57,7 +59,7 @@ public class ImageAdapter extends BaseAdapter {
         if (convertView == null) {
 
             imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(300,300));
+            imageView.setLayoutParams(new GridView.LayoutParams(300, 300));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
         } else {
@@ -70,7 +72,10 @@ public class ImageAdapter extends BaseAdapter {
 
             if (contentZone.getIsComingIn()) {
 
-                Log.i("*** ImageAdapter","Beacon "+contentZone.getTag()+" coming in");
+                Log.i(
+                        "*** ImageAdapter",
+                        "Beacon " + contentZone.getTag() + " coming in"
+                );
 
                 List<String> aux = contentZone.getPos();
 
@@ -82,7 +87,7 @@ public class ImageAdapter extends BaseAdapter {
                     String posName = elementParts.get(1);
 
                     /* Make de resourceName */
-                    String resourceName = posName+"_"+contentZone.getCode();
+                    String resourceName = posName + "_" + contentZone.getCode();
 
                     /* Get the active image */
                     Resources resources = mContext.getResources();
@@ -92,7 +97,7 @@ public class ImageAdapter extends BaseAdapter {
                             mContext.getPackageName()
                     );
 
-                    /* Set the actvie image */
+                    /* Set the active image */
                     mThumbIds[Integer.parseInt(String.valueOf(pos))] = resourceId;
                 }
 
@@ -118,7 +123,10 @@ public class ImageAdapter extends BaseAdapter {
                     );
 
                     /* Set the original image back */
-                    Log.i("*** ImageAdapter","Beacon "+contentZone.getTag()+" coming out");
+                    Log.i(
+                            "*** ImageAdapter",
+                            "Beacon " + contentZone.getTag() + " coming out"
+                    );
                     mThumbIds[Integer.parseInt(String.valueOf(pos))] = resourceId;
                 }
             }
@@ -129,10 +137,16 @@ public class ImageAdapter extends BaseAdapter {
         return imageView;
     }
 
-
     /* Here we received the contentZone data */
     public void adjustMapWith(ContentZone contentZone) {
         this.contentZone = contentZone;
     }
 
+    public void adjustMapWithDestination(Integer pos, JSONArray resp) {
+
+        Log.i(
+                "*** ImageAdapter",
+                "adjustMapWithDestination - pos: " + pos + " resp: " + resp
+        );
+    }
 }
