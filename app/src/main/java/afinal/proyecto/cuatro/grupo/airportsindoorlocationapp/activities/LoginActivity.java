@@ -3,25 +3,30 @@ package afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.R;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.exceptions.signin.EditTextVacioException;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.exceptions.signin.FormatoEmailInvalidoException;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.model.User;
+import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.model.Vuelo;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.ConexionWebService;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.ExceptionUtil;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.JsonObjectResponse;
@@ -135,8 +140,17 @@ public class LoginActivity extends AppCompatActivity {
             Log.d("LoginActivity","-- Response status: "+response.getStatus().toString());
 
             if (response.getStatus() == 200) {
-                Intent homeActivityIntent = new Intent(getApplicationContext(), HomeActivity.class);
-                startActivity(homeActivityIntent);
+                try {
+                    JSONArray flightsJson = response.getJsonObject().getJSONArray("flights");
+
+                    ArrayList<Vuelo> flights = new ArrayList<>(Arrays.asList(new Gson().fromJson(flightsJson.toString(), Vuelo[].class)));
+
+                    Intent homeActivityIntent = new Intent(getApplicationContext(), HomeActivity.class);
+                    homeActivityIntent.putParcelableArrayListExtra("flights", flights);
+                    startActivity(homeActivityIntent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             } else {
                 Toast.makeText(getApplicationContext(), "Se obtuvo el error:" + response.getStatus(), Toast.LENGTH_LONG).show(); //FIXME
             }

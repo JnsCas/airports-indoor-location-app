@@ -7,6 +7,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
+import java.util.ArrayList;
+
+import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.R;
+import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.model.Vuelo;
 import com.estimote.mustard.rx_goodness.rx_requirements_wizard.Requirement;
 import com.estimote.mustard.rx_goodness.rx_requirements_wizard.RequirementsWizardFactory;
 
@@ -20,11 +24,15 @@ import kotlin.jvm.functions.Function1;
 
 public class HomeActivity extends AppCompatActivity {
 
+    private ArrayList<Vuelo> flights;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home2);
 
+        flights = getIntent().getParcelableArrayListExtra("flights");
+      
         final MyApplication application = (MyApplication) getApplication();
 
         /* Wizard to check bluetooth connection for example */
@@ -80,6 +88,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intentVuelo = new Intent(getApplicationContext(), UserSupportActivity.class);
+                intentVuelo.putParcelableArrayListExtra("flights", flights);
                 startActivity(intentVuelo);
             }
         });
