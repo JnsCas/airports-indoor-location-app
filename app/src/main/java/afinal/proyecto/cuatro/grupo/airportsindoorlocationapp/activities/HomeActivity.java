@@ -1,5 +1,8 @@
 package afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +20,9 @@ import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.application.MyAppl
 import kotlin.Unit;
 import kotlin.jvm.functions.Function0;
 import kotlin.jvm.functions.Function1;
+import java.util.Calendar;
+
+import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.alarm.AlarmReceiver;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -59,6 +65,26 @@ public class HomeActivity extends AppCompatActivity {
         buttonMapa();
         buttonSupport();
         buttonNotification();
+        setFlightsAlarm();
+    }
+
+    private void setFlightsAlarm() {
+        Context context = getApplicationContext();
+        AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(HomeActivity.this, AlarmReceiver.class);
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+
+        // Alarma dentro de 2 minutos
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.SECOND, calendar.get(Calendar.SECOND) + 30);
+
+        Log.d("HomeActivity", "La alarma va a sonar a las: " + calendar.get(Calendar.HOUR_OF_DAY) +
+                ":" + calendar.get(Calendar.MINUTE) + ":" + calendar.get(Calendar.SECOND));
+
+        // Repeticiones en intervalos de 5 minutos
+        alarmMgr.set(AlarmManager.RTC, calendar.getTimeInMillis(), alarmIntent);
+
     }
 
     private void buttonMapa() {
