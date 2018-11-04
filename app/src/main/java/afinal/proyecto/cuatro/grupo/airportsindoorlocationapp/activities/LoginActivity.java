@@ -49,9 +49,9 @@ public class LoginActivity extends AppCompatActivity {
         cargarEditTextsObligatorios();
 
         buttonLogIn();
-        buttonSignIn();
+        //buttonSignIn();
     }
-
+    /*
     private void buttonSignIn() {
         Button btnSignIn = findViewById(R.id.login_signin_btn);
         btnSignIn.setOnClickListener(new View.OnClickListener() {
@@ -62,6 +62,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+    */
 
     private void cargarEditTextsObligatorios() {
         editTexts = new ArrayList<>();

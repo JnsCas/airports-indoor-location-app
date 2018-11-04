@@ -28,8 +28,8 @@ public class ConexionWebService {
     private static final String TAG = ConexionWebService.class.getName();
 
     /* Endpoint local, para probar desde el emulador */
-    // private static final String ENDPOINT = "http://10.0.2.2:8080";
-    // private static final String API_KEY_VALUE = "12345678";
+    //private static final String ENDPOINT = "http://10.0.2.2:8080";
+    //private static final String API_KEY_VALUE = "12345678";
 
     /* Endpoint de prod, para probar desde el celu */
     private static final String ENDPOINT = "http://54.233.174.152:9090";
