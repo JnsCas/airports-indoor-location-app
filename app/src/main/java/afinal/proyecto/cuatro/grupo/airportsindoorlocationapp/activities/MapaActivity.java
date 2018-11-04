@@ -1,5 +1,6 @@
 package afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -18,6 +19,9 @@ import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.JsonArrayResp
 
 public class MapaActivity extends AppCompatActivity {
 
+    private NotificationsManager newMapManager;
+    private ImageAdapter imageAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -26,11 +30,11 @@ public class MapaActivity extends AppCompatActivity {
 
         /* Set image map as a grid view */
         GridView gridview = findViewById(R.id.newmapgridview);
-        final ImageAdapter imageAdapter = new ImageAdapter(this);
+        imageAdapter = new ImageAdapter(this);
         gridview.setAdapter(imageAdapter);
 
         /* Send Beacon listener information */
-        final NotificationsManager newMapManager = NotificationsManager.getInstance();
+        newMapManager = NotificationsManager.getInstance();
         newMapManager.NewMapManager(this, imageAdapter);
 
         /* Grid listener */
@@ -44,21 +48,43 @@ public class MapaActivity extends AppCompatActivity {
                         Toast.LENGTH_LONG
                 ).show();
 
-                JsonArrayResponse jsonArrayResponse = ConexionWebService.getJson(
-                        "/way-finding/1/1/4/4");
-                JSONArray jsonObject = jsonArrayResponse.getJsonArray();
-                Integer status = jsonArrayResponse.getStatus();
-
-                Log.d("*** MapaActivity",
-                        "jsonArrayResponse : " + jsonArrayResponse.toString());
-                Log.d("*** MapaActivity",
-                        "jsonObject : " + jsonObject);
-                Log.d("*** MapaActivity",
-                        "status: " + status);
-
-                newMapManager.NewDestinationFound(imageAdapter, position, jsonObject);
+                new GetWayFinding(position).execute();
 
             }
         });
+    }
+
+    private class GetWayFinding  extends AsyncTask<Void, Void, Void> {
+
+        private int position;
+        private JSONArray jsonArray;
+        private Integer status;
+
+        public GetWayFinding(int position) {
+            this.position = position;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            JsonArrayResponse jsonArrayResponse = ConexionWebService.getJson(
+                    "/way-finding/1/1/4/4");
+            jsonArray = jsonArrayResponse.getJsonArray();
+            status = jsonArrayResponse.getStatus();
+
+            Log.d("*** MapaActivity",
+                    "jsonArrayResponse : " + jsonArrayResponse.toString());
+            Log.d("*** MapaActivity",
+                    "jsonArray : " + jsonArray);
+            Log.d("*** MapaActivity",
+                    "status: " + status);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void args) {
+            if (status == 200) {
+                newMapManager.NewDestinationFound(imageAdapter, position, jsonArray);
+            }
+        }
     }
 }
