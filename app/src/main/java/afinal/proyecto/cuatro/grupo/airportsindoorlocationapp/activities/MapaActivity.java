@@ -42,34 +42,110 @@ public class MapaActivity extends AppCompatActivity {
 
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 
-                new GetWayFinding(position).execute();
+                String nodeOrigin = getNodeOrigin();
+                String nodeDestination = getNodeDestination(position);
+
+                if (nodeDestination != null){
+                    new GetWayFinding(position,nodeOrigin,nodeDestination).execute();
+                } else {
+                    Toast.makeText(
+                            getApplicationContext(),
+                            "No existe un destino posible para dicha zona.",
+                            Toast.LENGTH_LONG
+                    ).show();
+                }
             }
         });
+    }
+
+    private String getNodeOrigin(){
+        return "1/1/";
+    }
+
+    private String getNodeDestination(int position){
+
+        String nodePosition;
+
+        switch(position) {
+            case 0:
+                nodePosition = null;
+                break;
+            case 1: // node co1
+                nodePosition = "3/5";
+                break;
+            case 2: // node co2
+                nodePosition = "4/5";
+                break;
+            case 3: // node co2
+                nodePosition = "4/5";
+                break;
+            case 4:
+                nodePosition = null;
+                break;
+            case 5: // node co1
+                nodePosition = "3/5";
+                break;
+            case 6: // node co1
+                nodePosition = "3/5";
+                break;
+            case 7: // node co2
+                nodePosition = "4/5";
+                break;
+            case 8: // node le2
+                nodePosition = "1/1";
+                break;
+            case 9: // node ca2
+                nodePosition = "3/3";
+                break;
+            case 10: // node br1
+                nodePosition = "4/3";
+                break;
+            case 11: // node br1
+                nodePosition = "4/3";
+                break;
+            case 12:
+                nodePosition = null;
+                break;
+            case 13: // node br2
+                nodePosition = "2/1";
+                break;
+            case 14: // node br2
+                nodePosition = "2/1";
+                break;
+            case 15:
+                nodePosition = null;
+                break;
+            default:
+                nodePosition = null;
+                break;
+        }
+        return nodePosition;
     }
 
     private class GetWayFinding extends AsyncTask<Void, Void, Void> {
 
         private int position;
+        private  String nodeOrigin;
+        private String nodeDestination;
         private JSONArray jsonArray;
         private Integer status;
 
-        public GetWayFinding(int position) {
+        public GetWayFinding(int position, String nodeOrigin, String nodeDestination) {
             this.position = position;
+            this.nodeOrigin = nodeOrigin;
+            this.nodeDestination = nodeDestination;
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
 
-            String nodeOrigin = getNodeOrigin();
-            String nodeDestination = getNodeDestination(position);
-
             JsonArrayResponse jsonArrayResponse = ConexionWebService.getJson(
-                    "/way-finding/"+nodeOrigin+nodeDestination);
+                    "/way-finding/" + nodeOrigin + nodeDestination);
             jsonArray = jsonArrayResponse.getJsonArray();
             status = jsonArrayResponse.getStatus();
 
             Log.d("*** MapaActivity",
-                    "/way-finding/"+nodeOrigin+nodeDestination);
+                    "/way-finding/" + nodeOrigin + nodeDestination);
             Log.d("*** MapaActivity",
                     "response : " + jsonArray);
 
@@ -79,79 +155,15 @@ public class MapaActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void args) {
             if (status == 200) {
-
+                newMapManager.NewDestinationFound(imageAdapter, position, jsonArray);
+            } else {
                 Toast.makeText(
                         getApplicationContext(),
-                        "New Position: " + position,
+                        "Ops! Algo no ocurrio como se esperaba.",
                         Toast.LENGTH_LONG
                 ).show();
-
-                newMapManager.NewDestinationFound(imageAdapter, position, jsonArray);
             }
         }
 
-        private String getNodeOrigin(){
-            return "1/1/";
-        }
-
-        private String getNodeDestination(int position){
-
-            String nodePosition;
-
-            switch(position) {
-                case 0:
-                    nodePosition = null;
-                    break;
-                case 1: // node co1
-                    nodePosition = "3/5";
-                    break;
-                case 2: // node co2
-                    nodePosition = "4/5";
-                    break;
-                case 3: // node co2
-                    nodePosition = "4/5";
-                    break;
-                case 4:
-                    nodePosition = null;
-                    break;
-                case 5: // node co1
-                    nodePosition = "3/5";
-                    break;
-                case 6: // node co1
-                    nodePosition = "3/5";
-                    break;
-                case 7: // node co2
-                    nodePosition = "4/5";
-                    break;
-                case 8: // node le2
-                    nodePosition = "1/1";
-                    break;
-                case 9: // node ca2
-                    nodePosition = "3/3";
-                    break;
-                case 10: // node br1
-                    nodePosition = "4/3";
-                    break;
-                case 11: // node br1
-                    nodePosition = "4/3";
-                    break;
-                case 12:
-                    nodePosition = null;
-                    break;
-                case 13: // node br2
-                    nodePosition = "2/1";
-                    break;
-                case 14: // node br2
-                    nodePosition = "2/1";
-                    break;
-                case 15:
-                    nodePosition = null;
-                    break;
-                default:
-                    nodePosition = null;
-                    break;
-            }
-            return nodePosition;
-        }
     }
 }
