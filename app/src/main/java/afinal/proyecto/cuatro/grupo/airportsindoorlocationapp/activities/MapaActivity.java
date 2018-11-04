@@ -44,17 +44,13 @@ public class MapaActivity extends AppCompatActivity {
                         Toast.LENGTH_LONG
                 ).show();
 
-                JsonArrayResponse jsonArrayResponse = ConexionWebService.getJson(
-                        "/way-finding/1/1/4/4");
+                JsonArrayResponse jsonArrayResponse = ConexionWebService.getJson("/way-finding/1/1/4/4");
                 JSONArray jsonObject = jsonArrayResponse.getJsonArray();
                 Integer status = jsonArrayResponse.getStatus();
 
-                Log.d("*** MapaActivity",
-                        "jsonArrayResponse : " + jsonArrayResponse.toString());
-                Log.d("*** MapaActivity",
-                        "jsonObject : " + jsonObject);
-                Log.d("*** MapaActivity",
-                        "status: " + status);
+                Log.d("*** MapaActivity", "jsonArrayResponse : " + jsonArrayResponse.toString());
+                Log.d("*** MapaActivity", "jsonObject : " + jsonObject);
+                Log.d("*** MapaActivity", "status: " + status);
 
                 newMapManager.NewDestinationFound(imageAdapter, position, jsonObject);
 
