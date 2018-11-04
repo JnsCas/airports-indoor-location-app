@@ -1,6 +1,7 @@
 package afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.model;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.exceptions.signin.ContrasenasDistintasException;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.exceptions.signin.EditTextVacioException;
@@ -14,9 +15,23 @@ import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.Validaciones;
 
 public class User {
 
+    private int id;
     private String nombre;
     private String email;
     private String contrasena;
+    private List<Vuelo> vuelos;
+
+    public User() {
+
+    }
+
+    public User(int id, String nombre, String email, String contrasena, List<Vuelo> vuelos) {
+        this.id = id;
+        this.nombre = nombre;
+        this.email = email;
+        this.contrasena = contrasena;
+        this.vuelos = vuelos;
+    }
 
     public String getNombre() {
         return nombre;
