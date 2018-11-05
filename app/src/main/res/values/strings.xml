@@ -43,4 +43,7 @@
     <string name="moreinfo">moreInfo</string>
     <!-- New Map -->
     <string name="imageDesc">Tamaño Original</string>
+    <string name="to">to</string>
+    <string name="buscarcamino">Buscar camino</string>
+    <string name="from">from</string>
 </resources>

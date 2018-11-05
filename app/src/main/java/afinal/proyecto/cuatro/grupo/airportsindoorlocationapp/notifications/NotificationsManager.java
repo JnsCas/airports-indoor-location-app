@@ -68,17 +68,17 @@ public class NotificationsManager {
     }
 
     /* NewMap Destination Found */
-    public void NewDestinationFound(ImageAdapter imageAdapter, Integer position, JSONArray jsonObject) {
+    public void NewDestinationFound(ImageAdapter imageAdapter, JSONArray jsonObject) {
 
-        Log.i("*** NotificationManager","NewDestinationFound - position: "+position+" jsonObject: "+jsonObject);
+        Log.i("*** NotificationManager","NewDestinationFound - jsonObject: "+jsonObject);
 
         if (imageAdapter != null) {
-            imageAdapter.adjustMapWithDestination(position,jsonObject);
+            // imageAdapter.adjustMapWithDestination(position,jsonObject);
             // imageAdapter.notifyDataSetChanged();
         }
     }
 
-    /* Buil notification */
+    /* Build notification */
     private Notification buildNotification(String title, String text) {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             NotificationChannel contentChannel = new NotificationChannel(
@@ -179,6 +179,7 @@ public class NotificationsManager {
                         if (imageAdapter != null) {
                             imageAdapter.adjustMapWith(contentZone);
                             imageAdapter.notifyDataSetChanged();
+
                         }
 
                         return null;
