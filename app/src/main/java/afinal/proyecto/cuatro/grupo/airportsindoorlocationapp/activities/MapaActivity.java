@@ -163,8 +163,9 @@ public class MapaActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
 
-            JsonArrayResponse jsonArrayResponse = ConexionWebService.getJson(
+            JsonArrayResponse jsonArrayResponse = ConexionWebService.getJsonArray(
                     "/way-finding/" + nodeOrigin + "/" + nodeDestination);
+
             jsonArray = jsonArrayResponse.getJsonArray();
             status = jsonArrayResponse.getStatus();
 

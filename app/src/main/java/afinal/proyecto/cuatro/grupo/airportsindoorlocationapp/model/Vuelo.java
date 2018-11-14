@@ -1,15 +1,12 @@
 package afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.util.Date;
 
 /**
  * Created by JnsCas on 3/5/18.
  */
 
-public class Vuelo implements Parcelable {
+public class Vuelo {
 
 
     private Long id;
@@ -76,6 +73,7 @@ public class Vuelo implements Parcelable {
         return "Vuelo " + number;
     }
 
+    /*
     @Override
     public int describeContents() {
         return 0;
@@ -133,4 +131,5 @@ public class Vuelo implements Parcelable {
             return new Vuelo[size];
         }
     };
+    */
 }

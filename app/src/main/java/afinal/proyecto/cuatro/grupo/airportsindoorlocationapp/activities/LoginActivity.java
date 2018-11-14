@@ -11,22 +11,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.R;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.exceptions.signin.EditTextVacioException;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.exceptions.signin.FormatoEmailInvalidoException;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.model.User;
-import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.model.Vuelo;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.ConexionWebService;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.ExceptionUtil;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.JsonObjectResponse;
@@ -49,9 +44,9 @@ public class LoginActivity extends AppCompatActivity {
         cargarEditTextsObligatorios();
 
         buttonLogIn();
-        //buttonSignIn();
+        buttonSignIn();
     }
-    /*
+
     private void buttonSignIn() {
         Button btnSignIn = findViewById(R.id.login_signin_btn);
         btnSignIn.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +57,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-    */
 
     private void cargarEditTextsObligatorios() {
         editTexts = new ArrayList<>();
@@ -138,16 +132,15 @@ public class LoginActivity extends AppCompatActivity {
                 progressDialog.dismiss();
             }
 
-            Log.d("LoginActivity","-- Response status: "+response.getStatus().toString());
+            Log.d("LoginActivity","-- Response status: "+ response.getStatus().toString());
 
             if (response.getStatus() == 200) {
                 try {
-                    JSONArray flightsJson = response.getJsonObject().getJSONArray("flights");
 
-                    ArrayList<Vuelo> flights = new ArrayList<>(Arrays.asList(new Gson().fromJson(flightsJson.toString(), Vuelo[].class)));
+                    int idUser = response.getJsonObject().getInt("id");
 
                     Intent homeActivityIntent = new Intent(getApplicationContext(), HomeActivity.class);
-                    homeActivityIntent.putParcelableArrayListExtra("flights", flights);
+                    homeActivityIntent.putExtra("idUser", idUser);
                     startActivity(homeActivityIntent);
                 } catch (Exception e) {
                     e.printStackTrace();

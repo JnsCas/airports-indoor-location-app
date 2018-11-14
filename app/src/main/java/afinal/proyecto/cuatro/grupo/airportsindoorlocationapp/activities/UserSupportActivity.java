@@ -1,6 +1,8 @@
 package afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -9,33 +11,45 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.R;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.model.Vuelo;
+import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.ConexionWebService;
+import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.JsonObjectResponse;
 
 public class UserSupportActivity extends AppCompatActivity {
 
-    ArrayAdapter<String> comboAdapter;
-    ArrayList<Vuelo> listaVuelos;
-    Spinner vuelosSpinner;
+    private ArrayAdapter<String> comboAdapter;
+    private Spinner vuelosSpinner;
     private ArrayList<Vuelo> flights;
-
+    private int idUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_support);
 
+        idUser = getIntent().getIntExtra("idUser", 0);
+
+        new GetFlights().execute();
+
         vuelosSpinner = findViewById(R.id.usersupport_vuelos_sp);
-        cargarVuelosEnSpinner();
+
         vuelosSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @SuppressLint("ResourceAsColor")
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                Vuelo vuelo = listaVuelos.get(position);
+                Vuelo vuelo = flights.get(position);
 
                 //TextView numeroTV = findViewById(R.id.usersupport_result_numero);
                 //numeroTV.setText(vuelo.getNumber());
@@ -78,13 +92,66 @@ public class UserSupportActivity extends AppCompatActivity {
     }
 
     private void cargarVuelosEnSpinner() {
-        listaVuelos = getIntent().getParcelableArrayListExtra("flights");
         List<String> listaVuelosStr = new ArrayList<>();
-        for (Vuelo v: listaVuelos) {
+        for (Vuelo v: flights) {
             listaVuelosStr.add(v.toString());
         }
         comboAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, listaVuelosStr);
         //Cargo el spinner con los datos
         vuelosSpinner.setAdapter(comboAdapter);
+    }
+
+    private class GetFlights extends AsyncTask<Void, Void, Void> {
+
+        private JsonObjectResponse response;
+        private ProgressDialog progressDialog;
+
+        public GetFlights() {
+            this.progressDialog = new ProgressDialog(UserSupportActivity.this);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog.setTitle("Espere por favor");
+            progressDialog.setMessage("Enviando datos..");
+            progressDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            response = ConexionWebService
+                    .getJsonObject("/user/" + idUser);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void args) {
+
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+
+            Log.d(this.getClass().getSimpleName(),"-- Response status: " + response.getStatus().toString());
+
+            if (response.getStatus() == 200) {
+                try {
+                    JSONArray flightsJson = response.getJsonObject().getJSONArray("flights");
+
+                    Gson gson = new GsonBuilder()
+                            .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                            .create();
+
+                    flights = new ArrayList<>(Arrays.asList(gson.fromJson(flightsJson.toString(), Vuelo[].class)));
+                    cargarVuelosEnSpinner();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Toast.makeText(getApplicationContext(), "Se obtuvo el error:" + response.getStatus(), Toast.LENGTH_LONG).show(); //FIXME
+            }
+        }
     }
 }
