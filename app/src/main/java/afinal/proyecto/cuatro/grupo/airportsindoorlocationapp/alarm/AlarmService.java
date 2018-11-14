@@ -8,8 +8,11 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
+
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.R;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.HomeActivity;
+import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.model.Vuelo;
 
 public class AlarmService extends IntentService {
 
@@ -21,16 +24,19 @@ public class AlarmService extends IntentService {
 
     @Override
     public void onHandleIntent(Intent intent) {
-        sendNotification("Wake Up! Wake Up!");
+        String flightNumber = intent.getStringExtra("flightNumber");
+        String flightDestinationName = intent.getStringExtra("flightDestinationName");
+        long minutesDifference = intent.getLongExtra("minutesDifference", 0);
+
+        String msg = "El vuelo " + flightNumber + " con destino a " + flightDestinationName +
+                " está por despegar" + (minutesDifference > 5 ? " en " + minutesDifference + " minutos" : "") + "!!";
+        sendNotificationVuelo(msg);
     }
 
-    private void sendNotification(String msg) {
+    private void sendNotificationVuelo(String msg) {
         Log.d("AlarmService", "Preparing to send notification...: " + msg);
         alarmNotificationManager = (NotificationManager) this
                 .getSystemService(Context.NOTIFICATION_SERVICE);
-
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, HomeActivity.class), 0);
 
         NotificationCompat.Builder alamNotificationBuilder = new NotificationCompat.Builder(
                 this, "content_channel")
@@ -39,8 +45,6 @@ public class AlarmService extends IntentService {
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
                 .setContentText(msg);
 
-
-        alamNotificationBuilder.setContentIntent(contentIntent);
         alarmNotificationManager.notify(1, alamNotificationBuilder.build());
         Log.d("AlarmService", "Notification sent.");
     }

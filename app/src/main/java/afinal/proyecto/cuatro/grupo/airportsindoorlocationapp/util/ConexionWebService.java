@@ -28,14 +28,67 @@ public class ConexionWebService {
     private static final String TAG = ConexionWebService.class.getName();
 
     /* Endpoint local, para probar desde el emulador */
-    //private static final String ENDPOINT = "http://10.0.2.2:8080";
-    //private static final String API_KEY_VALUE = "12345678";
+    private static final String ENDPOINT = "http://10.0.2.2:8080";
+
+    /* Endpoint local, para probar desde el cel */
+    //private static final String ENDPOINT = "http://192.168.0.29:8080";
+    private static final String API_KEY_VALUE = "12345678";
 
     /* Endpoint de prod, para probar desde el celu */
-    private static final String ENDPOINT = "http://54.233.174.152:9090";
-    private static final String API_KEY_VALUE = "udQH4Ny9NM3VAw5QB3Bvo7YIwQmIhMYiLamgjgYgn6GQ8V6cv8";
+    //private static final String ENDPOINT = "http://54.233.174.152:9090";
+    //private static final String API_KEY_VALUE = "udQH4Ny9NM3VAw5QB3Bvo7YIwQmIhMYiLamgjgYgn6GQ8V6cv8";
 
-    public static JsonArrayResponse getJson(String resource) {
+    public static JsonObjectResponse getJsonObject(String resource) {
+        InputStream is = null;
+        String result = "";
+        JSONObject jsonObject = null;
+
+        JsonObjectResponse jsonObjectResponse = new JsonObjectResponse();
+
+        String endpoint = ENDPOINT + resource;
+
+        // Download JSON data from URL
+        try {
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpGet httpget = new HttpGet(endpoint);
+            httpget.addHeader("X-Api-Key", API_KEY_VALUE);
+            HttpResponse response = httpclient.execute(httpget);
+            HttpEntity entity = response.getEntity();
+
+            //set status
+            jsonObjectResponse.setStatus(response.getStatusLine().getStatusCode());
+            is = entity.getContent();
+
+        } catch (Exception e) {
+            Log.e(TAG, "Error in http connection " + e.toString());
+        }
+
+        // Convert response to string
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    is, "iso-8859-1"), 8);
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line + "\n");
+            }
+            is.close();
+            result = sb.toString();
+        } catch (Exception e) {
+            Log.e(TAG, "Error converting result " + e.toString());
+        }
+
+        try {
+            jsonObject = new JSONObject(result);
+        } catch (JSONException e) {
+            Log.e(TAG, "Error parsing data " + e.toString());
+        }
+        jsonObjectResponse.setJsonObject(jsonObject);
+
+        return jsonObjectResponse;
+    }
+
+    public static JsonArrayResponse getJsonArray(String resource) {
         InputStream is = null;
         String result = "";
         JSONArray jArray = null;
