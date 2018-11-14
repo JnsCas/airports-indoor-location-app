@@ -25,6 +25,11 @@ public class User {
 
     }
 
+    public User(String email, String contrasena) {
+        this.email = email;
+        this.contrasena = contrasena;
+    }
+
     public User(int id, String nombre, String email, String contrasena, List<Vuelo> vuelos) {
         this.id = id;
         this.nombre = nombre;

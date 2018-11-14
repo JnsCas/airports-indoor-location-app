@@ -192,6 +192,11 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        // Do nothing. Back button blocked.
+    }
+
     private class GetFlights extends AsyncTask<Void, Void, Void> {
 
         private JsonObjectResponse response;
