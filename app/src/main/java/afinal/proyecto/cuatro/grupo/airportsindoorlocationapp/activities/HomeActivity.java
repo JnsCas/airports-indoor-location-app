@@ -5,8 +5,10 @@ import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -37,6 +39,8 @@ import kotlin.jvm.functions.Function1;
 import java.util.Calendar;
 
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.alarm.AlarmReceiver;
+
+import static afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.LoginActivity.PREFS_KEY;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -194,7 +198,15 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // Do nothing. Back button blocked.
+        SharedPreferences settings = getApplicationContext().getSharedPreferences(PREFS_KEY, MODE_PRIVATE);
+        SharedPreferences.Editor editor;
+        editor = settings.edit();
+        editor.remove("user");
+        editor.remove("password");
+        editor.apply();
+
+        Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(loginIntent);
     }
 
     private class GetFlights extends AsyncTask<Void, Void, Void> {

@@ -31,7 +31,7 @@ import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.Validaciones;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private static String PREFS_KEY = "mypreferences";
+    public static String PREFS_KEY = "mypreferences";
 
     private EditText emailEditText;
     private EditText contrasenaEditText;
