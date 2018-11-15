@@ -2,6 +2,7 @@ package afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -26,8 +27,11 @@ import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.ConexionWebSe
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.ExceptionUtil;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.JsonObjectResponse;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.Security;
+import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.Validaciones;
 
 public class LoginActivity extends AppCompatActivity {
+
+    public static String PREFS_KEY = "mypreferences";
 
     private EditText emailEditText;
     private EditText contrasenaEditText;
@@ -36,15 +40,46 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
 
-        this.emailEditText      = findViewById(R.id.login_email_et);
-        this.contrasenaEditText = findViewById(R.id.login_contrasena_et);
+        User userCredentials = isValidCredentials();
+        if (userCredentials != null ) {
+            new PostUserLogin(userCredentials).execute();
+        } else {
+            setContentView(R.layout.activity_login);
 
-        cargarEditTextsObligatorios();
+            this.emailEditText      = findViewById(R.id.login_email_et);
+            this.contrasenaEditText = findViewById(R.id.login_contrasena_et);
 
-        buttonLogIn();
-        buttonSignIn();
+            cargarEditTextsObligatorios();
+
+            buttonLogIn();
+            buttonSignIn();
+        }
+
+    }
+
+    private User isValidCredentials() {
+        String user = readValuePreferences("user");
+        String passwd = readValuePreferences("password");
+        if (!Validaciones.isNullOrEmpty(user) && !Validaciones.isNullOrEmpty(passwd)) {
+            return new User(user, passwd);
+        } else {
+            return null;
+        }
+    }
+
+    private void writeValuePreferences(User user) {
+        SharedPreferences settings = getApplicationContext().getSharedPreferences(PREFS_KEY, MODE_PRIVATE);
+        SharedPreferences.Editor editor;
+        editor = settings.edit();
+        editor.putString("user", user.getEmail());
+        editor.putString("password", user.getContrasena());
+        editor.commit();
+    }
+
+    private String readValuePreferences(String keyPref) {
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences(PREFS_KEY, MODE_PRIVATE);
+        return preferences.getString(keyPref, "");
     }
 
     private void buttonSignIn() {
@@ -136,6 +171,8 @@ public class LoginActivity extends AppCompatActivity {
 
             if (response.getStatus() == 200) {
                 try {
+
+                    writeValuePreferences(user);
 
                     int idUser = response.getJsonObject().getInt("id");
 
