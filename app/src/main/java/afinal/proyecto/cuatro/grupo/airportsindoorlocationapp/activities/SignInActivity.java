@@ -140,7 +140,13 @@ public class SignInActivity extends AppCompatActivity {
                 Intent loginActivityIntent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(loginActivityIntent);
             } else {
-                Toast.makeText(getApplicationContext(), "Se obtuvo el error." + response.getStatus(), Toast.LENGTH_LONG).show(); //FIXME
+                String msg;
+                if (response.getStatus() == 400) {
+                    msg = "Usuario existente.";
+                } else {
+                    msg = "Se obtuvo el error." + response.getStatus();
+                }
+                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
             }
         }
     }

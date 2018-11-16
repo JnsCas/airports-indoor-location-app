@@ -188,7 +188,13 @@ public class LoginActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             } else {
-                Toast.makeText(getApplicationContext(), "Se obtuvo el error:" + response.getStatus(), Toast.LENGTH_LONG).show(); //FIXME
+                String msg;
+                if (response.getStatus() == 404) {
+                    msg = "El usuario y/o contraseña ingresado es incorrecto.";
+                } else {
+                    msg = "Se obtuvo el error: " + response.getStatus();
+                }
+                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
             }
         }
     }

@@ -8,17 +8,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
-import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.R;
-import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.model.Vuelo;
 import com.estimote.mustard.rx_goodness.rx_requirements_wizard.Requirement;
 import com.estimote.mustard.rx_goodness.rx_requirements_wizard.RequirementsWizardFactory;
 import com.google.gson.Gson;
@@ -26,19 +21,21 @@ import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.R;
+import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.alarm.AlarmReceiver;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.application.MyApplication;
+import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.model.Vuelo;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.ConexionWebService;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.JsonObjectResponse;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function0;
 import kotlin.jvm.functions.Function1;
-import java.util.Calendar;
-
-import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.alarm.AlarmReceiver;
 
 import static afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.LoginActivity.PREFS_KEY;
 
@@ -104,7 +101,7 @@ public class HomeActivity extends AppCompatActivity {
             Calendar calBoardingDate = Calendar.getInstance();
             calBoardingDate.setTime(vuelo.getBoardingDateTime());
 
-            //si el vuelo es hoy y todavia no despego.
+            //si el vuelo todavia no despego.
             if (calNow.before(calBoardingDate)) {
                 long differenceMinutes = differenceMinutes(calNow, calBoardingDate);
                 if (differenceMinutes > 30) { //falta mas de media hora
@@ -198,6 +195,7 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        /** logout: elimino credenciales guardadas */
         SharedPreferences settings = getApplicationContext().getSharedPreferences(PREFS_KEY, MODE_PRIVATE);
         SharedPreferences.Editor editor;
         editor = settings.edit();
@@ -258,7 +256,7 @@ public class HomeActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             } else {
-                Toast.makeText(getApplicationContext(), "Se obtuvo el error:" + response.getStatus(), Toast.LENGTH_LONG).show(); //FIXME
+                Toast.makeText(getApplicationContext(), "Se obtuvo el error:" + response.getStatus(), Toast.LENGTH_LONG).show();
             }
         }
     }
