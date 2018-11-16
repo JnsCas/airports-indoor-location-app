@@ -58,6 +58,11 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+
+    }
+
     private User isValidCredentials() {
         String user = readValuePreferences("user");
         String passwd = readValuePreferences("password");
