@@ -12,7 +12,9 @@ import android.widget.Switch;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.R;
 
@@ -97,8 +99,145 @@ public class ImageAdapter extends BaseAdapter {
             default:
                 pos = null;
         }
-
         return pos;
+    }
+
+    private Integer getNumber(String code) {
+
+        Integer num;
+
+        switch (code) {
+            case "le2":
+                num = 1;
+                break;
+            case "br2":
+                num = 2;
+                break;
+            case "le1":
+                num = 3;
+                break;
+            case "ca2":
+                num = 4;
+                break;
+            case "br1":
+                num = 4;
+                break;
+            case "co1":
+                num = 5;
+                break;
+            case "co2":
+                num = 6;
+                break;
+            case "ca1":
+                num = 7;
+                break;
+            default:
+                num = 0;
+        }
+        return num;
+    }
+
+    /* Define the direction of the road */
+    private String getOrientation(List<String> way, String node){
+
+        // I get current node order number
+        Integer number = getNumber(node);
+
+        // I get previous node order number
+        Integer anterior = 0;
+
+        if (way.indexOf(node) != 0) {
+
+            try {
+                anterior = getNumber(way.get(way.indexOf(node) - 1));
+
+            } catch(Exception e) {
+
+                e.printStackTrace();
+            }
+        }
+
+        // Set postfijo order
+
+        String postfijo;
+
+        if (number > anterior) {
+
+            postfijo = "i";
+
+        } else if (number < anterior) {
+
+            postfijo = "d";
+
+        } else {
+
+            postfijo = "c";
+
+            // si no es nodo inicial y origen es menor que actual viene de abajo
+
+            if ( way.indexOf(node) != 0 && getNumber(way.get(0)) < number) {
+
+                postfijo = "c_down";
+
+            } else if ( way.indexOf(node) != 0 && getNumber(way.get(0)) > number) {
+
+                postfijo = "c_up";
+            }
+
+
+        }
+
+        String orientation;
+
+        // Set orientation
+
+        if (way.indexOf(node) == 0) {
+
+            orientation = "o" + postfijo;
+
+            switch (node) {
+                case "ca1":
+                    orientation = "o" + postfijo + "_ca1";
+                    break;
+                case "ca2":
+                    orientation = "o" + postfijo + "_ca2";
+                    break;
+                case "co1":
+                    orientation = "o" + postfijo + "_co1";
+                    break;
+                case "co2":
+                    orientation = "o" + postfijo + "_co2";
+                    break;
+            }
+
+        } else if ((way.indexOf(node) + 1) == way.size()) {
+
+            System.out.println("*********> postfijo: "+postfijo+" node: "+node);
+
+            orientation = "f" + postfijo;
+
+            switch (node) {
+                case "ca1":
+                    orientation = "f" + postfijo + "_ca1";
+                    break;
+                case "ca2":
+                    orientation = "f" + postfijo + "_ca2";
+                    break;
+                case "co1":
+                    orientation = "f" + postfijo + "_co1";
+                    break;
+                case "co2":
+                    orientation = "f" + postfijo + "_co2";
+                    break;
+            }
+
+        } else {
+
+            orientation = "d" + postfijo;
+        }
+
+        return orientation;
+
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -118,20 +257,25 @@ public class ImageAdapter extends BaseAdapter {
             imageView = (ImageView) convertView;
         }
 
+        /* Create a hashMap to check to illuminate when I move in the map */
+
+        Map<String, String> hashMap = new HashMap<>();
+
         /* Draw the road if exist */
         if (way != null) {
 
             for (String node : way) {
 
+                /* Orientation */
+
+                String orientation = getOrientation(way, node);
+
+                /* Get Positions */
+
                 String positionString = getPos(node);
                 List<String> aux = Arrays.asList(positionString.split("\\s*;\\s*"));
 
-                if (way.indexOf(node) == 0) {
-                    System.out.println("-------->  first element");
-                }
-                if ((way.indexOf(node) + 1) == way.size()) {
-                    System.out.println("-------->  last element");
-                }
+                /* for each position in node */
 
                 for (String element : aux) {
 
@@ -140,10 +284,9 @@ public class ImageAdapter extends BaseAdapter {
                     Integer pos = Integer.parseInt(elementParts.get(0));
                     String posName = elementParts.get(1);
 
-                    System.out.println("-------->  code: " + node + " pos: " + pos + " posName: " + posName);
-
                     /* Make de resourceName */
-                    String resourceName = posName + "_" + node;
+                    String resourceName = posName + "_wf_" + orientation;
+
 
                     /* Get the active image */
                     Resources resources = mContext.getResources();
@@ -153,10 +296,17 @@ public class ImageAdapter extends BaseAdapter {
                             mContext.getPackageName()
                     );
 
+                    /* Adding resource into the hashMap*/
+                    hashMap.put(posName, resourceName);
+
+                    System.out.println("--->  node: " + node + " resourceName: " + resourceName);
+
                     /* Set the active image */
                     mThumbIds[Integer.parseInt(String.valueOf(pos))] = resourceId;
                 }
             }
+
+            System.out.println("---> final hashMap: " + hashMap);
         }
 
 
@@ -182,13 +332,26 @@ public class ImageAdapter extends BaseAdapter {
                     /* Make de resourceName */
                     String resourceName = posName + "_" + contentZone.getCode();
 
+
+                    /* Check in hashMap if is part of the road */
+
+                    String value = hashMap.get(posName);
+
+                    if (value != null) {
+
+                        resourceName = value + "ilu" + contentZone.getCode();
+
+                    }
+
                     /* Get the active image */
+
                     Resources resources = mContext.getResources();
                     final int resourceId = resources.getIdentifier(
                             resourceName,
                             "drawable",
                             mContext.getPackageName()
                     );
+
 
                     /* Set the active image */
                     mThumbIds[Integer.parseInt(String.valueOf(pos))] = resourceId;
