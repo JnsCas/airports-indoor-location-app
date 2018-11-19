@@ -27,36 +27,23 @@ public class NotificationActivity extends AppCompatActivity {
 
         comidasRapidas.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean on) {
-                if (on) {
-                    mapNotificationStatusByTag.put("notification-candy-1", true);
-                    mapNotificationStatusByTag.put("notification-candy-2", true);
-                } else {
-                    mapNotificationStatusByTag.put("notification-candy-1", false);
-                    mapNotificationStatusByTag.put("notification-candy-2", false);
-                }
+            public void onCheckedChanged(CompoundButton compoundButton, boolean status) {
+                mapNotificationStatusByTag.put("notification-candy-1", status);
+                mapNotificationStatusByTag.put("notification-candy-2", status);
             }
         });
 
         indumentariaDeportiva.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean on) {
-                if (on) {
-                    mapNotificationStatusByTag.put("notification-coconut-2", true);
-                } else {
-                    mapNotificationStatusByTag.put("notification-coconut-2", false);
-                }
+            public void onCheckedChanged(CompoundButton compoundButton, boolean status) {
+                mapNotificationStatusByTag.put("notification-coconut-2", status);
             }
         });
 
         cafe.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean on) {
-                if (on) {
-                    mapNotificationStatusByTag.put("notification-lemon-1", true);
-                } else {
-                    mapNotificationStatusByTag.put("notification-lemon-1", false);
-                }
+            public void onCheckedChanged(CompoundButton compoundButton, boolean status) {
+                mapNotificationStatusByTag.put("notification-lemon-1", status);
             }
         });
     }
