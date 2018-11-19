@@ -36,7 +36,7 @@
     <string name="confirmar_contrase_a">Confirmar contraseña</string>
     <string name="notification_btn">notification_btn</string>
     <string name="vuelo_btn">vuelo_btn</string>
-    <string name="titulo">Titulo</string>
+    <string name="titulo">Configuración de notificaciones</string>
     <string name="pushnotification">PushNotification</string>
     <string name="aqui_agregar_info_relacionada_a_pushnotification">Aqui agregar info relacionada a PushNotification.</string>
     <string name="aqui_agregar_info_relacionada_a_ayuda_info_del_proyecto_preguntas_frecuentes_y_cualquier_otra_referencia">Aqui agregar info relacionada a ayuda. Info del proyecto. Preguntas frecuentes y cualquier otra referencia.</string>
@@ -46,4 +46,7 @@
     <string name="to">to</string>
     <string name="buscarcamino">Buscar camino</string>
     <string name="from">from</string>
+    <string name="comidas_rapidas">Comidas rápidas</string>
+    <string name="indumentaria_deportiva">Indumentaria Deportiva</string>
+    <string name="cafe">Café</string>
 </resources>

@@ -58,11 +58,11 @@
                     tools:ignore="UselessParent">
 
                     <TextView
-                        android:text="@string/titulo"
-                        android:layout_gravity="center_vertical"
-                        android:textSize="20dp"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/titulo"
+                        android:textSize="20dp" />
 
                 </LinearLayout>
 
@@ -80,6 +80,42 @@
                 android:text="Aqui agregar info relacionada a PushNotification."
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Switch
+                android:id="@+id/switchComidasRapidas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/comidas_rapidas" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Switch
+                android:id="@+id/switchIndumentariaDeportiva"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/indumentaria_deportiva" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Switch
+                android:id="@+id/switchCafe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/cafe" />
 
         </LinearLayout>
 

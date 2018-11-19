@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
@@ -19,16 +20,23 @@ import com.estimote.proximity_sdk.api.ProximityZoneContext;
 import org.json.JSONArray;
 
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.MainActivity;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.R;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.application.MyApplication;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.newmap.ContentZone;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.newmap.ImageAdapter;
+import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.Validaciones;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 
 public class NotificationsManager {
+
+    public static Map<String, Boolean> mapNotificationStatusByTag = new HashMap<>();
+    public static Map<String, Calendar> mapLastPushByTag = new HashMap<>();
 
     public NotificationsManager() {
         Log.i("*** NotificationManager", "NotificationManager instance created");
@@ -79,7 +87,7 @@ public class NotificationsManager {
     }
 
     /* Build notification */
-    private Notification buildNotification(String title, String text) {
+    private Notification buildNotification(String title, String text, String link) {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             NotificationChannel contentChannel = new NotificationChannel(
                     "content_channel",
@@ -89,17 +97,32 @@ public class NotificationsManager {
         }
 
         return new NotificationCompat.Builder(notificationContext, "content_channel")
-                .setSmallIcon(R.drawable.beacon_candy_small)
-                .setContentTitle(title)
-                .setContentText(text)
-                .setContentIntent(
-                        PendingIntent.getActivity(
-                                notificationContext,
-                                0,
-                                new Intent(notificationContext, MainActivity.class),
-                                PendingIntent.FLAG_UPDATE_CURRENT))
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .build();
+            .setSmallIcon(R.drawable.beacon_candy_small)
+            .setContentTitle(title)
+            .setContentText(text)
+            .setContentIntent(
+                    getContentIntentByLink(link)
+            )
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .build();
+    }
+
+    private PendingIntent getContentIntentByLink(String link) {
+
+        /** dejo solo 4 beacons asociados a una uri. Creo que no es necesario que todos los beacons
+         * lancen notificaciones */
+        Intent notificationIntent;
+        if (!Validaciones.isNullOrEmpty(link)) {
+            notificationIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+        } else {
+            notificationIntent = new Intent(notificationContext, MainActivity.class);
+        }
+
+        return PendingIntent.getActivity(
+                notificationContext,
+                0,
+                notificationIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     /* Beacon observer main process */
@@ -160,6 +183,11 @@ public class NotificationsManager {
                         liveNotificationZoneBeetroot2,
                         liveNotificationZoneCoconut1,
                         liveNotificationZoneCoconut2));
+
+        mapNotificationStatusByTag.put("notification-lemon-1", true); //FIXME(Jonas) si hay tiempo, guardar configuracion de notificaciones en base de datos.
+        mapNotificationStatusByTag.put("notification-candy-1", true);
+        mapNotificationStatusByTag.put("notification-candy-2", true);
+        mapNotificationStatusByTag.put("notification-coconut-2", true);
     }
 
     /* create zone for map activity */
@@ -172,7 +200,7 @@ public class NotificationsManager {
                     @Override
                     public Unit invoke(ProximityZoneContext proximityContext) {
 
-                        Log.i("*** NotificationManager","Beacon coming-in: "+tag);
+                        Log.i("*** NewMapZone","Beacon coming-in: "+tag);
 
                         ContentZone contentZone = new ContentZone(tag, true, proximityContext);
 
@@ -189,7 +217,7 @@ public class NotificationsManager {
                     @Override
                     public Unit invoke(ProximityZoneContext proximityContext) {
 
-                        Log.i("*** NotificationManager","Beacon coming-out: "+tag);
+                        Log.i("*** NewMapZone","Beacon coming-out: "+tag);
 
                         ContentZone contentZone = new ContentZone(tag, false, proximityContext);
 
@@ -205,7 +233,7 @@ public class NotificationsManager {
     }
 
     /* create zone for notification service */
-    private ProximityZone createLiveNotificationZoneFromBeacon(final String tag){
+    public ProximityZone createLiveNotificationZoneFromBeacon(final String tag){
 
         return new ProximityZoneBuilder()
             .forTag(tag)
@@ -214,16 +242,37 @@ public class NotificationsManager {
                 @Override
                 public Unit invoke(ProximityZoneContext proximityContext) {
 
-                    Log.i("*** NotificationManager","Beacon near to: "+tag);
+                    Log.i("*** LiveNotification","Beacon near to: " + tag);
 
                     NotificationZone notificationZone = new NotificationZone(tag, proximityContext);
 
-                    notificationManager.notify(notificationZone.getId(), buildNotification(
-                            notificationZone.getTitle(),
-                            notificationZone.getMessage()));
+                    Boolean enabled = mapNotificationStatusByTag.get(tag);
+                    if (enabled) {
+                        Calendar lastPush = mapLastPushByTag.get(tag);
+                        long differenceMinutes = -1;
+                        if (lastPush != null) {
+                            differenceMinutes = differenceMinutes(lastPush, Calendar.getInstance());
+                        }
+                        if (differenceMinutes >= 5 || differenceMinutes == -1) { //si paso al menos 5 minutos desde el ultimo push notifications o si es el primer push, entonces se notifica
+                            notificationManager.notify(notificationZone.getId(), buildNotification(
+                                notificationZone.getTitle(),
+                                notificationZone.getMessage(),
+                                notificationZone.getLink()));
+                            mapLastPushByTag.put(tag, Calendar.getInstance());
+                            Log.i("*** LiveNotification","Notificated beacon: " + tag);
+                        }
+                    } else {
+                        Log.i("*** LiveNotification","Notification disabled for beacon: " + tag);
+                    }
+
                     return null;
                 }
             })
             .build();
+    }
+
+    //FIXME codigo duplicado
+    private long differenceMinutes(Calendar cal1, Calendar cal2) {
+        return ((cal2.getTimeInMillis() - cal1.getTimeInMillis()) / 1000) / 60;
     }
 }
