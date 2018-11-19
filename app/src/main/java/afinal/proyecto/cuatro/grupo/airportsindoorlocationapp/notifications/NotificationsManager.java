@@ -17,7 +17,9 @@ import com.estimote.proximity_sdk.api.ProximityZoneBuilder;
 import com.estimote.proximity_sdk.api.ProximityZoneContext;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.MainActivity;
@@ -38,7 +40,7 @@ public class NotificationsManager {
     private static volatile NotificationsManager instance;
 
     public static NotificationsManager getInstance() {
-        if (instance == null ) {
+        if (instance == null) {
             instance = new NotificationsManager();
         }
 
@@ -67,15 +69,75 @@ public class NotificationsManager {
         this.imageAdapter = imageAdapter;
     }
 
+    /* convert JSONArray into a List of Strings */
+    private ArrayList<String> convertJsonToString(JSONArray jsonObject) {
+
+        ArrayList<String> list = new ArrayList<>();
+
+        JSONArray jsonArray = jsonObject;
+
+        if (jsonArray != null) {
+
+            int len = jsonArray.length();
+
+            for (int i = 0; i < len; i++) {
+
+                try {
+                    list.add(jsonArray.get(i).toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return list;
+    }
+
     /* NewMap Destination Found */
     public void NewDestinationFound(ImageAdapter imageAdapter, JSONArray jsonObject) {
 
-        Log.i("*** NotificationManager","NewDestinationFound - jsonObject: "+jsonObject);
+
+        final ArrayList<String> way = convertJsonToString(jsonObject);
+
+        Log.d("------->", " way: " + way);
 
         if (imageAdapter != null) {
-            // imageAdapter.adjustMapWithDestination(position,jsonObject);
-            // imageAdapter.notifyDataSetChanged();
+
+            imageAdapter.adjustMapWithDestination(way);
+            imageAdapter.notifyDataSetChanged();
+
         }
+
+        /*
+
+        new Function1<ProximityZoneContext, Unit>() {
+            @Override
+            public Unit invoke(ProximityZoneContext proximityContext) {
+
+                ArrayList<ContentZone> contentZoneList = null;
+
+                for (String elem : aux) {
+
+                    Log.d("------->", " contentZone: " + elem);
+
+                    ContentZone contentZone = new ContentZone(elem, false, proximityContext);
+                    contentZoneList.add(contentZone);
+
+                    Log.d("------->", " contentZoneList " + contentZoneList.toString());
+                }
+
+                if (imageAdapter != null) {
+
+                    Log.d("------->", " imageAdapter is not null");
+
+                    imageAdapter.adjustMapWithDestination(contentZoneList);
+                    imageAdapter.notifyDataSetChanged();
+
+                }
+
+                return null;
+            }
+        };
+        */
     }
 
     /* Build notification */
@@ -163,7 +225,7 @@ public class NotificationsManager {
     }
 
     /* create zone for map activity */
-    private ProximityZone createNewMapZoneFromBeacon(final String tag){
+    private ProximityZone createNewMapZoneFromBeacon(final String tag) {
 
         return new ProximityZoneBuilder()
                 .forTag(tag)
@@ -172,7 +234,7 @@ public class NotificationsManager {
                     @Override
                     public Unit invoke(ProximityZoneContext proximityContext) {
 
-                        Log.i("*** NotificationManager","Beacon coming-in: "+tag);
+                        Log.i("*** NotificationManager", "Beacon coming-in: " + tag);
 
                         ContentZone contentZone = new ContentZone(tag, true, proximityContext);
 
@@ -189,7 +251,7 @@ public class NotificationsManager {
                     @Override
                     public Unit invoke(ProximityZoneContext proximityContext) {
 
-                        Log.i("*** NotificationManager","Beacon coming-out: "+tag);
+                        Log.i("*** NotificationManager", "Beacon coming-out: " + tag);
 
                         ContentZone contentZone = new ContentZone(tag, false, proximityContext);
 
@@ -205,25 +267,25 @@ public class NotificationsManager {
     }
 
     /* create zone for notification service */
-    private ProximityZone createLiveNotificationZoneFromBeacon(final String tag){
+    private ProximityZone createLiveNotificationZoneFromBeacon(final String tag) {
 
         return new ProximityZoneBuilder()
-            .forTag(tag)
-            .inCustomRange(DISTANCE)
-            .onEnter(new Function1<ProximityZoneContext, Unit>() {
-                @Override
-                public Unit invoke(ProximityZoneContext proximityContext) {
+                .forTag(tag)
+                .inCustomRange(DISTANCE)
+                .onEnter(new Function1<ProximityZoneContext, Unit>() {
+                    @Override
+                    public Unit invoke(ProximityZoneContext proximityContext) {
 
-                    Log.i("*** NotificationManager","Beacon near to: "+tag);
+                        Log.i("*** NotificationManager", "Beacon near to: " + tag);
 
-                    NotificationZone notificationZone = new NotificationZone(tag, proximityContext);
+                        NotificationZone notificationZone = new NotificationZone(tag, proximityContext);
 
-                    notificationManager.notify(notificationZone.getId(), buildNotification(
-                            notificationZone.getTitle(),
-                            notificationZone.getMessage()));
-                    return null;
-                }
-            })
-            .build();
+                        notificationManager.notify(notificationZone.getId(), buildNotification(
+                                notificationZone.getTitle(),
+                                notificationZone.getMessage()));
+                        return null;
+                    }
+                })
+                .build();
     }
 }

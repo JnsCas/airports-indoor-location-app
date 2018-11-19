@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.Switch;
 
-import org.json.JSONArray;
-
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,6 +22,8 @@ public class ImageAdapter extends BaseAdapter {
 
     private ContentZone contentZone;
 
+    private List<String> way;
+
     // Image Map
     private Integer[] mThumbIds = {
             R.drawable.p0, R.drawable.p1, R.drawable.p2, R.drawable.p3,
@@ -29,6 +31,7 @@ public class ImageAdapter extends BaseAdapter {
             R.drawable.p8, R.drawable.p9, R.drawable.p10, R.drawable.p11,
             R.drawable.p12, R.drawable.p13, R.drawable.p14, R.drawable.p15,
     };
+
 
     public ImageAdapter(Context c) {
         mContext = c;
@@ -50,6 +53,54 @@ public class ImageAdapter extends BaseAdapter {
         return mThumbIds[position];
     }
 
+    /* Here we received a contentZone data when are interacting with a beacon */
+    public void adjustMapWith(ContentZone contentZone) {
+        this.contentZone = contentZone;
+    }
+
+    /* Here we received a list of node when someone select a destination */
+    public void adjustMapWithDestination(ArrayList<String> way) {
+        this.way = way;
+    }
+
+
+    /* CACA hardcodeada fea - BORRAR ESTO POR DIOS (Si llegamos con el tiempo) */
+    private String getPos(String code) {
+
+        String pos;
+
+        switch (code) {
+            case "le2":
+                pos = "8,p8;9,p9";
+                break;
+            case "br2":
+                pos = "13,p13;14,p14";
+                break;
+            case "le1":
+                pos = "9,p9;10,p10";
+                break;
+            case "ca2":
+                pos = "5,p5;6,p6;9,p9;10,p10";
+                break;
+            case "br1":
+                pos = "11,p11;10,p10";
+                break;
+            case "co1":
+                pos = "1,p1;2,p2;5,p5;6,p6";
+                break;
+            case "co2":
+                pos = "2,p2;3,p3;6,p6;7,p7";
+                break;
+            case "ca1":
+                pos = "6,p6;7,p7";
+                break;
+            default:
+                pos = null;
+        }
+
+        return pos;
+    }
+
     public View getView(int position, View convertView, ViewGroup parent) {
 
         /* ImageView to return */
@@ -66,6 +117,48 @@ public class ImageAdapter extends BaseAdapter {
 
             imageView = (ImageView) convertView;
         }
+
+        /* Draw the road if exist */
+        if (way != null) {
+
+            for (String node : way) {
+
+                String positionString = getPos(node);
+                List<String> aux = Arrays.asList(positionString.split("\\s*;\\s*"));
+
+                if (way.indexOf(node) == 0) {
+                    System.out.println("-------->  first element");
+                }
+                if ((way.indexOf(node) + 1) == way.size()) {
+                    System.out.println("-------->  last element");
+                }
+
+                for (String element : aux) {
+
+                    List<String> elementParts = Arrays.asList(element.split("\\s*,\\s*"));
+
+                    Integer pos = Integer.parseInt(elementParts.get(0));
+                    String posName = elementParts.get(1);
+
+                    System.out.println("-------->  code: " + node + " pos: " + pos + " posName: " + posName);
+
+                    /* Make de resourceName */
+                    String resourceName = posName + "_" + node;
+
+                    /* Get the active image */
+                    Resources resources = mContext.getResources();
+                    final int resourceId = resources.getIdentifier(
+                            resourceName,
+                            "drawable",
+                            mContext.getPackageName()
+                    );
+
+                    /* Set the active image */
+                    mThumbIds[Integer.parseInt(String.valueOf(pos))] = resourceId;
+                }
+            }
+        }
+
 
         /* Check if there are any contentZone active */
         if (contentZone != null) {
@@ -137,16 +230,4 @@ public class ImageAdapter extends BaseAdapter {
         return imageView;
     }
 
-    /* Here we received the contentZone data */
-    public void adjustMapWith(ContentZone contentZone) {
-        this.contentZone = contentZone;
-    }
-
-    public void adjustMapWithDestination(Integer pos, JSONArray resp) {
-
-        Log.i(
-                "*** ImageAdapter",
-                "adjustMapWithDestination - pos: " + pos + " resp: " + resp
-        );
-    }
 }
