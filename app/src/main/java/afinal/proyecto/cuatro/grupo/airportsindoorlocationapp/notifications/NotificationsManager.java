@@ -106,38 +106,6 @@ public class NotificationsManager {
             imageAdapter.notifyDataSetChanged();
 
         }
-
-        /*
-
-        new Function1<ProximityZoneContext, Unit>() {
-            @Override
-            public Unit invoke(ProximityZoneContext proximityContext) {
-
-                ArrayList<ContentZone> contentZoneList = null;
-
-                for (String elem : aux) {
-
-                    Log.d("------->", " contentZone: " + elem);
-
-                    ContentZone contentZone = new ContentZone(elem, false, proximityContext);
-                    contentZoneList.add(contentZone);
-
-                    Log.d("------->", " contentZoneList " + contentZoneList.toString());
-                }
-
-                if (imageAdapter != null) {
-
-                    Log.d("------->", " imageAdapter is not null");
-
-                    imageAdapter.adjustMapWithDestination(contentZoneList);
-                    imageAdapter.notifyDataSetChanged();
-
-                }
-
-                return null;
-            }
-        };
-        */
     }
 
     /* Build notification */

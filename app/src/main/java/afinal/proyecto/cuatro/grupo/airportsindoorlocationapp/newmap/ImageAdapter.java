@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.Switch;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -66,7 +65,201 @@ public class ImageAdapter extends BaseAdapter {
     }
 
 
-    /* CACA hardcodeada fea - BORRAR ESTO POR DIOS (Si llegamos con el tiempo) */
+    private ImageView cleanMap(ImageView imageView){
+
+        /* Get the active image */
+
+        Resources resources = mContext.getResources();
+
+        for(int i=0; i<16; i++){
+
+            final int resourceId = resources.getIdentifier(
+                    "p"+i,
+                    "drawable",
+                    mContext.getPackageName()
+            );
+
+
+            /* Set the active image */
+            mThumbIds[i] = resourceId;
+        }
+        return imageView;
+    }
+
+
+    public View getView(int position, View convertView, ViewGroup parent) {
+
+        /* ImageView to return */
+        ImageView imageView;
+
+        /* Check if a convertView exists */
+        if (convertView == null) {
+
+            imageView = new ImageView(mContext);
+            imageView.setLayoutParams(new GridView.LayoutParams(300, 300));
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+        } else {
+
+            imageView = (ImageView) convertView;
+        }
+
+        /* Clean map */
+
+        imageView = cleanMap(imageView);
+
+        /* Create a hashMap to check to illuminate when I move in the map */
+
+        Map<String, String> hashMap = new HashMap<>();
+
+        /* Draw the road if exist */
+        if (way != null) {
+
+            for (String node : way) {
+
+                /* Orientation */
+
+                String orientation = getOrientation(way, node);
+
+                /* Get Positions */
+
+                String positionString = getPos(node);
+                String[] aux = positionString.split("\\s*;\\s*");
+
+                /* for each position in node */
+
+                for (String element : aux) {
+
+                    List<String> elementParts = Arrays.asList(element.split("\\s*,\\s*"));
+
+                    Integer pos = Integer.parseInt(elementParts.get(0));
+                    String posName = elementParts.get(1);
+
+                    /* Make de resourceName */
+                    String resourceName = posName + "_wf_" + orientation;
+
+
+                    /* Get the active image */
+                    Resources resources = mContext.getResources();
+                    final int resourceId = resources.getIdentifier(
+                            resourceName,
+                            "drawable",
+                            mContext.getPackageName()
+                    );
+
+                    /* Adding resource into the hashMap*/
+                    hashMap.put(posName, resourceName);
+
+                    // System.out.println("--->  node: " + node + " resourceName: " + resourceName);
+
+                    /* Set the active image */
+                    mThumbIds[Integer.parseInt(String.valueOf(pos))] = resourceId;
+                }
+            }
+
+            System.out.println("-----------> final hashMap: " + hashMap);
+        }
+
+
+        /* Check if there are any contentZone active */
+        if (contentZone != null) {
+
+            if (contentZone.getIsComingIn()) {
+
+                Log.i(
+                        "*** ImageAdapter",
+                        "Beacon " + contentZone.getTag() + " coming in"
+                );
+
+                List<String> aux = contentZone.getPos();
+
+                for (String element : aux) {
+
+                    List<String> elementParts = Arrays.asList(element.split("\\s*,\\s*"));
+
+                    Integer pos = Integer.parseInt(elementParts.get(0));
+                    String posName = elementParts.get(1);
+
+                    /* Make de resourceName */
+                    String resourceName = posName + "_" + contentZone.getCode();
+
+
+                    /* Check in hashMap if is part of the road */
+
+                    String value = hashMap.get(posName);
+
+                    if (value != null) {
+
+                        resourceName = value + "_ilu_" + contentZone.getCode();
+
+                        System.out.println("*************** >> resourceName: " + resourceName);
+                    }
+
+                    /* Get the active image */
+
+                    Resources resources = mContext.getResources();
+                    final int resourceId = resources.getIdentifier(
+                            resourceName,
+                            "drawable",
+                            mContext.getPackageName()
+                    );
+
+
+                    /* Set the active image */
+                    mThumbIds[Integer.parseInt(String.valueOf(pos))] = resourceId;
+                }
+
+            } else {
+
+                contentZone.setIsComingIn(false);
+
+                List<String> aux = contentZone.getPos();
+
+                for (String element : aux) {
+
+                    List<String> elementParts = Arrays.asList(element.split("\\s*,\\s*"));
+
+                    Integer pos = Integer.parseInt(elementParts.get(0));
+                    String posName = elementParts.get(1);
+
+                    /* Check in hashMap if is part of the road */
+
+                    String value = hashMap.get(posName);
+
+                    if (value != null) {
+
+                        posName = value;
+
+                        System.out.println("*************** >> resourceName: " + posName);
+                    }
+
+                    /* Get the original image back */
+                    Resources resources = mContext.getResources();
+                    final int resourceId = resources.getIdentifier(
+                            posName,
+                            "drawable",
+                            mContext.getPackageName()
+                    );
+
+                    /* Set the original image back */
+                    Log.i(
+                            "*** ImageAdapter",
+                            "Beacon " + contentZone.getTag() + " coming out"
+                    );
+                    mThumbIds[Integer.parseInt(String.valueOf(pos))] = resourceId;
+                }
+            }
+        }
+
+        /* Set the rest of the image map */
+        imageView.setImageResource(mThumbIds[position]);
+        return imageView;
+    }
+
+    /* A PARTIR DE ACÁ CACA */
+
+    /* BORRAR ESTO POR DIOS (Si llegamos con el tiempo) */
+
     private String getPos(String code) {
 
         String pos;
@@ -138,7 +331,7 @@ public class ImageAdapter extends BaseAdapter {
     }
 
     /* Define the direction of the road */
-    private String getOrientation(List<String> way, String node){
+    private String getOrientation(List<String> way, String node) {
 
         // I get current node order number
         Integer number = getNumber(node);
@@ -151,7 +344,7 @@ public class ImageAdapter extends BaseAdapter {
             try {
                 anterior = getNumber(way.get(way.indexOf(node) - 1));
 
-            } catch(Exception e) {
+            } catch (Exception e) {
 
                 e.printStackTrace();
             }
@@ -175,16 +368,14 @@ public class ImageAdapter extends BaseAdapter {
 
             // si no es nodo inicial y origen es menor que actual viene de abajo
 
-            if ( way.indexOf(node) != 0 && getNumber(way.get(0)) < number) {
+            if (way.indexOf(node) != 0 && getNumber(way.get(0)) < number) {
 
                 postfijo = "c_down";
 
-            } else if ( way.indexOf(node) != 0 && getNumber(way.get(0)) > number) {
+            } else if (way.indexOf(node) != 0 && getNumber(way.get(0)) > number) {
 
                 postfijo = "c_up";
             }
-
-
         }
 
         String orientation;
@@ -212,8 +403,6 @@ public class ImageAdapter extends BaseAdapter {
 
         } else if ((way.indexOf(node) + 1) == way.size()) {
 
-            System.out.println("*********> postfijo: "+postfijo+" node: "+node);
-
             orientation = "f" + postfijo;
 
             switch (node) {
@@ -229,168 +418,23 @@ public class ImageAdapter extends BaseAdapter {
                 case "co2":
                     orientation = "f" + postfijo + "_co2";
                     break;
+                case "le1":
+                    orientation = "f" + postfijo + "_le1";
+                    break;
             }
 
         } else {
 
             orientation = "d" + postfijo;
+
+            if ( way.get(0).equals("ca1") && node.equals("ca2") ) {
+
+                orientation = "d" + postfijo + "_ca1";
+
+            }
         }
 
         return orientation;
-
-    }
-
-    public View getView(int position, View convertView, ViewGroup parent) {
-
-        /* ImageView to return */
-        ImageView imageView;
-
-        /* Check if a convertView exists */
-        if (convertView == null) {
-
-            imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(300, 300));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-
-        } else {
-
-            imageView = (ImageView) convertView;
-        }
-
-        /* Create a hashMap to check to illuminate when I move in the map */
-
-        Map<String, String> hashMap = new HashMap<>();
-
-        /* Draw the road if exist */
-        if (way != null) {
-
-            for (String node : way) {
-
-                /* Orientation */
-
-                String orientation = getOrientation(way, node);
-
-                /* Get Positions */
-
-                String positionString = getPos(node);
-                List<String> aux = Arrays.asList(positionString.split("\\s*;\\s*"));
-
-                /* for each position in node */
-
-                for (String element : aux) {
-
-                    List<String> elementParts = Arrays.asList(element.split("\\s*,\\s*"));
-
-                    Integer pos = Integer.parseInt(elementParts.get(0));
-                    String posName = elementParts.get(1);
-
-                    /* Make de resourceName */
-                    String resourceName = posName + "_wf_" + orientation;
-
-
-                    /* Get the active image */
-                    Resources resources = mContext.getResources();
-                    final int resourceId = resources.getIdentifier(
-                            resourceName,
-                            "drawable",
-                            mContext.getPackageName()
-                    );
-
-                    /* Adding resource into the hashMap*/
-                    hashMap.put(posName, resourceName);
-
-                    System.out.println("--->  node: " + node + " resourceName: " + resourceName);
-
-                    /* Set the active image */
-                    mThumbIds[Integer.parseInt(String.valueOf(pos))] = resourceId;
-                }
-            }
-
-            System.out.println("---> final hashMap: " + hashMap);
-        }
-
-
-        /* Check if there are any contentZone active */
-        if (contentZone != null) {
-
-            if (contentZone.getIsComingIn()) {
-
-                Log.i(
-                        "*** ImageAdapter",
-                        "Beacon " + contentZone.getTag() + " coming in"
-                );
-
-                List<String> aux = contentZone.getPos();
-
-                for (String element : aux) {
-
-                    List<String> elementParts = Arrays.asList(element.split("\\s*,\\s*"));
-
-                    Integer pos = Integer.parseInt(elementParts.get(0));
-                    String posName = elementParts.get(1);
-
-                    /* Make de resourceName */
-                    String resourceName = posName + "_" + contentZone.getCode();
-
-
-                    /* Check in hashMap if is part of the road */
-
-                    String value = hashMap.get(posName);
-
-                    if (value != null) {
-
-                        resourceName = value + "ilu" + contentZone.getCode();
-
-                    }
-
-                    /* Get the active image */
-
-                    Resources resources = mContext.getResources();
-                    final int resourceId = resources.getIdentifier(
-                            resourceName,
-                            "drawable",
-                            mContext.getPackageName()
-                    );
-
-
-                    /* Set the active image */
-                    mThumbIds[Integer.parseInt(String.valueOf(pos))] = resourceId;
-                }
-
-            } else {
-
-                contentZone.setIsComingIn(false);
-
-                List<String> aux = contentZone.getPos();
-
-                for (String element : aux) {
-
-                    List<String> elementParts = Arrays.asList(element.split("\\s*,\\s*"));
-
-                    Integer pos = Integer.parseInt(elementParts.get(0));
-                    String posName = elementParts.get(1);
-
-                    /* Get the original image back */
-                    Resources resources = mContext.getResources();
-                    final int resourceId = resources.getIdentifier(
-                            posName,
-                            "drawable",
-                            mContext.getPackageName()
-                    );
-
-                    /* Set the original image back */
-                    Log.i(
-                            "*** ImageAdapter",
-                            "Beacon " + contentZone.getTag() + " coming out"
-                    );
-                    mThumbIds[Integer.parseInt(String.valueOf(pos))] = resourceId;
-                }
-            }
-        }
-
-        /* Set the rest of the image map */
-        imageView.setImageResource(mThumbIds[position]);
-        return imageView;
     }
 
 }
