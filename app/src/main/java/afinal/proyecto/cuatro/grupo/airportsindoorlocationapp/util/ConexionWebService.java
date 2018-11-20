@@ -10,14 +10,18 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Map;
 
 import cz.msebera.android.httpclient.HttpEntity;
 import cz.msebera.android.httpclient.HttpResponse;
 import cz.msebera.android.httpclient.client.HttpClient;
 import cz.msebera.android.httpclient.client.methods.HttpGet;
 import cz.msebera.android.httpclient.client.methods.HttpPost;
+import cz.msebera.android.httpclient.client.utils.URIBuilder;
 import cz.msebera.android.httpclient.entity.StringEntity;
 import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
+import cz.msebera.android.httpclient.params.BasicHttpParams;
+import cz.msebera.android.httpclient.params.HttpParams;
 
 /**
  * Created by JnsCas on 4/5/18.
@@ -28,17 +32,17 @@ public class ConexionWebService {
     private static final String TAG = ConexionWebService.class.getName();
 
     /* Endpoint local, para probar desde el emulador */
-    //private static final String ENDPOINT = "http://10.0.2.2:8080";
+    private static final String ENDPOINT = "http://10.0.2.2:8080";
 
     /* Endpoint local, para probar desde el cel */
-    //private static final String ENDPOINT = "http://192.168.0.29:8080";
-    //private static final String API_KEY_VALUE = "12345678";
+    //private static final String ENDPOINT = "http://10.54.34.60:8080";
+    private static final String API_KEY_VALUE = "12345678";
 
     /* Endpoint de prod, para probar desde el celu */
-    private static final String ENDPOINT = "http://54.233.174.152:9090";
-    private static final String API_KEY_VALUE = "udQH4Ny9NM3VAw5QB3Bvo7YIwQmIhMYiLamgjgYgn6GQ8V6cv8";
+    //private static final String ENDPOINT = "http://54.233.174.152:9090";
+    //private static final String API_KEY_VALUE = "udQH4Ny9NM3VAw5QB3Bvo7YIwQmIhMYiLamgjgYgn6GQ8V6cv8";
 
-    public static JsonObjectResponse getJsonObject(String resource) {
+    public static JsonObjectResponse getJsonObject(String resource, Map<String, String> requestParam) {
         InputStream is = null;
         String result = "";
         JSONObject jsonObject = null;
@@ -50,8 +54,19 @@ public class ConexionWebService {
         // Download JSON data from URL
         try {
             HttpClient httpclient = new DefaultHttpClient();
-            HttpGet httpget = new HttpGet(endpoint);
+            HttpGet httpget;
+            
+            if (requestParam != null) {
+                URIBuilder builder = new URIBuilder(endpoint);
+                for (Map.Entry<String, String> entry: requestParam.entrySet()) {
+                    builder.setParameter(entry.getKey(), entry.getValue());
+                }
+                httpget = new HttpGet(builder.build());
+            } else {
+                httpget = new HttpGet(endpoint);
+            }
             httpget.addHeader("X-Api-Key", API_KEY_VALUE);
+
             HttpResponse response = httpclient.execute(httpget);
             HttpEntity entity = response.getEntity();
 
@@ -179,10 +194,12 @@ public class ConexionWebService {
             Log.e(TAG, "Error converting result " + e.toString());
         }
 
-        try {
-            jObject = new JSONObject(result);
-        } catch (JSONException e) {
-            Log.e(TAG, "Error parsing data " + e.toString());
+        if (result != "") {
+            try {
+                jObject = new JSONObject(result);
+            } catch (JSONException e) {
+                Log.e(TAG, "Error parsing data " + e.toString());
+            }
         }
         jsonObjectResponse.setJsonObject(jObject);
         return jsonObjectResponse;

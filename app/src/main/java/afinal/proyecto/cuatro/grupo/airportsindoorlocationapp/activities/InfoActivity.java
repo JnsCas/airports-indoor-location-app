@@ -1,61 +1,80 @@
 package afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities;
 
-import android.content.Intent;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
+
+import org.json.JSONException;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.R;
+import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.ConexionWebService;
+import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.JsonObjectResponse;
 
 public class InfoActivity extends AppCompatActivity {
+
+    private TextView resultTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
 
-        //buttonVuelo();
-        //buttonMapa();
-        //buttonInfo();
+        resultTV = findViewById(R.id.info_people_quantity_result);
+
+        new PostPeopleQuantity().execute();
 
     }
-/*
-    private void buttonMapa() {
-        Button btnMapa = (Button) findViewById(R.id.main_mapa_btn);
 
-        btnMapa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentMapa = new Intent(getApplicationContext(), MapaActivity.class);
-                startActivity(intentMapa);
+    private class PostPeopleQuantity extends AsyncTask<Void, Void, Void> {
+
+        private JsonObjectResponse response;
+        private ProgressDialog progressDialog;
+
+        public PostPeopleQuantity() {
+            this.progressDialog = new ProgressDialog(InfoActivity.this);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog.setTitle("Espere por favor");
+            progressDialog.setMessage("Enviando datos..");
+            progressDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            Map<String, String> requestParam = new HashMap<>();
+            requestParam.put("zone", "lemon-2"); //FIXME hardcodeo fuerte. lemon-2 es la puerta de embarque
+            Calendar fiveMinutesBefore = Calendar.getInstance();
+            fiveMinutesBefore.add(Calendar.MINUTE, -5);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            requestParam.put("since", sdf.format(fiveMinutesBefore.getTime()));
+            //requestParam.put("until", "");
+            response = ConexionWebService
+                    .getJsonObject("/flowAnalysis/peopleQuantity", requestParam);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void args) {
+
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
             }
-        });
-    }
 
-    private void buttonVuelo() {
-        Button btnVuelo = (Button) findViewById(R.id.main_vuelo_btn);
-
-        btnVuelo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentVuelo = new Intent(getApplicationContext(), UserSupportActivity.class);
-                startActivity(intentVuelo);
+            try {
+                int result = response.getJsonObject().getInt("peopleQuantity");
+                resultTV.setText(String.valueOf(result));
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        });
+        }
     }
-
-    private void buttonInfo() {
-        TextView btnInfo = (TextView) findViewById(R.id.main_info_btn);
-
-        btnInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentInfo = new Intent(getApplicationContext(), InfoActivity.class);
-                startActivity(intentInfo);
-            }
-        });
-    }
-
-    */
 }

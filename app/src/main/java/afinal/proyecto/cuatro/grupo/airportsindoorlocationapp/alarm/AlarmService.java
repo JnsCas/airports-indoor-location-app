@@ -2,17 +2,12 @@ package afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.alarm;
 
 import android.app.IntentService;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import java.text.SimpleDateFormat;
-
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.R;
-import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.HomeActivity;
-import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.model.Vuelo;
 
 public class AlarmService extends IntentService {
 
