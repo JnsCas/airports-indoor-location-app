@@ -21,9 +21,19 @@ public class NotificationActivity extends AppCompatActivity {
         final Switch cafe = findViewById(R.id.switchCafe);
 
         //set switch with actual status value
-        comidasRapidas.setChecked(mapNotificationStatusByTag.get("notification-candy-1") && mapNotificationStatusByTag.get("notification-candy-2"));
-        indumentariaDeportiva.setChecked(mapNotificationStatusByTag.get("notification-coconut-2"));
-        cafe.setChecked(mapNotificationStatusByTag.get("notification-lemon-1"));
+        if (mapNotificationStatusByTag.size() != 0) {
+            comidasRapidas.setChecked(mapNotificationStatusByTag.get("notification-candy-1") && mapNotificationStatusByTag.get("notification-candy-2"));
+            indumentariaDeportiva.setChecked(mapNotificationStatusByTag.get("notification-coconut-2"));
+            cafe.setChecked(mapNotificationStatusByTag.get("notification-lemon-1"));
+        } else {
+            mapNotificationStatusByTag.put("notification-candy-1", true);
+            mapNotificationStatusByTag.put("notification-candy-2", true);
+            mapNotificationStatusByTag.put("notification-coconut-2", true);
+            mapNotificationStatusByTag.put("notification-lemon-1", true);
+            comidasRapidas.setChecked(true);
+            indumentariaDeportiva.setChecked(true);
+            cafe.setChecked(true);
+        }
 
         comidasRapidas.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
