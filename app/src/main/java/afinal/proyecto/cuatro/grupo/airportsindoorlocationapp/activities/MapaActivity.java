@@ -1,7 +1,6 @@
 package afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,15 +10,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
 
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.R;
-import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.model.Vuelo;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.newmap.ImageAdapter;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.notifications.NotificationsManager;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.ConexionWebService;
@@ -46,11 +42,11 @@ public class MapaActivity extends AppCompatActivity {
             "Baño Hombres" // 8
     };
 
-    private String getNode(int position){
+    private String getNode(int position) {
 
         String nodePosition;
 
-        switch(position) {
+        switch (position) {
             case 0:
                 nodePosition = null;
                 break;
@@ -102,7 +98,7 @@ public class MapaActivity extends AppCompatActivity {
 
         /* Spinner From */
         fromSpinner = findViewById(R.id.from);
-        fromSpinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, LOCATIONS));
+        fromSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, LOCATIONS));
         fromSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @SuppressLint("ResourceAsColor")
             @Override
@@ -118,7 +114,7 @@ public class MapaActivity extends AppCompatActivity {
 
         /* Spinner To */
         toSpinner = findViewById(R.id.to);
-        toSpinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, LOCATIONS));
+        toSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, LOCATIONS));
         toSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @SuppressLint("ResourceAsColor")
             @Override
@@ -142,20 +138,21 @@ public class MapaActivity extends AppCompatActivity {
         btnBuscarCamino.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new GetWayFinding(nodeFrom,nodeTo).execute();
+                new GetWayFinding(nodeFrom, nodeTo).execute();
             }
         });
     }
 
 
+    @SuppressLint("StaticFieldLeak")
     private class GetWayFinding extends AsyncTask<Void, Void, Void> {
 
-        private  String nodeOrigin;
+        private String nodeOrigin;
         private String nodeDestination;
         private JSONArray jsonArray;
         private Integer status;
 
-        public GetWayFinding(String nodeOrigin, String nodeDestination) {
+        GetWayFinding(String nodeOrigin, String nodeDestination) {
             this.nodeOrigin = nodeOrigin;
             this.nodeDestination = nodeDestination;
         }
@@ -163,16 +160,13 @@ public class MapaActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
 
-            JsonArrayResponse jsonArrayResponse = ConexionWebService.getJsonArray(
-                    "/way-finding/" + nodeOrigin + "/" + nodeDestination);
+            String resource = "/way-finding/" + nodeOrigin + "/" + nodeDestination;
+            JsonArrayResponse jsonArrayResponse = ConexionWebService.getJsonArray(resource);
 
             jsonArray = jsonArrayResponse.getJsonArray();
             status = jsonArrayResponse.getStatus();
 
-            Log.d("*** MapaActivity",
-                    "/way-finding/" + nodeOrigin + nodeDestination);
-            Log.d("*** MapaActivity",
-                    "response : " + jsonArray);
+            Log.d("*** MapaActivity", resource);
 
             return null;
         }
@@ -180,11 +174,11 @@ public class MapaActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void args) {
             if (status == 200) {
-                newMapManager.NewDestinationFound(imageAdapter,jsonArray);
+                newMapManager.NewDestinationFound(imageAdapter, jsonArray);
             } else {
                 Toast.makeText(
                         getApplicationContext(),
-                        "Ops! Algo no ocurrio como se esperaba.",
+                        "Ops! Algo no ocurri\u00f3 como se esperaba.",
                         Toast.LENGTH_LONG
                 ).show();
             }
