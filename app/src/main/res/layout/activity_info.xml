@@ -75,7 +75,12 @@
             android:layout_marginVertical="20dp">
 
             <TextView
-                android:text="@string/aqui_agregar_info_relacionada_a_ayuda_info_del_proyecto_preguntas_frecuentes_y_cualquier_otra_referencia"
+                android:text="Cantidad de personas en la puerta de embarque"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/info_people_quantity_result"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 

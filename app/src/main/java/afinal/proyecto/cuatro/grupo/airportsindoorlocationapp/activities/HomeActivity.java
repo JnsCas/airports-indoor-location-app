@@ -45,7 +45,7 @@ public class HomeActivity extends AppCompatActivity {
     private AlarmManager alarmMgr;
 
     private ArrayList<Vuelo> flights;
-    private int idUser;
+    private static int idUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +89,10 @@ public class HomeActivity extends AppCompatActivity {
         buttonSupport();
         buttonNotification();
         new GetFlights().execute();
+    }
+
+    public static int getIdUser() {
+        return idUser;
     }
 
     private void loadFlightsAlarm() {
@@ -227,7 +231,7 @@ public class HomeActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
 
             response = ConexionWebService
-                    .getJsonObject("/user/" + idUser);
+                    .getJsonObject("/user/" + idUser, null);
 
             return null;
         }

@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
@@ -18,17 +19,25 @@ import com.estimote.proximity_sdk.api.ProximityZoneBuilder;
 import com.estimote.proximity_sdk.api.ProximityZoneContext;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.MainActivity;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.R;
+import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities.HomeActivity;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.application.MyApplication;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.newmap.ContentZone;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.newmap.ImageAdapter;
+import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.ConexionWebService;
+import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.JsonObjectResponse;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.Validaciones;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
@@ -36,7 +45,8 @@ import kotlin.jvm.functions.Function1;
 public class NotificationsManager {
 
     public static Map<String, Boolean> mapNotificationStatusByTag = new HashMap<>();
-    public static Map<String, Calendar> mapLastPushByTag = new HashMap<>();
+    private static Map<String, Calendar> mapLastPushByTag = new HashMap<>();
+    private static Map<String, Calendar> mapLastPostByTag = new HashMap<>();
 
     public NotificationsManager() {
         Log.i("*** NotificationManager", "NotificationManager instance created");
@@ -207,9 +217,12 @@ public class NotificationsManager {
                         if (imageAdapter != null) {
                             imageAdapter.adjustMapWith(contentZone);
                             imageAdapter.notifyDataSetChanged();
-
                         }
-
+                        Calendar lastPost = mapLastPostByTag.get(tag);
+                        long differenceMinutes = getDifferenceMinutes(lastPost);
+                        if (differenceMinutes > 0 || differenceMinutes == -1) {
+                            new PostFlowAnalysis(HomeActivity.getIdUser(), tag).execute();
+                        }
                         return null;
                     }
                 })
@@ -249,10 +262,7 @@ public class NotificationsManager {
                     Boolean enabled = mapNotificationStatusByTag.get(tag);
                     if (enabled) {
                         Calendar lastPush = mapLastPushByTag.get(tag);
-                        long differenceMinutes = -1;
-                        if (lastPush != null) {
-                            differenceMinutes = differenceMinutes(lastPush, Calendar.getInstance());
-                        }
+                        long differenceMinutes = getDifferenceMinutes(lastPush);
                         if (differenceMinutes >= 5 || differenceMinutes == -1) { //si paso al menos 5 minutos desde el ultimo push notifications o si es el primer push, entonces se notifica
                             notificationManager.notify(notificationZone.getId(), buildNotification(
                                 notificationZone.getTitle(),
@@ -274,5 +284,52 @@ public class NotificationsManager {
     //FIXME codigo duplicado
     private long differenceMinutes(Calendar cal1, Calendar cal2) {
         return ((cal2.getTimeInMillis() - cal1.getTimeInMillis()) / 1000) / 60;
+    }
+
+    private long getDifferenceMinutes(Calendar lastCal) {
+        long differenceMinutes = -1;
+        if (lastCal != null) {
+            differenceMinutes = differenceMinutes(lastCal, Calendar.getInstance());
+        }
+        return differenceMinutes;
+    }
+
+    private class PostFlowAnalysis extends AsyncTask<Void, Void, Void> {
+
+        private JsonObjectResponse response;
+        private int idUser;
+        private String zone;
+
+        private PostFlowAnalysis(int idUser, String zone) {
+            this.idUser = idUser;
+            this.zone = zone;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            JSONObject json = new JSONObject();
+
+            try {
+                json.put("idUsuario", idUser);
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                json.put("momentoPosicion", format.format(new Date()));
+                json.put("zone", zone);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            response = ConexionWebService
+                    .postJson("/flowAnalysis", json);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if (response.getStatus() == 201) {
+                Log.i(NotificationsManager.class.getSimpleName(), "Post flow analysis done.");
+            } else {
+                Log.i(NotificationsManager.class.getSimpleName(), "Error " + response.getStatus() + " in post flow analysis.");
+            }
+        }
     }
 }
