@@ -121,7 +121,7 @@ public class UserSupportActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
 
             response = ConexionWebService
-                    .getJsonObject("/user/" + idUser);
+                    .getJsonObject("/user/" + idUser, null);
 
             return null;
         }
