@@ -32,15 +32,15 @@ public class ConexionWebService {
     private static final String TAG = ConexionWebService.class.getName();
 
     /* Endpoint local, para probar desde el emulador */
-    private static final String ENDPOINT = "http://10.0.2.2:8080";
+    //private static final String ENDPOINT = "http://10.0.2.2:8080";
 
     /* Endpoint local, para probar desde el cel */
     //private static final String ENDPOINT = "http://10.54.34.60:8080";
-    private static final String API_KEY_VALUE = "12345678";
+    //private static final String API_KEY_VALUE = "12345678";
 
     /* Endpoint de prod, para probar desde el celu */
-    //private static final String ENDPOINT = "http://54.233.174.152:9090";
-    //private static final String API_KEY_VALUE = "udQH4Ny9NM3VAw5QB3Bvo7YIwQmIhMYiLamgjgYgn6GQ8V6cv8";
+    private static final String ENDPOINT = "http://54.233.174.152:9090";
+    private static final String API_KEY_VALUE = "udQH4Ny9NM3VAw5QB3Bvo7YIwQmIhMYiLamgjgYgn6GQ8V6cv8";
 
     public static JsonObjectResponse getJsonObject(String resource, Map<String, String> requestParam) {
         InputStream is = null;
