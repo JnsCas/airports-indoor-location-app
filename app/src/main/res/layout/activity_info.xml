@@ -56,11 +56,11 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:text="Titulo"
-                        android:layout_gravity="center_vertical"
-                        android:textSize="20dp"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:text="Estado Embarque "
+                        android:textSize="20dp" />
 
                 </LinearLayout>
 
@@ -68,23 +68,44 @@
 
         </GridLayout>
 
-        <LinearLayout
-            android:orientation="vertical"
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="Cantidad de personas en la puerta de embarque"
+            android:textAlignment="center"
+            android:textSize="30dp"
+            tools:ignore="NestedWeights" />
+
+        <TextView
+            android:id="@+id/info_people_quantity_result"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginVertical="20dp">
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textAlignment="center"
+            android:textSize="30dp" />
 
-            <TextView
-                android:text="Cantidad de personas en la puerta de embarque"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="Espera actual en la puerta de embarque"
+            android:textAlignment="center"
+            android:textSize="30dp"
+            tools:ignore="NestedWeights" />
 
-            <TextView
-                android:id="@+id/info_people_quantity_result"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/info_duracion_estadia"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textAlignment="center"
+            android:textSize="30dp" />
 
     </LinearLayout>
 

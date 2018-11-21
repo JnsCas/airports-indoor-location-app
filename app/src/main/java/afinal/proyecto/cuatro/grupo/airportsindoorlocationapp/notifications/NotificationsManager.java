@@ -254,10 +254,10 @@ public class NotificationsManager {
                         liveNotificationZoneCoconut1,
                         liveNotificationZoneCoconut2));
 
-        mapNotificationStatusByTag.put("notification-lemon-1", true); //FIXME(Jonas) si hay tiempo, guardar configuracion de notificaciones en base de datos.
-        mapNotificationStatusByTag.put("notification-candy-1", true);
-        mapNotificationStatusByTag.put("notification-candy-2", true);
-        mapNotificationStatusByTag.put("notification-coconut-2", true);
+        mapNotificationStatusByTag.put("notification-lemon-1", false); //FIXME(Jonas) si hay tiempo, guardar configuracion de notificaciones en base de datos.
+        mapNotificationStatusByTag.put("notification-candy-1", false);
+        mapNotificationStatusByTag.put("notification-candy-2", false);
+        mapNotificationStatusByTag.put("notification-coconut-2", false);
     }
 
     /* create zone for map activity */

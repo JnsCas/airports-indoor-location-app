@@ -26,13 +26,13 @@ public class NotificationActivity extends AppCompatActivity {
             indumentariaDeportiva.setChecked(mapNotificationStatusByTag.get("notification-coconut-2"));
             cafe.setChecked(mapNotificationStatusByTag.get("notification-lemon-1"));
         } else {
-            mapNotificationStatusByTag.put("notification-candy-1", true);
-            mapNotificationStatusByTag.put("notification-candy-2", true);
-            mapNotificationStatusByTag.put("notification-coconut-2", true);
-            mapNotificationStatusByTag.put("notification-lemon-1", true);
-            comidasRapidas.setChecked(true);
-            indumentariaDeportiva.setChecked(true);
-            cafe.setChecked(true);
+            mapNotificationStatusByTag.put("notification-candy-1", false);
+            mapNotificationStatusByTag.put("notification-candy-2", false);
+            mapNotificationStatusByTag.put("notification-coconut-2", false);
+            mapNotificationStatusByTag.put("notification-lemon-1", false);
+            comidasRapidas.setChecked(false);
+            indumentariaDeportiva.setChecked(false);
+            cafe.setChecked(false);
         }
 
         comidasRapidas.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
