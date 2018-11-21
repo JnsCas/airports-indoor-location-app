@@ -107,9 +107,9 @@ public class InfoActivity extends AppCompatActivity {
             }
 
             try {
-                DecimalFormat df = new DecimalFormat("#.00");
                 Double result = response.getJsonObject().getDouble("duracionEstadia");
-                resultDuracionEstadiaTV.setText(String.valueOf(df.format(result)) + " Minutos");
+                String msgResult= String.format("%.2f", result) + " Minutos";
+                resultDuracionEstadiaTV.setText(msgResult);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
