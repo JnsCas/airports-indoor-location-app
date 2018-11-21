@@ -64,7 +64,7 @@ public class NotificationsManager {
     }
 
     /* Beacon recognition distance  */
-    private static final Double DISTANCE = 3.0;
+    private static final Double DISTANCE = 6.0;
 
 
     /* General notification */
@@ -186,14 +186,14 @@ public class NotificationsManager {
                         .withTelemetryReportingDisabled()
                         .build();
 
-        ProximityZone newMapZoneCandy2 = createNewMapZoneFromBeacon("candy-2");
-        ProximityZone newMapZoneLemon2 = createNewMapZoneFromBeacon("lemon-2");
-        ProximityZone newMapZoneBeetroot2 = createNewMapZoneFromBeacon("beetroot-2");
-        ProximityZone newMapZoneCoconut2 = createNewMapZoneFromBeacon("coconut-2");
         ProximityZone newMapZoneCandy1 = createNewMapZoneFromBeacon("candy-1");
-        ProximityZone newMapZoneLemon1 = createNewMapZoneFromBeacon("lemon-1");
+        ProximityZone newMapZoneCandy2 = createNewMapZoneFromBeacon("candy-2");
         ProximityZone newMapZoneBeetroot1 = createNewMapZoneFromBeacon("beetroot-1");
+        ProximityZone newMapZoneBeetroot2 = createNewMapZoneFromBeacon("beetroot-2");
         ProximityZone newMapZoneCoconut1 = createNewMapZoneFromBeacon("coconut-1");
+        ProximityZone newMapZoneCoconut2 = createNewMapZoneFromBeacon("coconut-2");
+        ProximityZone newMapZoneLemon1 = createNewMapZoneFromBeacon("lemon-1");
+        ProximityZone newMapZoneLemon2 = createNewMapZoneFromBeacon("lemon-2");
         ProximityZone liveNotificationZoneLemon1 = createLiveNotificationZoneFromBeacon("notification-lemon-1");
         ProximityZone liveNotificationZoneLemon2 = createLiveNotificationZoneFromBeacon("notification-lemon-2");
         ProximityZone liveNotificationZoneCandy1 = createLiveNotificationZoneFromBeacon("notification-candy-1");
