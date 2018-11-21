@@ -64,7 +64,7 @@ public class NotificationsManager {
     }
 
     /* Beacon recognition distance  */
-    private static final Double DISTANCE = 1.0;
+    private static final Double DISTANCE = 1.5;
 
 
     /* General notification */
@@ -181,7 +181,9 @@ public class NotificationsManager {
                                 return null;
                             }
                         })
-                        .withBalancedPowerMode()
+                        //.withBalancedPowerMode()
+                        .withLowLatencyPowerMode()
+                        .withAnalyticsReportingDisabled()
                         .withEstimoteSecureMonitoringDisabled()
                         .withTelemetryReportingDisabled()
                         .build();
@@ -233,8 +235,8 @@ public class NotificationsManager {
 
         return new ProximityZoneBuilder()
                 .forTag(tag)
-                .inNearRange()
-                //.inCustomRange(DISTANCE)
+                //.inNearRange()
+                .inCustomRange(DISTANCE)
                 .onEnter(new Function1<ProximityZoneContext, Unit>() {
                     @Override
                     public Unit invoke(ProximityZoneContext proximityContext) {
