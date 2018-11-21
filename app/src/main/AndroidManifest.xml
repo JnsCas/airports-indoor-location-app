@@ -23,23 +23,33 @@
         </activity>
         <activity
             android:name=".activities.SignInActivity"
-            android:label="SignIn" />
+            android:label="SignIn"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.HomeActivity"
-            android:label="Home" />
+            android:label="Home"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.UserSupportActivity"
-            android:label="UserInformation" />
+            android:label="UserInformation"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.MapaActivity"
-            android:label="WayFinding" />
-        <activity android:name=".activities.DestinoActivity" />
+            android:label="WayFinding"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.DestinoActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.InfoActivity"
-            android:label="Ayuda" />
-        <activity android:name=".activities.CargarVueloActivity" />
-        <activity android:name=".activities.LoginActivity" android:label="LogIn"/>
-        <activity android:name=".activities.NotificationActivity" android:label="PushNotification"></activity>
+            android:label="Ayuda"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.CargarVueloActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.LoginActivity" android:label="LogIn"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.NotificationActivity"
+            android:label="PushNotification"
+            android:screenOrientation="portrait" />
         <service
             android:name=".alarm.AlarmService"
             android:enabled="true" />
