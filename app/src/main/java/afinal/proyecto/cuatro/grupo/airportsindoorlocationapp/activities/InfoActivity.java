@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import org.json.JSONException;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -20,6 +21,7 @@ import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.JsonObjectRes
 public class InfoActivity extends AppCompatActivity {
 
     private TextView resultTV;
+    private TextView resultDuracionEstadiaTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,15 +29,17 @@ public class InfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_info);
 
         resultTV = findViewById(R.id.info_people_quantity_result);
+        resultDuracionEstadiaTV = findViewById(R.id.info_duracion_estadia);
 
         new PostPeopleQuantity().execute();
+        new GetEsperaActual().execute();
 
     }
 
     private class PostPeopleQuantity extends AsyncTask<Void, Void, Void> {
 
-        private JsonObjectResponse response;
         private ProgressDialog progressDialog;
+        private JsonObjectResponse response;
 
         public PostPeopleQuantity() {
             this.progressDialog = new ProgressDialog(InfoActivity.this);
@@ -72,6 +76,40 @@ public class InfoActivity extends AppCompatActivity {
             try {
                 int result = response.getJsonObject().getInt("peopleQuantity");
                 resultTV.setText(String.valueOf(result));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private class GetEsperaActual extends AsyncTask<Void, Void, Void> {
+
+        private ProgressDialog progressDialog;
+        private JsonObjectResponse response;
+
+        public GetEsperaActual() {
+            this.progressDialog = new ProgressDialog(InfoActivity.this);
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            Map<String, String> requestParam = new HashMap<>();
+            requestParam.put("zone", "lemon-2"); //FIXME hardcodeo fuerte. lemon-2 es la puerta de embarque
+            response = ConexionWebService.getJsonObject("/flowAnalysis/duracionEstadia", requestParam);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void args) {
+
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+
+            try {
+                DecimalFormat df = new DecimalFormat("#.00");
+                Double result = response.getJsonObject().getDouble("duracionEstadia");
+                resultDuracionEstadiaTV.setText(String.valueOf(df.format(result)) + " Minutos");
             } catch (JSONException e) {
                 e.printStackTrace();
             }

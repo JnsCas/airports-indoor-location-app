@@ -58,7 +58,7 @@
                     tools:ignore="UselessParent">
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
                         android:text="@string/titulo"
@@ -75,11 +75,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginVertical="20dp">
-
-            <TextView
-                android:text="Aqui agregar info relacionada a PushNotification."
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
 
         </LinearLayout>
 
