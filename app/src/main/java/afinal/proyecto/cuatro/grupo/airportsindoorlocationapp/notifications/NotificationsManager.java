@@ -297,6 +297,7 @@ public class NotificationsManager {
                                 notificationZone.getMessage(),
                                 notificationZone.getLink()));
                             mapLastPushByTag.put(tag, Calendar.getInstance());
+                            new PostEnvioPromo(tag).execute();
                             Log.i("*** LiveNotification","Notificated beacon: " + tag);
                         }
                     } else {
@@ -358,6 +359,38 @@ public class NotificationsManager {
             } else {
                 Log.i(NotificationsManager.class.getSimpleName(), "Error " + response.getStatus() + " in post flow analysis.");
             }
+        }
+    }
+
+    private class PostEnvioPromo extends AsyncTask<Void, Void, Void> {
+
+        private String beacon;
+
+        public PostEnvioPromo(String tag) {
+            this.beacon = tag;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            JsonObjectResponse response;
+            try {
+                JSONObject body = new JSONObject();
+                body.put("idUsuario", Long.parseLong(String.valueOf(HomeActivity.getIdUser())));
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                body.put("momentoEnvio",  format.format(new Date()));
+                body.put("beacon", beacon);
+                body.put("flagPromo", 1);
+                body.put("textoMultiuso", null);
+                response = ConexionWebService.postJson("/envioPromo", body);
+                if (response.getStatus() == 201) {
+                    Log.d("NotificationsManager", "Post envioPromo OK.");
+                } else {
+                    Log.d("NotificationsManager", "Error in post envioPromo.");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
         }
     }
 }
