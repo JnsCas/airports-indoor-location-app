@@ -64,7 +64,7 @@ public class NotificationsManager {
     }
 
     /* Beacon recognition distance  */
-    private static final Double DISTANCE = 6.0;
+    private static final Double DISTANCE = 1.0;
 
 
     /* General notification */
@@ -233,7 +233,8 @@ public class NotificationsManager {
 
         return new ProximityZoneBuilder()
                 .forTag(tag)
-                .inCustomRange(DISTANCE)
+                .inNearRange()
+                //.inCustomRange(DISTANCE)
                 .onEnter(new Function1<ProximityZoneContext, Unit>() {
                     @Override
                     public Unit invoke(ProximityZoneContext proximityContext) {
