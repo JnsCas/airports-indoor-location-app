@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -30,18 +29,20 @@ public class MapaActivity extends AppCompatActivity {
     String nodeFrom;
     String nodeTo;
 
+    /* Statics location / destinations  */
     private static final String[] LOCATIONS = {
-            "", // 0
-            "Laboratorio", // 1
-            "Pasillo Laboratorio A", // 2
-            "Pasillo Laboratorio B", // 3
-            "Pasillo Vertical A", // 4
-            "Pasillo Vertical B", // 5
-            "Pasillo Horizontal Norte", // 6
-            "Pasillo Horizontal Sur", // 7
-            "Baño Hombres" // 8
+            "Seleccione un destino...", // case 0 -> null
+            "Hall de entrada",          // case 1 -> le2
+            // "Zona de transito A",    // case 2 -> br2
+            // "Zona de transito B",    // case 3 -> le1
+            "Sala de espera",           // case 4 -> ca2
+            "Hall central",             // case 5 -> co1
+            "Corredor norte",           // case 6 -> co2
+            "Puerta de embarque 2",     // case 7 -> br1
+            "Puerta de embarque 1"      // case 8 -> ca1
     };
 
+    /* In order with the destination selected get the node and his position in the graph */
     private String getNode(int position) {
 
         String nodePosition;
@@ -100,15 +101,14 @@ public class MapaActivity extends AppCompatActivity {
         fromSpinner = findViewById(R.id.from);
         fromSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, LOCATIONS));
         fromSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
             @SuppressLint("ResourceAsColor")
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 nodeFrom = getNode(position);
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
             }
         });
 
@@ -116,18 +116,16 @@ public class MapaActivity extends AppCompatActivity {
         toSpinner = findViewById(R.id.to);
         toSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, LOCATIONS));
         toSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
             @SuppressLint("ResourceAsColor")
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 nodeTo = getNode(position);
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
             }
         });
-
         buttonBuscarCamino();
     }
 
@@ -166,7 +164,7 @@ public class MapaActivity extends AppCompatActivity {
             jsonArray = jsonArrayResponse.getJsonArray();
             status = jsonArrayResponse.getStatus();
 
-            Log.d("*** MapaActivity", resource);
+            // Log.d("*** MapaActivity", resource);
 
             return null;
         }
@@ -178,7 +176,7 @@ public class MapaActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(
                         getApplicationContext(),
-                        "Ops! Algo no ocurri\u00f3 como se esperaba.",
+                        "Ups! Algo no ocurri\u00f3 como se esperaba.",
                         Toast.LENGTH_LONG
                 ).show();
             }
