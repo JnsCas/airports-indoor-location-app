@@ -64,11 +64,10 @@ public class ImageAdapter extends BaseAdapter {
         this.way = way;
     }
 
-
+    /* Any time that something change in the view, the map cleans */
     private ImageView cleanMap(ImageView imageView){
 
         /* Get the active image */
-
         Resources resources = mContext.getResources();
 
         for(int i=0; i<16; i++){
@@ -78,7 +77,6 @@ public class ImageAdapter extends BaseAdapter {
                     "drawable",
                     mContext.getPackageName()
             );
-
 
             /* Set the active image */
             mThumbIds[i] = resourceId;
@@ -150,14 +148,14 @@ public class ImageAdapter extends BaseAdapter {
                     /* Adding resource into the hashMap*/
                     hashMap.put(posName, resourceName);
 
-                    // System.out.println("--->  node: " + node + " resourceName: " + resourceName);
+                    System.out.println("--->  node: " + node + " resourceName: " + resourceName);
 
                     /* Set the active image */
                     mThumbIds[Integer.parseInt(String.valueOf(pos))] = resourceId;
                 }
             }
 
-            System.out.println("-----------> final hashMap: " + hashMap);
+            System.out.println("---> final hashMap: " + hashMap);
         }
 
 
@@ -192,7 +190,7 @@ public class ImageAdapter extends BaseAdapter {
 
                         resourceName = value + "_ilu_" + contentZone.getCode();
 
-                        System.out.println("*************** >> resourceName: " + resourceName);
+                        System.out.println("---> resourceName: " + resourceName);
                     }
 
                     /* Get the active image */
@@ -230,7 +228,7 @@ public class ImageAdapter extends BaseAdapter {
 
                         posName = value;
 
-                        System.out.println("*************** >> resourceName: " + posName);
+                        System.out.println("---> resourceName: " + posName);
                     }
 
                     /* Get the original image back */

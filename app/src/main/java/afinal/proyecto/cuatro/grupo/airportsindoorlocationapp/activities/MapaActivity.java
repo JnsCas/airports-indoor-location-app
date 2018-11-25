@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -33,13 +34,14 @@ public class MapaActivity extends AppCompatActivity {
     private static final String[] LOCATIONS = {
             "Seleccione un destino...", // case 0 -> null
             "Hall de entrada",          // case 1 -> le2
+            "Sala de espera",           // case 2 -> ca2
+            "Hall central",             // case 3 -> co1
+            "Corredor norte",           // case 4 -> co2
+            "Puerta de embarque 2",     // case 5 -> br1
+            "Puerta de embarque 1"      // case 6 -> ca1
+
             // "Zona de transito A",    // case 2 -> br2
             // "Zona de transito B",    // case 3 -> le1
-            "Sala de espera",           // case 4 -> ca2
-            "Hall central",             // case 5 -> co1
-            "Corredor norte",           // case 6 -> co2
-            "Puerta de embarque 2",     // case 7 -> br1
-            "Puerta de embarque 1"      // case 8 -> ca1
     };
 
     /* In order with the destination selected get the node and his position in the graph */
@@ -54,30 +56,32 @@ public class MapaActivity extends AppCompatActivity {
             case 1: // node le2
                 nodePosition = "1/1";
                 break;
+            case 2: // node ca2
+                nodePosition = "3/3";
+                break;
+            case 3: // node co1
+                nodePosition = "3/5";
+                break;
+            case 4: // node co2
+                nodePosition = "4/5";
+                break;
+            case 5: // node br1
+                nodePosition = "4/3";
+                break;
+            case 6: // node ca1
+                nodePosition = "4/4";
+                break;
+            default:
+                nodePosition = null;
+                break;
+            /*
             case 2: // node br2
                 nodePosition = "2/1";
                 break;
             case 3: // node le1
                 nodePosition = "3/2";
                 break;
-            case 4: // node ca2
-                nodePosition = "3/3";
-                break;
-            case 5: // node co1
-                nodePosition = "3/5";
-                break;
-            case 6: // node co2
-                nodePosition = "4/5";
-                break;
-            case 7: // node br1
-                nodePosition = "4/3";
-                break;
-            case 8: // node ca1
-                nodePosition = "4/4";
-                break;
-            default:
-                nodePosition = null;
-                break;
+            */
         }
         return nodePosition;
     }
@@ -164,7 +168,7 @@ public class MapaActivity extends AppCompatActivity {
             jsonArray = jsonArrayResponse.getJsonArray();
             status = jsonArrayResponse.getStatus();
 
-            // Log.d("*** MapaActivity", resource);
+            System.out.println("---> MapaActivity: " + resource);
 
             return null;
         }
