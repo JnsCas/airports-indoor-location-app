@@ -155,6 +155,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intentMapa = new Intent(getApplicationContext(), MapaActivity.class);
+                intentMapa.putExtra("idUser", idUser);
                 startActivity(intentMapa);
             }
         });

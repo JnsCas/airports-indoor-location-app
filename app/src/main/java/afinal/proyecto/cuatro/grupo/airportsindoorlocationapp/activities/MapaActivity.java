@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,6 +13,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.R;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.newmap.ImageAdapter;
@@ -29,6 +30,20 @@ public class MapaActivity extends AppCompatActivity {
     Spinner toSpinner;
     String nodeFrom;
     String nodeTo;
+
+    /* Last position class */
+    class LastPosition
+    {
+        String Zone;
+        String Time;
+
+        LastPosition(String zone, String momentoPosicion) {
+            this.Zone = zone;
+            this.Time = momentoPosicion;
+        }
+    }
+
+    LastPosition lastPosition;
 
     /* Statics location / destinations  */
     private static final String[] LOCATIONS = {
@@ -89,6 +104,8 @@ public class MapaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa);
 
@@ -111,10 +128,20 @@ public class MapaActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 nodeFrom = getNode(position);
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
+
+        /* New implementation of last position by backend information */
+
+        int idUser = getIntent().getIntExtra("idUser", 0);
+
+        new GetLastPosition((long) idUser).execute();
+
+        nodeFrom = lastPosition.Zone;
+
 
         /* Spinner To */
         toSpinner = findViewById(R.id.to);
@@ -126,6 +153,7 @@ public class MapaActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 nodeTo = getNode(position);
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
@@ -177,6 +205,64 @@ public class MapaActivity extends AppCompatActivity {
         protected void onPostExecute(Void args) {
             if (status == 200) {
                 newMapManager.NewDestinationFound(imageAdapter, jsonArray);
+            } else {
+                Toast.makeText(
+                        getApplicationContext(),
+                        "Ups! Algo no ocurri\u00f3 como se esperaba.",
+                        Toast.LENGTH_LONG
+                ).show();
+            }
+        }
+
+    }
+
+
+    @SuppressLint("StaticFieldLeak")
+    private class GetLastPosition extends AsyncTask<Void, Void, Void> {
+
+        private Long userID;
+        private JSONArray jsonArray;
+        private Integer status;
+        private String auxZone;
+        private String auxMomentoPosicion;
+
+        GetLastPosition(Long userID) {
+            this.userID = userID;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            String resource = "/lastposition/" + userID;
+            JsonArrayResponse jsonArrayResponse = ConexionWebService.getJsonArray(resource);
+
+            jsonArray = jsonArrayResponse.getJsonArray();
+            status = jsonArrayResponse.getStatus();
+
+            try {
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                    auxZone = jsonObject1.optString("zone");
+                    auxMomentoPosicion = jsonObject1.optString("momentoPosicion");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            System.out.println("---> MapaActivity: " + resource);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void args) {
+            if (status == 200) {
+
+                lastPosition.Zone = auxZone;
+                lastPosition.Time = auxMomentoPosicion;
+
+                System.out.println("---> lastPosition: " + lastPosition.Zone);
+
             } else {
                 Toast.makeText(
                         getApplicationContext(),
