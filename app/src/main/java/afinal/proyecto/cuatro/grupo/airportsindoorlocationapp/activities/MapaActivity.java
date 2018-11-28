@@ -13,7 +13,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.R;
@@ -21,6 +20,7 @@ import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.newmap.ImageAdapte
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.notifications.NotificationsManager;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.ConexionWebService;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.JsonArrayResponse;
+import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.JsonObjectResponse;
 
 public class MapaActivity extends AppCompatActivity {
 
@@ -32,15 +32,9 @@ public class MapaActivity extends AppCompatActivity {
     String nodeTo;
 
     /* Last position class */
-    class LastPosition
-    {
+    class LastPosition {
         String Zone;
         String Time;
-
-        LastPosition(String zone, String momentoPosicion) {
-            this.Zone = zone;
-            this.Time = momentoPosicion;
-        }
     }
 
     LastPosition lastPosition;
@@ -101,9 +95,39 @@ public class MapaActivity extends AppCompatActivity {
         return nodePosition;
     }
 
+    /* Get the position number in base a full name beacon */
+    private int getPosition(String beacon) {
+
+        int node;
+
+        switch (beacon) {
+            case "lemon-2":
+                node = 1;
+                break;
+            case "candy-2":
+                node = 2;
+                break;
+            case "coconut-1":
+                node = 3;
+                break;
+            case "coconut-2":
+                node = 4;
+                break;
+            case "beetroot-1":
+                node = 5;
+                break;
+            case "candy-1":
+                node = 6;
+                break;
+            default:
+                node = 0;
+                break;
+        }
+        return node;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
 
 
         super.onCreate(savedInstanceState);
@@ -119,6 +143,7 @@ public class MapaActivity extends AppCompatActivity {
         newMapManager.NewMapManager(this, imageAdapter);
 
         /* Spinner From */
+
         fromSpinner = findViewById(R.id.from);
         fromSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, LOCATIONS));
         fromSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -134,13 +159,14 @@ public class MapaActivity extends AppCompatActivity {
             }
         });
 
+
         /* New implementation of last position by backend information */
 
         int idUser = getIntent().getIntExtra("idUser", 0);
 
-        new GetLastPosition((long) idUser).execute();
+        System.out.println("---> MapaActivity > userID : " + idUser);
 
-        nodeFrom = lastPosition.Zone;
+        new GetLastPosition((long) idUser).execute();
 
 
         /* Spinner To */
@@ -152,14 +178,18 @@ public class MapaActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 nodeTo = getNode(position);
+
+                new GetWayFinding(nodeFrom, nodeTo).execute();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
+
         buttonBuscarCamino();
     }
+
 
     private void buttonBuscarCamino() {
 
@@ -221,10 +251,9 @@ public class MapaActivity extends AppCompatActivity {
     private class GetLastPosition extends AsyncTask<Void, Void, Void> {
 
         private Long userID;
-        private JSONArray jsonArray;
+        private JSONObject jsonObject;
         private Integer status;
         private String auxZone;
-        private String auxMomentoPosicion;
 
         GetLastPosition(Long userID) {
             this.userID = userID;
@@ -234,22 +263,14 @@ public class MapaActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
 
             String resource = "/lastposition/" + userID;
-            JsonArrayResponse jsonArrayResponse = ConexionWebService.getJsonArray(resource);
 
-            jsonArray = jsonArrayResponse.getJsonArray();
-            status = jsonArrayResponse.getStatus();
+            JsonObjectResponse jsonObjectResponse = ConexionWebService.getJsonObject(resource,null);
 
-            try {
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                    auxZone = jsonObject1.optString("zone");
-                    auxMomentoPosicion = jsonObject1.optString("momentoPosicion");
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            status = jsonObjectResponse.getStatus();
+            jsonObject = jsonObjectResponse.getJsonObject();
 
-            System.out.println("---> MapaActivity: " + resource);
+            auxZone = jsonObject.optString("zone");
+            // auxMomentoPosicion = jsonObject.optString("momentoPosicion");
 
             return null;
         }
@@ -258,10 +279,9 @@ public class MapaActivity extends AppCompatActivity {
         protected void onPostExecute(Void args) {
             if (status == 200) {
 
-                lastPosition.Zone = auxZone;
-                lastPosition.Time = auxMomentoPosicion;
+                nodeFrom = getNode(getPosition(auxZone));
 
-                System.out.println("---> lastPosition: " + lastPosition.Zone);
+                System.out.println("---> MapaActivity > nodeFrom: " + nodeFrom);
 
             } else {
                 Toast.makeText(
