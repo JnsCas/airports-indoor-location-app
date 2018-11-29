@@ -12,7 +12,7 @@ public class Vuelo {
     private Long id;
     private String number;
     private Date boardingDateTime;
-    private Integer boardingGate;
+    private BoardingGate boardingGate;
     private StateFlight stateFlight;
     private Location destination;
 
@@ -44,11 +44,11 @@ public class Vuelo {
         this.boardingDateTime = boardingDateTime;
     }
 
-    public Integer getBoardingGate() {
+    public BoardingGate getBoardingGate() {
         return boardingGate;
     }
 
-    public void setBoardingGate(Integer boardingGate) {
+    public void setBoardingGate(BoardingGate boardingGate) {
         this.boardingGate = boardingGate;
     }
 

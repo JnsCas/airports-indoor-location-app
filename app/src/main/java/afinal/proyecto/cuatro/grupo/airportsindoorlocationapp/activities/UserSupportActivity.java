@@ -65,7 +65,7 @@ public class UserSupportActivity extends AppCompatActivity {
 
                 TextView puertaEmbarqueTV;
                 puertaEmbarqueTV = findViewById(R.id.usersupport_result_puertaEmbarque);
-                puertaEmbarqueTV.setText(vuelo.getBoardingGate().toString());
+                puertaEmbarqueTV.setText(vuelo.getBoardingGate().getNumber().toString());
 
                 TextView estadoTV;
                 estadoTV = findViewById(R.id.usersupport_result_estado_de_vuelo);
