@@ -38,6 +38,7 @@ import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.newmap.ContentZone
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.newmap.ImageAdapter;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.ConexionWebService;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.JsonObjectResponse;
+import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.Util;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.Validaciones;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
@@ -313,15 +314,10 @@ public class NotificationsManager {
             .build();
     }
 
-    //FIXME codigo duplicado
-    private long differenceMinutes(Calendar cal1, Calendar cal2) {
-        return ((cal2.getTimeInMillis() - cal1.getTimeInMillis()) / 1000) / 60;
-    }
-
     private long getDifferenceMinutes(Calendar lastCal) {
         long differenceMinutes = -1;
         if (lastCal != null) {
-            differenceMinutes = differenceMinutes(lastCal, Calendar.getInstance());
+            differenceMinutes = Util.differenceMinutes(lastCal, Calendar.getInstance());
         }
         return differenceMinutes;
     }

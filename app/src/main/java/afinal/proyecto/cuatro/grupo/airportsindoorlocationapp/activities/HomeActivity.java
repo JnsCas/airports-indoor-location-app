@@ -34,6 +34,7 @@ import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.application.MyAppl
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.model.Vuelo;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.ConexionWebService;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.JsonObjectResponse;
+import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.Util;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function0;
 import kotlin.jvm.functions.Function1;
@@ -93,6 +94,7 @@ public class HomeActivity extends AppCompatActivity {
         buttonNotification();
 
         /* Inicio de servicios en background */
+        //FIXME esto estaria bueno iniciarlo solo si el usuario tiene un vuelo cargado para el dia de hoy o mañana
         Intent intentService = new Intent(this, BackgroundService.class);
         startService(intentService);
 
@@ -115,7 +117,7 @@ public class HomeActivity extends AppCompatActivity {
 
             //si el vuelo todavia no despego.
             if (calNow.before(calBoardingDate)) {
-                long differenceMinutes = differenceMinutes(calNow, calBoardingDate);
+                long differenceMinutes = Util.differenceMinutes(calNow, calBoardingDate);
                 if (differenceMinutes > 30) { //falta mas de media hora
                     Calendar calPlusHalfHour = Calendar.getInstance();
                     calPlusHalfHour.setTime(calBoardingDate.getTime());
@@ -135,7 +137,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void createNotification(Vuelo vuelo, Calendar cal, long minutesDifference) {
-        Log.d("HomeActivity", "La alarma va a sonar a las: " + new Date(cal.getTimeInMillis()));
+        Log.d("HomeActivity", "La alarma asociada al " + vuelo + " va a sonar a las: " + new Date(cal.getTimeInMillis()));
 
         Intent intent = new Intent(HomeActivity.this, AlarmReceiver.class);
         intent.putExtra("flightNumber", vuelo.getNumber());
@@ -143,12 +145,6 @@ public class HomeActivity extends AppCompatActivity {
         intent.putExtra("minutesDifference", minutesDifference);
         PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
         alarmMgr.set(AlarmManager.RTC, cal.getTimeInMillis(), alarmIntent);
-    }
-
-
-
-    protected long differenceMinutes(Calendar calNow, Calendar calBoardingDate) {
-        return ((calBoardingDate.getTimeInMillis() - calNow.getTimeInMillis()) / 1000) / 60;
     }
 
     /** dejo esta funcion por si se necesita en un futuro */
