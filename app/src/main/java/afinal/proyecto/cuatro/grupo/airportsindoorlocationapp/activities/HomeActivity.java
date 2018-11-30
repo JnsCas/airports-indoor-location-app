@@ -29,7 +29,7 @@ import java.util.List;
 
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.R;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.alarm.AlarmReceiver;
-import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.backgroundService.backgroundService;
+import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.backgroundService.BackgroundService;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.application.MyApplication;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.model.Vuelo;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.ConexionWebService;
@@ -93,7 +93,7 @@ public class HomeActivity extends AppCompatActivity {
         buttonNotification();
 
         /* Inicio de servicios en background */
-        Intent intentService = new Intent(this, backgroundService.class);
+        Intent intentService = new Intent(this, BackgroundService.class);
         startService(intentService);
 
         new GetFlights().execute();

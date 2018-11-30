@@ -63,7 +63,7 @@
         <receiver android:name=".alarm.AlarmReceiver" />
 
         <service
-            android:name=".backgroundService.backgroundService">
+            android:name=".backgroundService.BackgroundService">
         </service>
     </application>
 

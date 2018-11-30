@@ -10,11 +10,11 @@ import android.util.Log;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.R;
 
 
-public class backgroundService extends IntentService {
+public class BackgroundService extends IntentService {
 
 
-    public backgroundService() {
-        super("backgroundService");
+    public BackgroundService() {
+        super("BackgroundService");
     }
 
 
@@ -46,7 +46,7 @@ public class backgroundService extends IntentService {
 
 
         }
-        Log.d("---> backgroundService","> MyIntentService onHandleIntent() method is invoked.");
+        Log.d("---> BackgroundService","> MyIntentService onHandleIntent() method is invoked.");
     }
 
     public void checkMethod() {
@@ -60,19 +60,19 @@ public class backgroundService extends IntentService {
          * 5   -> Si hay que salir, notificar y sumar en la notificacion trigger para wayfinding.
          */
 
-        Log.d("---> backgroundService","> MyIntentService checkMethod() is invoked.");
+        Log.d("---> BackgroundService","> MyIntentService checkMethod() is invoked.");
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d("---> backgroundService","> MyIntentService onCreate() method is invoked.");
+        Log.d("---> BackgroundService","> MyIntentService onCreate() method is invoked.");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d("---> backgroundService","> MyIntentService onDestroy() method is invoked.");
+        Log.d("---> BackgroundService","> MyIntentService onDestroy() method is invoked.");
     }
 
 }
