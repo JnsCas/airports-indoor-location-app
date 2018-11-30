@@ -37,23 +37,34 @@
             android:name=".activities.MapaActivity"
             android:label="WayFinding"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.DestinoActivity"
+        <activity
+            android:name=".activities.DestinoActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.InfoActivity"
             android:label="Ayuda"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.CargarVueloActivity"
+        <activity
+            android:name=".activities.CargarVueloActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.LoginActivity" android:label="LogIn"
+        <activity
+            android:name=".activities.LoginActivity"
+            android:label="LogIn"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.NotificationActivity"
+        <activity
+            android:name=".activities.NotificationActivity"
             android:label="PushNotification"
             android:screenOrientation="portrait" />
+
         <service
             android:name=".alarm.AlarmService"
             android:enabled="true" />
+
         <receiver android:name=".alarm.AlarmReceiver" />
+
+        <service
+            android:name=".backgroundService.BackgroundService">
+        </service>
     </application>
 
 </manifest>
