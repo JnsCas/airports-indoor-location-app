@@ -11,28 +11,6 @@
         android:paddingTop="30dp"
         android:shrinkColumns="*"
         tools:ignore="UselessParent">
-        <!-- Row 1 with single column -->
-        <TableRow
-            android:id="@+id/tableRow1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp">
-
-            <ImageView
-                android:id="@+id/imageView6"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:contentDescription="@string/from"
-                app:srcCompat="@drawable/from" />
-
-            <Spinner
-                android:id="@+id/from"
-                android:layout_width="400dp"
-                android:layout_height="match_parent"
-                android:ellipsize="marquee"
-                android:gravity="center_vertical"
-                android:spinnerMode="dropdown" />
-        </TableRow>
 
         <TableRow
             android:id="@+id/tableRow2"
@@ -42,15 +20,17 @@
 
             <ImageView
                 android:id="@+id/imageView7"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".15"
                 android:contentDescription="@string/to"
                 app:srcCompat="@drawable/to" />
 
             <Spinner
                 android:id="@+id/to"
-                android:layout_width="400dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight=".85"
                 android:ellipsize="marquee"
                 android:gravity="center_vertical"
                 android:spinnerMode="dropdown" />
@@ -64,21 +44,6 @@
             android:numColumns="4"
             android:padding="32dp">
         </GridView>
-
-        <TableRow
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:gravity="center_horizontal"
-            android:layout_marginHorizontal="30dp">
-            <Button
-                android:id="@+id/btn_buscar_camino"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/buscarcamino"
-                android:layout_span="2"
-                android:background="@color/colorButton"
-                android:textColor="@color/colorButtonText"/>
-        </TableRow>
 
     </TableLayout>
 
