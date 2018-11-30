@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -26,18 +25,9 @@ public class MapaActivity extends AppCompatActivity {
 
     private NotificationsManager newMapManager;
     private ImageAdapter imageAdapter;
-    Spinner fromSpinner;
     Spinner toSpinner;
     String nodeFrom;
     String nodeTo;
-
-    /* Last position class */
-    class LastPosition {
-        String Zone;
-        String Time;
-    }
-
-    LastPosition lastPosition;
 
     /* Statics location / destinations  */
     private static final String[] LOCATIONS = {
@@ -80,17 +70,15 @@ public class MapaActivity extends AppCompatActivity {
             case 6: // node ca1
                 nodePosition = "4/4";
                 break;
+            case 7: // node br2
+                nodePosition = "2/1";
+                break;
+            case 8: // node le1
+                nodePosition = "3/2";
+                break;
             default:
                 nodePosition = null;
                 break;
-            /*
-            case 2: // node br2
-                nodePosition = "2/1";
-                break;
-            case 3: // node le1
-                nodePosition = "3/2";
-                break;
-            */
         }
         return nodePosition;
     }
@@ -119,6 +107,12 @@ public class MapaActivity extends AppCompatActivity {
             case "candy-1":
                 node = 6;
                 break;
+            case "beetroot-2":
+                node = 7;
+                break;
+            case "lemon-1":
+                node = 8;
+                break;
             default:
                 node = 0;
                 break;
@@ -128,7 +122,6 @@ public class MapaActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa);
@@ -141,23 +134,6 @@ public class MapaActivity extends AppCompatActivity {
         /* Send Beacon listener information */
         newMapManager = NotificationsManager.getInstance();
         newMapManager.NewMapManager(this, imageAdapter);
-
-        /* Spinner From */
-
-        fromSpinner = findViewById(R.id.from);
-        fromSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, LOCATIONS));
-        fromSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @SuppressLint("ResourceAsColor")
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                nodeFrom = getNode(position);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-        });
 
 
         /* New implementation of last position by backend information */
@@ -187,22 +163,7 @@ public class MapaActivity extends AppCompatActivity {
             }
         });
 
-        buttonBuscarCamino();
     }
-
-
-    private void buttonBuscarCamino() {
-
-        Button btnBuscarCamino = findViewById(R.id.btn_buscar_camino);
-
-        btnBuscarCamino.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new GetWayFinding(nodeFrom, nodeTo).execute();
-            }
-        });
-    }
-
 
     @SuppressLint("StaticFieldLeak")
     private class GetWayFinding extends AsyncTask<Void, Void, Void> {
@@ -220,22 +181,39 @@ public class MapaActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
 
-            String resource = "/way-finding/" + nodeOrigin + "/" + nodeDestination;
-            JsonArrayResponse jsonArrayResponse = ConexionWebService.getJsonArray(resource);
+            status = 0;
 
-            jsonArray = jsonArrayResponse.getJsonArray();
-            status = jsonArrayResponse.getStatus();
+            System.out.println("---> MapaActivity > nodeOrigin " + nodeOrigin + " and nodeDestination " + nodeDestination);
 
-            System.out.println("---> MapaActivity: " + resource);
+            if (nodeOrigin != null && nodeDestination != null) {
+
+                String resource = "/way-finding/" + nodeOrigin + "/" + nodeDestination;
+
+                System.out.println("---> MapaActivity > resource: " + resource);
+
+                JsonArrayResponse jsonArrayResponse = ConexionWebService.getJsonArray(resource);
+
+                jsonArray = jsonArrayResponse.getJsonArray();
+
+                status = jsonArrayResponse.getStatus();
+            }
 
             return null;
         }
 
         @Override
         protected void onPostExecute(Void args) {
+
             if (status == 200) {
+
                 newMapManager.NewDestinationFound(imageAdapter, jsonArray);
+
+            }  else if (status == 0) {
+
+                // nada
+
             } else {
+
                 Toast.makeText(
                         getApplicationContext(),
                         "Ups! Algo no ocurri\u00f3 como se esperaba.",
@@ -243,7 +221,6 @@ public class MapaActivity extends AppCompatActivity {
                 ).show();
             }
         }
-
     }
 
 
@@ -262,31 +239,57 @@ public class MapaActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
 
-            String resource = "/lastposition/" + userID;
+            if (userID != null) {
 
-            JsonObjectResponse jsonObjectResponse = ConexionWebService.getJsonObject(resource);
+                String resource = "/lastposition/" + userID;
 
-            status = jsonObjectResponse.getStatus();
-            jsonObject = jsonObjectResponse.getJsonObject();
+                JsonObjectResponse jsonObjectResponse = ConexionWebService.getJsonObject(resource);
+                status = jsonObjectResponse.getStatus();
 
-            auxZone = jsonObject.optString("zone");
-            // auxMomentoPosicion = jsonObject.optString("momentoPosicion");
+                if (status == 200) {
+
+                    jsonObject = jsonObjectResponse.getJsonObject();
+
+                    auxZone = jsonObject.optString("zone");
+
+                } else {
+
+                    status = 200;
+                    auxZone = "lemon-2";
+                }
+
+                System.out.println("---> MapaActivity > auxZone: " + auxZone);
+
+                // auxMomentoPosicion = jsonObject.optString("momentoPosicion");
+
+            } else {
+
+                status = 0;
+            }
 
             return null;
         }
 
         @Override
         protected void onPostExecute(Void args) {
+
             if (status == 200) {
 
                 nodeFrom = getNode(getPosition(auxZone));
 
                 System.out.println("---> MapaActivity > nodeFrom: " + nodeFrom);
 
+            } else if (status == 0) {
+                Toast.makeText(
+                        getApplicationContext(),
+                        "Ups! Parece que, por alg\u00fan motivo, no se encontr\u00f3 motivo al usuario .",
+                        Toast.LENGTH_LONG
+                ).show();
+
             } else {
                 Toast.makeText(
                         getApplicationContext(),
-                        "Ups! Algo no ocurri\u00f3 como se esperaba.",
+                        "Ups! Algo no ocurri\u00f3 como se esperaba con el usuario registrado.",
                         Toast.LENGTH_LONG
                 ).show();
             }
