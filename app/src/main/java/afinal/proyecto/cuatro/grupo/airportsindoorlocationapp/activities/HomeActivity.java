@@ -29,6 +29,7 @@ import java.util.List;
 
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.R;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.alarm.AlarmReceiver;
+import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.backgroundService.backgroundService;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.application.MyApplication;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.model.Vuelo;
 import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.ConexionWebService;
@@ -46,6 +47,8 @@ public class HomeActivity extends AppCompatActivity {
 
     private ArrayList<Vuelo> flights;
     private static int idUser;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +91,11 @@ public class HomeActivity extends AppCompatActivity {
         buttonMapa();
         buttonSupport();
         buttonNotification();
+
+        /* Inicio de servicios en background */
+        Intent intentService = new Intent(this, backgroundService.class);
+        startService(intentService);
+
         new GetFlights().execute();
     }
 
@@ -136,6 +144,8 @@ public class HomeActivity extends AppCompatActivity {
         PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
         alarmMgr.set(AlarmManager.RTC, cal.getTimeInMillis(), alarmIntent);
     }
+
+
 
     protected long differenceMinutes(Calendar calNow, Calendar calBoardingDate) {
         return ((calBoardingDate.getTimeInMillis() - calNow.getTimeInMillis()) / 1000) / 60;
