@@ -112,11 +112,13 @@ public class BackgroundService extends IntentService {
 
             if (response.getStatus() == 200) {
                 try {
+
                     Double demoraRecorrido = response.getJsonObject().getDouble("demoraRecorrido");
                     Log.d("---> BackgroundService","> DemoraRecorrido: " + demoraRecorrido + " minutos.");
+
                     String flightString= response.getJsonObject().getJSONObject("flight").toString();
                     Vuelo flight = new Gson().fromJson(flightString, Vuelo.class);
-                    Log.d("---> BackgroundService","> Hora del proximo vuelo: " + flight.getBoardingDateTime());
+                    Log.d("---> BackgroundService", "> Hora del pr\u00f3ximo vuelo: " + flight.getBoardingDateTime());
 
                     Calendar nowPlusDemora = Calendar.getInstance(TimeZone.getTimeZone("America/Argentina/Buenos_Aires"));
                     int demoraRecorridoSeconds= redondear(demoraRecorrido);
@@ -127,27 +129,28 @@ public class BackgroundService extends IntentService {
 
                     long tiempoSobrante = Util.differenceMinutes(nowPlusDemora, boardingCalendar);
                     Log.d("---> BackgroundService","> Tiempo sobrante: " + tiempoSobrante + "min.");
+
                     if (tiempoSobrante > 0 && tiempoSobrante < 20) {
-                        //send notification
+                        // send notification
                         notificationManager.notify(
                                 1,
                                 buildNotification(
                                     "No llegues tarde!!",
-                                    String.format("Tu vuelo sale en %smin y tenes %smin de recorrido",
+                                    String.format("Tu vuelo sale en %smin y ten\u00e9s %smin de recorrido",
                                             Util.differenceMinutes(Calendar.getInstance(), boardingCalendar),
                                             demoraRecorrido.intValue()
                                     ),
                                     new Intent(context, MapaActivity.class)
                                 )
                         );
-                        Log.d("---> BackgroundService","> Notificacion enviada.");
+                        Log.d("---> BackgroundService"," > Notificacion enviada.");
                     }
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             } else {
-                Log.e("---> BackgroundService", "> Se obtuvo el error: " + response.getStatus());
+                Log.e("---> BackgroundService", " > Se obtuvo el error: " + response.getStatus());
             }
         }
 
