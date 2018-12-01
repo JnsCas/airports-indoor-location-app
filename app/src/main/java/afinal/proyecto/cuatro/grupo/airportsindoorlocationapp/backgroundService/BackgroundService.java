@@ -45,8 +45,8 @@ public class BackgroundService extends IntentService {
                     while(true) {
                         try {
                             checkMethod();
-                            Thread.sleep(60000); // cada 1 minutos
-                            // Thread.sleep(300000); // cada 5 minutos
+                            //Thread.sleep(60000); // cada 1 minutos
+                            Thread.sleep(300000); // cada 5 minutos
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -131,6 +131,12 @@ public class BackgroundService extends IntentService {
                     Log.d("---> BackgroundService","> Tiempo sobrante: " + tiempoSobrante + "min.");
 
                     if (tiempoSobrante > 0 && tiempoSobrante < 20) {
+
+                        Intent intentMapa = new Intent(context, MapaActivity.class);
+                        intentMapa.putExtra("beaconTag",flight.getBoardingGate().getBeaconTag());
+                        intentMapa.putExtra("fromBackgroundService",true);
+                        intentMapa.putExtra("idUser", HomeActivity.getIdUser());
+
                         // send notification
                         notificationManager.notify(
                                 1,
@@ -140,7 +146,7 @@ public class BackgroundService extends IntentService {
                                             Util.differenceMinutes(Calendar.getInstance(), boardingCalendar),
                                             demoraRecorrido.intValue()
                                     ),
-                                    new Intent(context, MapaActivity.class)
+                                    intentMapa
                                 )
                         );
                         Log.d("---> BackgroundService"," > Notificacion enviada.");

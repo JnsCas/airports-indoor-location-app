@@ -113,6 +113,12 @@ public class MapaActivity extends AppCompatActivity {
             case "lemon-1":
                 node = 8;
                 break;
+            case "br1":
+                node = 5;
+                break;
+            case "ca1":
+                node = 6;
+                break;
             default:
                 node = 0;
                 break;
@@ -126,6 +132,11 @@ public class MapaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa);
 
+        /* New implementation of last position by backend information */
+        final int idUser = getIntent().getIntExtra("idUser", 0);
+        new GetLastPosition((long) idUser).execute();
+        System.out.println("---> MapaActivity > userID : " + idUser);
+
         /* Set image map as a grid view */
         GridView gridview = findViewById(R.id.newmapgridview);
         imageAdapter = new ImageAdapter(this);
@@ -135,19 +146,20 @@ public class MapaActivity extends AppCompatActivity {
         newMapManager = NotificationsManager.getInstance();
         newMapManager.NewMapManager(this, imageAdapter);
 
-
-        /* New implementation of last position by backend information */
-
-        int idUser = getIntent().getIntExtra("idUser", 0);
-
-        System.out.println("---> MapaActivity > userID : " + idUser);
-
-        new GetLastPosition((long) idUser).execute();
-
-
         /* Spinner To */
         toSpinner = findViewById(R.id.to);
         toSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, LOCATIONS));
+
+        /* Check if the activity is activated from background */
+        Boolean isFromBackground = getIntent().getBooleanExtra ("fromBackgroundService", false);
+
+        if (isFromBackground) {
+            String node = getIntent().getStringExtra("beaconTag");
+            //nodeTo = getNode(getPosition(node));
+            System.out.println("---> MapaActivity > isFromBackground -> beaconTag: " + node);
+            toSpinner.setSelection(getPosition(node));
+        }
+
         toSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @SuppressLint("ResourceAsColor")
@@ -160,8 +172,82 @@ public class MapaActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
+
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private class GetLastPosition extends AsyncTask<Void, Void, Void> {
+
+        private Long userID;
+        private JSONObject jsonObject;
+        private Integer status;
+        private String auxZone;
+
+        GetLastPosition(Long userID) {
+            this.userID = userID;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            if (userID != null) {
+
+                String resource = "/lastposition/" + userID;
+
+                JsonObjectResponse jsonObjectResponse = ConexionWebService.getJsonObject(resource);
+                status = jsonObjectResponse.getStatus();
+
+                if (status == 200) {
+
+                    jsonObject = jsonObjectResponse.getJsonObject();
+
+                    auxZone = jsonObject.optString("zone");
+
+                    nodeFrom = getNode(getPosition(auxZone));
+
+                } else {
+
+                    status = 200;
+                    auxZone = "lemon-2";
+                }
+
+                System.out.println("---> MapaActivity > auxZone: " + auxZone);
+
+                // auxMomentoPosicion = jsonObject.optString("momentoPosicion");
+
+            } else {
+
+                status = 0;
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void args) {
+
+            if (status == 200) {
+
+                System.out.println("---> MapaActivity > nodeFrom: " + nodeFrom);
+
+            } else if (status == 0) {
+                Toast.makeText(
+                        getApplicationContext(),
+                        "Ups! Parece que, por alg\u00fan motivo, no se encontr\u00f3 motivo al usuario .",
+                        Toast.LENGTH_LONG
+                ).show();
+
+            } else {
+                Toast.makeText(
+                        getApplicationContext(),
+                        "Ups! Algo no ocurri\u00f3 como se esperaba con el usuario registrado.",
+                        Toast.LENGTH_LONG
+                ).show();
+            }
+        }
 
     }
 
@@ -221,79 +307,5 @@ public class MapaActivity extends AppCompatActivity {
                 ).show();
             }
         }
-    }
-
-
-    @SuppressLint("StaticFieldLeak")
-    private class GetLastPosition extends AsyncTask<Void, Void, Void> {
-
-        private Long userID;
-        private JSONObject jsonObject;
-        private Integer status;
-        private String auxZone;
-
-        GetLastPosition(Long userID) {
-            this.userID = userID;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-
-            if (userID != null) {
-
-                String resource = "/lastposition/" + userID;
-
-                JsonObjectResponse jsonObjectResponse = ConexionWebService.getJsonObject(resource);
-                status = jsonObjectResponse.getStatus();
-
-                if (status == 200) {
-
-                    jsonObject = jsonObjectResponse.getJsonObject();
-
-                    auxZone = jsonObject.optString("zone");
-
-                } else {
-
-                    status = 200;
-                    auxZone = "lemon-2";
-                }
-
-                System.out.println("---> MapaActivity > auxZone: " + auxZone);
-
-                // auxMomentoPosicion = jsonObject.optString("momentoPosicion");
-
-            } else {
-
-                status = 0;
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void args) {
-
-            if (status == 200) {
-
-                nodeFrom = getNode(getPosition(auxZone));
-
-                System.out.println("---> MapaActivity > nodeFrom: " + nodeFrom);
-
-            } else if (status == 0) {
-                Toast.makeText(
-                        getApplicationContext(),
-                        "Ups! Parece que, por alg\u00fan motivo, no se encontr\u00f3 motivo al usuario .",
-                        Toast.LENGTH_LONG
-                ).show();
-
-            } else {
-                Toast.makeText(
-                        getApplicationContext(),
-                        "Ups! Algo no ocurri\u00f3 como se esperaba con el usuario registrado.",
-                        Toast.LENGTH_LONG
-                ).show();
-            }
-        }
-
     }
 }
