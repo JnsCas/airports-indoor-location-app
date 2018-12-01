@@ -243,8 +243,7 @@ public class MapaActivity extends AppCompatActivity {
 
                 String resource = "/lastposition/" + userID;
 
-                JsonObjectResponse jsonObjectResponse = ConexionWebService.getJsonObject(resource, null);
-
+                JsonObjectResponse jsonObjectResponse = ConexionWebService.getJsonObject(resource);
                 status = jsonObjectResponse.getStatus();
 
                 if (status == 200) {

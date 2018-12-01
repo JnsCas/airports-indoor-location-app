@@ -1,20 +1,14 @@
 package afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Calendar;
 
+import afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.util.Util;
+
 import static org.junit.Assert.assertEquals;
 
 public class HomeActivityTest {
-
-    private HomeActivity target;
-
-    @Before
-    public void init() {
-        this.target = new HomeActivity();
-    }
 
     @Test
     public void differenceMinutes() {
@@ -26,14 +20,14 @@ public class HomeActivityTest {
         cal2.set(Calendar.HOUR, 22);
         cal2.set(Calendar.MINUTE, 5);
 
-        long differenceMinutes = target.differenceMinutes(cal1, cal2);
+        long differenceMinutes = Util.differenceMinutes(cal1, cal2);
         assertEquals(10, differenceMinutes);
 
         Calendar cal3 = Calendar.getInstance();
         cal3.set(Calendar.HOUR, 23);
         cal3.set(Calendar.MINUTE, 50);
 
-        differenceMinutes = target.differenceMinutes(cal1, cal3);
+        differenceMinutes = Util.differenceMinutes(cal1, cal3);
         assertEquals(115, differenceMinutes);
     }
 }
