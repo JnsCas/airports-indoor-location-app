@@ -15,5 +15,13 @@
     <color name="colorCancelado">#e1734f</color>
     <color name="colorEnHorario">#09693f</color>
     <color name="colorDemorado">#ffb03b</color>
+    <color name="colorInfo">#709178</color>
+    <color name="colorNotificaciones">#a68bce</color>
+    <color name="colorSupport">#97d1ec</color>
+    <color name="colorMapa">#CD6155</color>
+    <color name="colorFondoMapa">#f7f5ff</color>
+
+
+
 
 </resources>

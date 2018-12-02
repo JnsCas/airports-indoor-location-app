@@ -3,38 +3,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="@color/colorFondoMapa">
 
     <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="30dp"
         android:shrinkColumns="*"
         tools:ignore="UselessParent">
 
-        <TableRow
-            android:id="@+id/tableRow2"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@color/colorMapa"
+            android:textStyle="bold">
 
-            <ImageView
-                android:id="@+id/imageView7"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight=".15"
-                android:contentDescription="@string/to"
-                app:srcCompat="@drawable/to" />
+            <TableRow
+                android:id="@+id/tableRow2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:textStyle="bold">
 
-            <Spinner
-                android:id="@+id/to"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight=".85"
-                android:ellipsize="marquee"
-                android:gravity="center_vertical"
-                android:spinnerMode="dropdown" />
-        </TableRow>
+                <ImageView
+                    android:id="@+id/imageView7"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".15"
+                    android:contentDescription="@string/to"
+                    app:srcCompat="@drawable/to" />
+
+                <Spinner
+                    android:id="@+id/to"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".85"
+                    android:ellipsize="marquee"
+                    android:gravity="center_vertical"
+                    android:spinnerMode="dropdown"
+                    android:textStyle="bold"/>
+            </TableRow>
+
+        </LinearLayout>
+
+
 
         <GridView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/newmapgridview"

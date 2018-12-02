@@ -1,119 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="30dp">
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-        <GridLayout
-            android:id="@+id/mainGrid"
-            android:columnCount="2"
-            android:rowCount="1"
-            android:alignmentMode="alignMargins"
-            android:columnOrderPreserved="false"
-            android:layout_width="match_parent"
-            android:layout_height="60dp" >
-
-            <!-- Column 1 -->
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp">
-
-                <LinearLayout
-                    android:layout_gravity="center_horizontal|center_vertical"
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:ignore="UselessParent">
-
-                    <ImageView
-                        android:src="@drawable/beacon_mint_small"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="PushNotification" />
-
-                </LinearLayout>
-
-            </FrameLayout>
-
-            <!-- Column 2 -->
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="10dp">
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:ignore="UselessParent">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_vertical"
-                        android:text="@string/titulo"
-                        android:textSize="20dp" />
-
-                </LinearLayout>
-
-            </FrameLayout>
-
-        </GridLayout>
+        android:layout_height="204dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:background="@color/colorNotificaciones">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginVertical="20dp">
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="30dp"
+            android:textStyle="bold">
+
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".15"
+                android:layout_gravity="center_vertical"
+                android:paddingRight="15dp"
+                app:srcCompat="@drawable/beacon_beetroot_small"
+                tools:ignore="DuplicateIds,NestedWeights" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".85"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:text="Configurá tus notificaciones"
+                android:textStyle="bold"
+                android:textSize="20dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="30dp"
+        android:weightSum="6">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".80"
+                android:gravity="center_vertical"
+                android:text="Comidas rápidas"
+                android:textSize="15dp"
+                tools:ignore="NestedWeights" />
+
+            <Switch
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".20"
+                android:gravity="center_vertical"
+                android:id="@+id/switchComidasRapidas"/>
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".80"
+                android:gravity="center_vertical"
+                android:text="Indumentaria deportiva"
+                android:textSize="15dp"
+                tools:ignore="NestedWeights" />
 
             <Switch
-                android:id="@+id/switchComidasRapidas"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/comidas_rapidas" />
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".20"
+                android:gravity="center_vertical"
+                android:id="@+id/switchIndumentariaDeportiva"/>
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".80"
+                android:gravity="center_vertical"
+                android:text="Cafe"
+                android:textSize="15dp"
+                tools:ignore="NestedWeights" />
 
             <Switch
-                android:id="@+id/switchIndumentariaDeportiva"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/indumentaria_deportiva" />
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".20"
+                android:gravity="center_vertical"
+                android:id="@+id/switchCafe"/>
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
-            <Switch
-                android:id="@+id/switchCafe"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/cafe" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".80"
+                android:gravity="center_vertical"
+                android:textSize="15dp"
+                tools:ignore="NestedWeights" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".80"
+                android:gravity="center_vertical"
+                android:textSize="15dp"
+                tools:ignore="NestedWeights" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".80"
+                android:gravity="center_vertical"
+                android:textSize="15dp"
+                tools:ignore="NestedWeights" />
 
         </LinearLayout>
 
     </LinearLayout>
 
-</ScrollView>
+
+
+</LinearLayout>
