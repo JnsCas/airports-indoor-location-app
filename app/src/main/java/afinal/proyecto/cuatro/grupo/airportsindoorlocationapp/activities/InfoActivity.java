@@ -94,9 +94,11 @@ public class InfoActivity extends AppCompatActivity {
             try {
                 int result1 = responsePE1.getJsonObject().getInt("peopleQuantity");
                 resultTV1.setText(String.valueOf(result1));
+                resultTV1.setTypeface(null, Typeface.BOLD);
 
                 int result2 = responsePE2.getJsonObject().getInt("peopleQuantity");
                 resultTV2.setText(String.valueOf(result2));
+                resultTV2.setTypeface(null, Typeface.BOLD);
 
                 Log.d("---> InfoActivity","> peopleQuantity1: " + result1 + "> peopleQuantity2: " + result2);
 

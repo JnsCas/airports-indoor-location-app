@@ -2,6 +2,7 @@ package afinal.proyecto.cuatro.grupo.airportsindoorlocationapp.activities;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

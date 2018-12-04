@@ -40,7 +40,8 @@
                 android:gravity="center_vertical"
                 android:text="Estado zonas de embarque"
                 android:textStyle="bold"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                android:textColor="@color/titleWhite"/>
 
         </LinearLayout>
     </LinearLayout>
@@ -75,6 +76,7 @@
                 android:gravity="center_vertical"
                 android:text="Cantidad de personas en la puerta de embarque 1"
                 android:textSize="15dp"
+                android:paddingRight="15dp"
                 tools:ignore="NestedWeights" />
 
             <TextView
@@ -109,6 +111,7 @@
                 android:gravity="center_vertical"
                 android:text="Cantidad de personas en la puerta de embarque 2"
                 android:textSize="15dp"
+                android:paddingRight="15dp"
                 tools:ignore="NestedWeights" />
 
             <TextView

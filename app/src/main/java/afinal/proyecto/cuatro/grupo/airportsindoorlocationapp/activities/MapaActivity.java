@@ -166,8 +166,8 @@ public class MapaActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 nodeTo = getNode(position);
+                new GetLastPosition((long) idUser).execute();
 
-                new GetWayFinding(nodeFrom, nodeTo).execute();
             }
 
             @Override
@@ -230,6 +230,8 @@ public class MapaActivity extends AppCompatActivity {
         protected void onPostExecute(Void args) {
 
             if (status == 200) {
+
+                new GetWayFinding(nodeFrom, nodeTo).execute();
 
                 System.out.println("---> MapaActivity > nodeFrom: " + nodeFrom);
 
