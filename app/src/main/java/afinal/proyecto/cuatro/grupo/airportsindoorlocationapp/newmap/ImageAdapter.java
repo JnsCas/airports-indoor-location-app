@@ -432,6 +432,15 @@ public class ImageAdapter extends BaseAdapter {
             }
         }
 
+
+        // Si el recorrido comienza en ca1 (puerta de embarque 1) y termina en le2 (hall de entrada) y el nodo al que
+        // se le calcula la orientación es el le1, entonces agregarle una codificación al final de la orientación
+        if ( way.get(0).equals("ca1") && node.equals("le1") && way.get((way.size())-1 ).equals("le2")) {
+
+            orientation = orientation + "_mod";
+
+        }
+
         return orientation;
     }
 
